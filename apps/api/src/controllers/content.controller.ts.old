@@ -1,0 +1,85 @@
+import { Response, NextFunction } from 'express';
+import { AuthRequest } from '../middleware/auth';
+import { contentService } from '../services/content.service';
+
+class ContentController {
+  async getContentItems(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const content = await contentService.getContentItems(req.user!.organizationId, req.query);
+      res.json({
+        success: true,
+        data: content,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getContentById(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const content = await contentService.getContentById(req.params.id);
+      res.json({
+        success: true,
+        data: content,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async createContent(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const content = await contentService.createContent(req.body);
+      res.status(201).json({
+        success: true,
+        data: content,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateContent(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const content = await contentService.updateContent(req.params.id, req.body);
+      res.json({
+        success: true,
+        data: content,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async publishContent(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      const content = await contentService.publishContent(req.params.id);
+      res.json({
+        success: true,
+        data: content,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteContent(req: AuthRequest, res: Response, next: NextFunction) {
+    try {
+      await contentService.deleteContent(req.params.id);
+      res.json({
+        success: true,
+        message: 'Content deleted successfully',
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+}
+
+export const contentController = new ContentController();

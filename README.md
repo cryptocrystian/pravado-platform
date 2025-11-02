@@ -1,103 +1,121 @@
-# Pravado AI Platform
+# Pravado Platform
 
-Pravado is an AI-first, multi-pillar brand growth platform designed to unify Public Relations, Content Marketing, and SEO into an intelligent orchestration engine. Built for flexibility, it adapts to solopreneurs, SMBs, and enterprises via Autopilot (automated), Copilot (AI-assisted), and Manual (expert-led) workflows.
+AI-powered PR, content, and SEO orchestration platform with agentic workflows.
 
-This monorepo hosts the full codebase for the platform — backend services, frontend apps, agent orchestration, and shared systems.
+## Overview
 
----
+Pravado is a comprehensive platform designed to streamline and automate PR, content marketing, and SEO operations using advanced AI agents. The platform enables teams to orchestrate complex workflows, generate high-quality content, and execute data-driven strategies at scale.
 
-## 🧭 Overview
+## Core Features
 
-- 🧠 **AI-Orchestrated Workflows** – PR, SEO, and Content powered by autonomous agents and LLMs
-- 🛠 **Composable Design System** – Shared UI library powered by Tailwind + shadcn/ui
-- 🔒 **Enterprise-Ready Architecture** – RBAC, audit logs, multi-tenant structure
-- 🚀 **Trial-Onboarding Intelligence** – Automated strategic setup in 14-day free trial
-- 📡 **Real-Time Agent System** – Modular execution and escalation via AUTOMATE
-- 🎙 **CiteMind Engine** – Converts content into podcast/audio, submits to AI indexes and media
+- **AI-Powered Content Generation**: Automated creation of blog posts, press releases, social media content, and more
+- **PR Campaign Management**: End-to-end management of PR campaigns with media contact tracking and outreach automation
+- **SEO Optimization**: Keyword research, content optimization, and performance tracking
+- **Agentic Workflows**: Intelligent agents that can plan, execute, and adapt strategies based on performance data
+- **Multi-Channel Distribution**: Unified platform for managing content across websites, social media, email, and more
 
----
+## Technology Stack
 
-## 📁 Monorepo Structure
+### Frontend
+- **Next.js 14** (App Router) - Deployed to **Cloudflare Pages**
+- TypeScript
+- Tailwind CSS
+- shadcn/ui components
+- React Query for data fetching
+- Zustand for state management
 
-apps/
-├── dashboard # Next.js 14 web application
-├── api # Node.js backend w/ Prisma, Redis, Auth
-├── agents # Agent task execution engine
-packages/
-├── design-system # Shared UI component library
-├── shared-types # Global TypeScript types/interfaces
-├── utils # Shared logic (date, parsing, validators)
-docs/
-├── ARCHITECTURE.md # System design and modular breakdown
-├── AGENT_FRAMEWORK.md# AI orchestration and agent lifecycle
-├── DESIGN_SYSTEM.md # UI standards and token usage
+### Backend
+- **Node.js** with Express
+- **Supabase** (PostgreSQL database + Authentication)
+- **Redis/Upstash** (Queue management with BullMQ)
+- Supabase Row-Level Security (RLS)
 
-yaml
-Copy code
+### AI/ML
+- OpenAI GPT-4
+- Anthropic Claude
+- Custom agent orchestration framework (SAGE & AUTOMATE)
 
----
+### Infrastructure
+- **Frontend**: Cloudflare Pages
+- **Backend API**: Node.js hosting (Render/Fly.io/Railway)
+- **Database**: Supabase managed PostgreSQL
+- **Queue**: Redis (Upstash or self-hosted)
 
-## 🧪 Tech Stack
+## Project Structure
 
-| Layer       | Tech Stack                         |
-|-------------|------------------------------------|
-| Frontend    | Next.js 14 (App Router), Tailwind, shadcn/ui |
-| Backend     | Node.js, Express or Fastify, Prisma, PostgreSQL |
-| Agents      | TypeScript + OpenAI API + Redis queues |
-| Infra       | Redis, S3, Postgres, Vercel, Render/Fly.io |
-| Dev Tools   | Turborepo, Jest/Vitest, Storybook  |
+```
+pravado-platform/
+├── apps/
+│   ├── api/              # Express + Supabase backend
+│   ├── dashboard/        # Next.js 14 frontend (Cloudflare Pages)
+│   └── agents/           # Agent execution engine
+├── packages/
+│   ├── design-system/    # Shared UI components (Button, Input, Card, etc.)
+│   ├── shared-types/     # TypeScript types and interfaces
+│   └── utils/            # Shared utilities (date, format, validators, etc.)
+├── docs/                 # Documentation
+└── .github/workflows/    # CI/CD pipelines
+```
 
----
+## Getting Started
 
-## 🔐 Core Principles
+See [SETUP.md](./SETUP.md) for detailed setup instructions.
 
-- **Real Data Only**: Absolutely no mock data in production flows
-- **Agent-First Execution**: Modular, queueable, and auditable AI agents
-- **Trial-Driven Value**: Trial onboarding generates strategic plans + instant ROI
-- **Secure by Default**: Role-based permissions, campaign sandboxing, anti-spam protection
-- **Extensibility**: Designed for white-labeling and future integrations
-
----
-
-## 🧠 AI Agent Roles
-
-| Agent                 | Role Description                                |
-|-----------------------|--------------------------------------------------|
-| `DraftAgent`          | Writes articles, press releases, briefs         |
-| `QAValidatorAgent`    | Validates tone, clarity, SEO, style guides      |
-| `OutreachAgent`       | Generates targeted outreach emails              |
-| `CiteMindAgent`       | Formats content for podcast + LLM indexing      |
-| `StrategySynthAgent`  | Synthesizes onboarding into strategic plans     |
-
----
-
-## 🚧 Getting Started
+### Quick Start
 
 ```bash
-# Clone repo
-git clone https://github.com/your-org/pravado-core.git
-cd pravado-core
-
-# Install packages
+# Install dependencies
 pnpm install
 
-# Setup env
+# Copy environment variables
 cp .env.sample .env
 
-# Run dev
+# Start Supabase locally
+cd apps/api && supabase start
+
+# Generate database types
+pnpm db:types
+
+# Start all services in development mode
 pnpm dev
-📚 Documentation
-ARCHITECTURE.md — Full system breakdown
+```
 
-AGENT_FRAMEWORK.md — Agent lifecycle + orchestration
+## Documentation
 
-DESIGN_SYSTEM.md — UI usage and token rules
+- [Setup Guide](./SETUP.md)
+- [Architecture Overview](./docs/architecture.md)
+- [Agent Framework](./docs/agent_framework.md)
+- [Design System](./docs/design_system.md)
 
-👥 Maintainers
-Founder: @yourname
+## Key Technologies
 
-Lead Architect: [@yourAIassistant 🤖]
+- **Monorepo**: Turborepo for fast builds and caching
+- **Package Manager**: pnpm with workspaces
+- **Testing**: Vitest for unit tests
+- **Linting**: ESLint + Prettier
+- **Type Safety**: Full TypeScript coverage across all packages
 
-📃 License
-All code is © Pravado, Inc. IP protection in progress.
-Do not copy, fork, or redistribute without written consent.
+## Deployment
+
+### Frontend (Cloudflare Pages)
+The Next.js dashboard is optimized for deployment to Cloudflare Pages using `@cloudflare/next-on-pages`.
+
+```bash
+cd apps/dashboard
+pnpm pages:build
+pnpm pages:deploy
+```
+
+### Backend API
+Deploy to any Node.js hosting platform. Ensure Supabase production credentials are configured.
+
+### Agent Worker
+Run as a separate service that processes agent tasks from the Redis queue.
+
+## Contributing
+
+This is a private repository. Please ensure all changes go through PR review before merging to main.
+
+## License
+
+Proprietary - All rights reserved

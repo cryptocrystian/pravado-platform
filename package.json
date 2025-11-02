@@ -1,0 +1,39 @@
+{
+  "name": "pravado-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-powered PR, content, and SEO orchestration platform using agentic workflows",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "db:types": "cd apps/api && supabase gen types typescript --local > src/types/database.types.ts",
+    "supabase:start": "cd apps/api && supabase start",
+    "supabase:stop": "cd apps/api && supabase stop",
+    "supabase:status": "cd apps/api && supabase status",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "eslint": "^8.56.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.4",
+    "turbo": "^1.12.1",
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "pnpm@8.15.1",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

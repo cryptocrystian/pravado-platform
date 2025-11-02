@@ -1,0 +1,17 @@
+import { Router } from 'express';
+import { contentController } from '../controllers/content.controller';
+import { authenticate, authorize } from '../middleware/auth';
+import { Permission } from '@pravado/shared-types';
+
+const router = Router();
+
+router.use(authenticate);
+
+router.get('/', authorize(Permission.CONTENT_READ), contentController.getContentItems);
+router.get('/:id', authorize(Permission.CONTENT_READ), contentController.getContentById);
+router.post('/', authorize(Permission.CONTENT_WRITE), contentController.createContent);
+router.patch('/:id', authorize(Permission.CONTENT_WRITE), contentController.updateContent);
+router.post('/:id/publish', authorize(Permission.CONTENT_PUBLISH), contentController.publishContent);
+router.delete('/:id', authorize(Permission.CONTENT_DELETE), contentController.deleteContent);
+
+export default router;

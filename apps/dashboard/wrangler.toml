@@ -1,0 +1,9 @@
+name = "pravado-dashboard"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = ".vercel/output/static"
+
+[env.production]
+name = "pravado-dashboard-production"
+
+[env.staging]
+name = "pravado-dashboard-staging"

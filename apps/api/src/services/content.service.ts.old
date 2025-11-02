@@ -1,0 +1,118 @@
+import { supabase } from '../lib/supabase';
+import { NotFoundError } from '@pravado/utils';
+import { ContentStatus } from '@pravado/shared-types';
+import type { CreateContentInput, UpdateContentInput } from '@pravado/shared-types';
+
+class ContentService {
+  async getContentItems(organizationId: string, filters: Record<string, unknown>) {
+    const { data: campaigns } = await supabase
+      .from('campaigns')
+      .select('id')
+      .eq('organization_id', organizationId);
+
+    const campaignIds = campaigns?.map((c) => c.id) || [];
+
+    let query = supabase
+      .from('content_items')
+      .select('*')
+      .in('campaign_id', campaignIds);
+
+    if (filters.status) {
+      query = query.eq('status', filters.status);
+    }
+
+    if (filters.type) {
+      query = query.eq('type', filters.type);
+    }
+
+    const { data, error } = await query.order('created_at', { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+
+    return data || [];
+  }
+
+  async getContentById(id: string) {
+    const { data, error } = await supabase
+      .from('content_items')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error || !data) {
+      throw new NotFoundError('Content', id);
+    }
+
+    return data;
+  }
+
+  async createContent(input: CreateContentInput) {
+    const { data, error } = await supabase
+      .from('content_items')
+      .insert(input)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
+
+  async updateContent(id: string, input: UpdateContentInput) {
+    const { data, error } = await supabase
+      .from('content_items')
+      .update(input)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data) {
+      throw new NotFoundError('Content', id);
+    }
+
+    return data;
+  }
+
+  async publishContent(id: string) {
+    const { data, error } = await supabase
+      .from('content_items')
+      .update({
+        status: ContentStatus.PUBLISHED,
+        published_at: new Date().toISOString(),
+      })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data) {
+      throw new NotFoundError('Content', id);
+    }
+
+    return data;
+  }
+
+  async deleteContent(id: string) {
+    const { error } = await supabase
+      .from('content_items')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      throw error;
+    }
+  }
+}
+
+export const contentService = new ContentService();

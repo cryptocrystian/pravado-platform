@@ -1,0 +1,31 @@
+{
+  "name": "@pravado/agents",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@pravado/shared-types": "workspace:*",
+    "@pravado/utils": "workspace:*",
+    "@supabase/supabase-js": "^2.39.7",
+    "bullmq": "^5.1.9",
+    "dotenv": "^16.4.1",
+    "ioredis": "^5.3.2",
+    "openai": "^4.26.0",
+    "pino": "^8.17.2",
+    "pino-pretty": "^10.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.1"
+  }
+}

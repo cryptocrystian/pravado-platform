@@ -57,6 +57,7 @@ export * from './agent-personality';
 export * from './agent-interaction';
 export * from './agent-feedback';
 export * from './agent-self-eval';
+export * from './multi-agent-dialogue';
 
 // Validation Schemas
 export * from './schemas';

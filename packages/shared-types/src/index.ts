@@ -43,11 +43,16 @@ export * from './goal-tracking';
 export * from './channel-intel';
 export * from './lead-scoring';
 export * from './reporting';
-export * from './prompts';
+export * from './prompt-templates';
 export * from './persona';
 export * from './team-analytics';
 export * from './competitive-intel';
 export * from './agent-evaluator';
+export * from './role';
+export * from './playbooks';
+export * from './agent-playbook';
+export * from './agent-collaboration';
+export * from './agent-context';
 
 // Validation Schemas
 export * from './schemas';

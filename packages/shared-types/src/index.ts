@@ -66,6 +66,7 @@ export * from './external-api';
 export * from './admin-analytics';
 export * from './moderation';
 export * from './agent-debug';
+export * from './admin-access';
 
 // Validation Schemas
 export * from './schemas';

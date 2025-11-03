@@ -27,12 +27,14 @@ import {
   Speed,
   Home,
   AdminPanelSettings,
+  Security,
 } from '@mui/icons-material';
 import { OverviewTab } from './admin-console/OverviewTab';
 import { TenantActivityTab } from './admin-console/TenantActivityTab';
 import { AgentActivityTab } from './admin-console/AgentActivityTab';
 import { ErrorExplorerTab } from './admin-console/ErrorExplorerTab';
 import { PerformanceTab } from './admin-console/PerformanceTab';
+import { ModerationTab } from './admin-console/ModerationTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -245,6 +247,13 @@ export const AdminConsole: React.FC = () => {
             {...a11yProps(4)}
             sx={{ textTransform: 'none', fontSize: '0.95rem' }}
           />
+          <Tab
+            icon={<Security />}
+            iconPosition="start"
+            label="Moderation"
+            {...a11yProps(5)}
+            sx={{ textTransform: 'none', fontSize: '0.95rem' }}
+          />
         </Tabs>
       </Paper>
 
@@ -264,6 +273,9 @@ export const AdminConsole: React.FC = () => {
         </TabPanel>
         <TabPanel value={currentTab} index={4}>
           <PerformanceTab />
+        </TabPanel>
+        <TabPanel value={currentTab} index={5}>
+          <ModerationTab />
         </TabPanel>
       </Box>
     </Container>

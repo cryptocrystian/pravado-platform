@@ -1,32 +1,90 @@
 // =====================================================
 // CHAT MESSAGE COMPONENT
-// Sprint 64 Phase 6.1: Mobile App Foundation
+// Sprint 65 Phase 6.2: Advanced UI/UX Foundation
+// Enhanced with animations and improved styling
 // =====================================================
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Surface, useTheme } from 'react-native-paper';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+  FadeInLeft,
+  FadeInRight,
+} from 'react-native-reanimated';
 import { Message } from '@types/index';
 import { formatTimestamp } from '@utils/index';
 
 interface Props {
   message: Message;
+  index?: number;
 }
 
-export default function ChatMessage({ message }: Props) {
+const AnimatedView = Animated.createAnimatedComponent(View);
+
+export default function ChatMessage({ message, index = 0 }: Props) {
   const theme = useTheme();
   const isUser = message.role === 'user';
 
+  // Animation values
+  const scale = useSharedValue(0.9);
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    // Entrance animation
+    scale.value = withSpring(1, {
+      damping: 12,
+      stiffness: 100,
+    });
+    opacity.value = withTiming(1, { duration: 300 });
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+    opacity: opacity.value,
+  }));
+
+  // Different border radius for user vs agent
+  const bubbleStyle = isUser
+    ? {
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+        borderBottomLeftRadius: 16,
+        borderBottomRightRadius: 4,
+      }
+    : {
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 16,
+      };
+
   return (
-    <View style={[styles.container, isUser ? styles.userContainer : styles.agentContainer]}>
+    <AnimatedView
+      style={[
+        styles.container,
+        isUser ? styles.userContainer : styles.agentContainer,
+        animatedStyle,
+      ]}
+      entering={isUser ? FadeInRight.delay(index * 50) : FadeInLeft.delay(index * 50)}
+    >
       <Surface
         style={[
           styles.bubble,
+          bubbleStyle,
           isUser
-            ? { backgroundColor: theme.colors.primary }
-            : { backgroundColor: theme.colors.surfaceVariant },
+            ? {
+                backgroundColor: theme.colors.primary,
+                elevation: 2,
+              }
+            : {
+                backgroundColor: theme.colors.surfaceVariant,
+                elevation: 1,
+              },
         ]}
-        elevation={1}
       >
         <Text
           style={[
@@ -36,16 +94,21 @@ export default function ChatMessage({ message }: Props) {
         >
           {message.content}
         </Text>
-        <Text
-          style={[
-            styles.timestamp,
-            { color: isUser ? 'rgba(255,255,255,0.7)' : theme.colors.onSurfaceVariant },
-          ]}
-        >
-          {formatTimestamp(message.timestamp)}
-        </Text>
+        <View style={styles.footer}>
+          <Text
+            style={[
+              styles.timestamp,
+              { color: isUser ? 'rgba(255,255,255,0.7)' : theme.colors.onSurfaceVariant },
+            ]}
+          >
+            {formatTimestamp(message.timestamp)}
+          </Text>
+          {isUser && (
+            <Text style={styles.readReceipt}>✓</Text>
+          )}
+        </View>
       </Surface>
-    </View>
+    </AnimatedView>
   );
 }
 
@@ -62,15 +125,28 @@ const styles = StyleSheet.create({
   },
   bubble: {
     maxWidth: '75%',
-    borderRadius: 16,
     padding: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   message: {
     fontSize: 16,
-    lineHeight: 20,
+    lineHeight: 22,
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 4,
   },
   timestamp: {
     fontSize: 11,
-    marginTop: 4,
+  },
+  readReceipt: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.8)',
+    marginLeft: 4,
   },
 });

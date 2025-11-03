@@ -40,6 +40,7 @@ import agentAnalyticsRoutes from './agent-analytics';
 import agentFeedbackRoutes from './agent-feedback';
 import agentSelfEvalRoutes from './agent-self-eval';
 import multiAgentDialogueRoutes from './multi-agent-dialogue';
+import agentModerationRoutes from './agent-moderation';
 
 const router = Router();
 
@@ -84,5 +85,6 @@ router.use('/agent-analytics', agentAnalyticsRoutes);
 router.use('/agent-feedback', agentFeedbackRoutes);
 router.use('/agent-self-eval', agentSelfEvalRoutes);
 router.use('/multi-agent-dialogue', multiAgentDialogueRoutes);
+router.use('/agent-moderation', agentModerationRoutes);
 
 export default router;

@@ -58,6 +58,7 @@ export * from './agent-interaction';
 export * from './agent-feedback';
 export * from './agent-self-eval';
 export * from './multi-agent-dialogue';
+export * from './agent-moderation';
 
 // Validation Schemas
 export * from './schemas';

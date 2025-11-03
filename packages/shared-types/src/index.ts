@@ -61,6 +61,7 @@ export * from './multi-agent-dialogue';
 export * from './agent-moderation';
 export * from './agent-escalation';
 export * from './agent-arbitration';
+export * from './agent-playbook-sync';
 
 // Validation Schemas
 export * from './schemas';

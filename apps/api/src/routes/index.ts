@@ -38,6 +38,7 @@ import promptTemplateRoutes from './prompt-template.routes';
 import agentInteractionRoutes from './agent-interaction';
 import agentAnalyticsRoutes from './agent-analytics';
 import agentFeedbackRoutes from './agent-feedback';
+import agentSelfEvalRoutes from './agent-self-eval';
 
 const router = Router();
 
@@ -80,5 +81,6 @@ router.use('/prompt-templates', promptTemplateRoutes);
 router.use('/agent-interaction', agentInteractionRoutes);
 router.use('/agent-analytics', agentAnalyticsRoutes);
 router.use('/agent-feedback', agentFeedbackRoutes);
+router.use('/agent-self-eval', agentSelfEvalRoutes);
 
 export default router;

@@ -34,6 +34,7 @@ import teamAnalyticsRoutes from './team-analytics.routes';
 import competitiveIntelRoutes from './competitive-intel.routes';
 import goalTrackingRoutes from './goal-tracking.routes';
 import agentEvaluatorRoutes from './agent-evaluator.routes';
+import promptTemplateRoutes from './prompt-template.routes';
 
 const router = Router();
 
@@ -72,5 +73,6 @@ router.use('/team-analytics', teamAnalyticsRoutes);
 router.use('/competitive-intel', competitiveIntelRoutes);
 router.use('/goal-tracking', goalTrackingRoutes);
 router.use('/agent-evaluator', agentEvaluatorRoutes);
+router.use('/prompt-templates', promptTemplateRoutes);
 
 export default router;

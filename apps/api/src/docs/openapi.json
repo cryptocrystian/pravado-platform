@@ -1,0 +1,781 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pravado External Agent API",
+    "version": "1.0.0",
+    "description": "External API for third-party applications to interact with AI agents securely. Includes token-based authentication, rate limiting, and webhook support.",
+    "contact": {
+      "name": "Pravado API Support",
+      "url": "https://pravado.com/support",
+      "email": "api@pravado.com"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://pravado.com/license"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.pravado.com/v1",
+      "description": "Production"
+    },
+    {
+      "url": "https://api-staging.pravado.com/v1",
+      "description": "Staging"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/external-agent/submit-task": {
+      "post": {
+        "summary": "Submit Task to Agent",
+        "description": "Submit a task to an AI agent for processing. The agent will process the request and return a response asynchronously.",
+        "operationId": "submitTask",
+        "tags": ["Agent Tasks"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitTaskRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitTaskResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
+        }
+      }
+    },
+    "/external-agent/result/{requestId}": {
+      "get": {
+        "summary": "Get Task Result",
+        "description": "Retrieve the result of a previously submitted task.",
+        "operationId": "getTaskResult",
+        "tags": ["Agent Tasks"],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Request ID returned from submit-task"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task result retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResultResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/external-agent/status/{agentId}": {
+      "get": {
+        "summary": "Get Agent Status",
+        "description": "Get the current status and availability of an agent.",
+        "operationId": "getAgentStatus",
+        "tags": ["Agent Management"],
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentStatusResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/external-agent/history/{conversationId}": {
+      "get": {
+        "summary": "Get Conversation History",
+        "description": "Retrieve the complete conversation history for a given conversation ID.",
+        "operationId": "getConversationHistory",
+        "tags": ["Conversations"],
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Conversation ID"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "maximum": 100
+            },
+            "description": "Maximum number of messages to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "description": "Pagination offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conversation history retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationHistoryResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/external-agent/register-webhook": {
+      "post": {
+        "summary": "Register Webhook",
+        "description": "Register a webhook to receive notifications for specific events.",
+        "operationId": "registerWebhook",
+        "tags": ["Webhooks"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterWebhookRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Webhook registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterWebhookResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/external-agent/rotate-token": {
+      "post": {
+        "summary": "Rotate API Token",
+        "description": "Generate a new API token and revoke the old one.",
+        "operationId": "rotateToken",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RotateTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token rotated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RotateTokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/external-agent/health": {
+      "get": {
+        "summary": "Health Check",
+        "description": "Check the health status of the API.",
+        "operationId": "healthCheck",
+        "tags": ["System"],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "healthy"
+                    },
+                    "version": {
+                      "type": "string",
+                      "example": "1.0.0"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "pk_live_...",
+        "description": "API token obtained from the Pravado dashboard"
+      }
+    },
+    "schemas": {
+      "SubmitTaskRequest": {
+        "type": "object",
+        "required": ["agentId", "taskType"],
+        "properties": {
+          "agentId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the agent to process the task"
+          },
+          "taskType": {
+            "type": "string",
+            "enum": ["conversation", "task", "query", "command"],
+            "description": "Type of task to submit"
+          },
+          "message": {
+            "type": "string",
+            "description": "User message or query"
+          },
+          "context": {
+            "type": "object",
+            "description": "Additional context for the task",
+            "additionalProperties": true
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Task-specific parameters",
+            "additionalProperties": true
+          },
+          "conversationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Optional conversation ID to continue an existing conversation"
+          },
+          "webhookUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional webhook URL for asynchronous response"
+          }
+        }
+      },
+      "SubmitTaskResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "processing", "completed", "failed"]
+          },
+          "conversationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estimatedCompletionTime": {
+            "type": "integer",
+            "description": "Estimated time to completion in milliseconds"
+          }
+        }
+      },
+      "TaskResultResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending", "processing", "completed", "failed"]
+              },
+              "agentResponse": {
+                "type": "string",
+                "description": "Agent's response to the task"
+              },
+              "confidence": {
+                "type": "number",
+                "format": "float",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "reasoning": {
+                "type": "string",
+                "description": "Agent's reasoning process"
+              },
+              "actions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Actions taken by the agent"
+              },
+              "processingTime": {
+                "type": "integer",
+                "description": "Time taken to process in milliseconds"
+              }
+            }
+          }
+        }
+      },
+      "AgentStatusResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "object",
+            "properties": {
+              "agentId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["online", "offline", "busy", "error"]
+              },
+              "availability": {
+                "type": "boolean"
+              },
+              "currentLoad": {
+                "type": "integer",
+                "description": "Number of active requests"
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ConversationHistoryResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "messageId": {
+                  "type": "string"
+                },
+                "conversationId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": ["user", "agent", "system"]
+                },
+                "content": {
+                  "type": "string"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RegisterWebhookRequest": {
+        "type": "object",
+        "required": ["url", "events"],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Webhook endpoint URL"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "agent_response",
+                "task_completed",
+                "task_failed",
+                "conversation_started",
+                "conversation_ended",
+                "agent_status_change",
+                "error_occurred"
+              ]
+            },
+            "minItems": 1,
+            "description": "Events to subscribe to"
+          },
+          "secret": {
+            "type": "string",
+            "description": "Optional custom secret for signature validation"
+          },
+          "headers": {
+            "type": "object",
+            "description": "Optional custom headers to include in webhook requests",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RegisterWebhookResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "webhookId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "secret": {
+            "type": "string",
+            "description": "Secret for HMAC signature validation"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RotateTokenRequest": {
+        "type": "object",
+        "required": ["tokenId"],
+        "properties": {
+          "tokenId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the token to rotate"
+          },
+          "expiresIn": {
+            "type": "integer",
+            "description": "Number of days until new token expires"
+          }
+        }
+      },
+      "RotateTokenResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "newToken": {
+            "type": "string",
+            "description": "New API token (only returned once)"
+          },
+          "newTokenId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "oldTokenId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error type"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad request - invalid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - invalid or missing API token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "RateLimitExceeded": {
+        "description": "Rate limit exceeded",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Error"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "rateLimitStatus": {
+                      "type": "object",
+                      "properties": {
+                        "remaining": {
+                          "type": "object",
+                          "properties": {
+                            "requestsThisMinute": {
+                              "type": "integer"
+                            },
+                            "requestsThisHour": {
+                              "type": "integer"
+                            },
+                            "requestsThisDay": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "resetAt": {
+                          "type": "object",
+                          "properties": {
+                            "minute": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "hour": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "day": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "headers": {
+          "X-RateLimit-Limit-Minute": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Requests allowed per minute"
+          },
+          "X-RateLimit-Remaining-Minute": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Requests remaining in current minute"
+          },
+          "X-RateLimit-Reset-Minute": {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Time when minute limit resets"
+          }
+        }
+      },
+      "InternalError": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Agent Tasks",
+      "description": "Submit and retrieve agent tasks"
+    },
+    {
+      "name": "Agent Management",
+      "description": "Manage and monitor agents"
+    },
+    {
+      "name": "Conversations",
+      "description": "Conversation history and management"
+    },
+    {
+      "name": "Webhooks",
+      "description": "Webhook registration and management"
+    },
+    {
+      "name": "Authentication",
+      "description": "API token management"
+    },
+    {
+      "name": "System",
+      "description": "System health and status"
+    }
+  ]
+}

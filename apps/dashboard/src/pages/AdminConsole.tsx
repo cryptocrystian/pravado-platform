@@ -29,6 +29,7 @@ import {
   AdminPanelSettings,
   Security,
   BugReport,
+  Shield,
 } from '@mui/icons-material';
 import { OverviewTab } from './admin-console/OverviewTab';
 import { TenantActivityTab } from './admin-console/TenantActivityTab';
@@ -37,6 +38,7 @@ import { ErrorExplorerTab } from './admin-console/ErrorExplorerTab';
 import { PerformanceTab } from './admin-console/PerformanceTab';
 import { ModerationTab } from './admin-console/ModerationTab';
 import { AgentDebugTabs } from './admin-console/debug/AgentDebugTabs';
+import { AccessControlTabs } from './admin-console/access/AccessControlTabs';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -263,6 +265,13 @@ export const AdminConsole: React.FC = () => {
             {...a11yProps(6)}
             sx={{ textTransform: 'none', fontSize: '0.95rem' }}
           />
+          <Tab
+            icon={<Shield />}
+            iconPosition="start"
+            label="Access Controls"
+            {...a11yProps(7)}
+            sx={{ textTransform: 'none', fontSize: '0.95rem' }}
+          />
         </Tabs>
       </Paper>
 
@@ -288,6 +297,9 @@ export const AdminConsole: React.FC = () => {
         </TabPanel>
         <TabPanel value={currentTab} index={6}>
           <AgentDebugTabs />
+        </TabPanel>
+        <TabPanel value={currentTab} index={7}>
+          <AccessControlTabs />
         </TabPanel>
       </Box>
     </Container>

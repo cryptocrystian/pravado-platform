@@ -45,6 +45,7 @@ import agentEscalationRoutes from './agent-escalation';
 import agentArbitrationRoutes from './agent-arbitration';
 import agentPlaybookSyncRoutes from './agent-playbook-sync';
 import externalAgentRoutes from './external-agent';
+import adminConsoleRoutes from './admin-console';
 
 const router = Router();
 
@@ -94,5 +95,6 @@ router.use('/agent-escalation', agentEscalationRoutes);
 router.use('/agent-arbitration', agentArbitrationRoutes);
 router.use('/agent-playbook-sync', agentPlaybookSyncRoutes);
 router.use('/external-agent', externalAgentRoutes);
+router.use('/admin-console', adminConsoleRoutes);
 
 export default router;

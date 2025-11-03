@@ -55,6 +55,7 @@ export * from './agent-collaboration';
 export * from './agent-context';
 export * from './agent-personality';
 export * from './agent-interaction';
+export * from './agent-feedback';
 
 // Validation Schemas
 export * from './schemas';

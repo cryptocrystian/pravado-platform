@@ -65,6 +65,7 @@ export * from './agent-playbook-sync';
 export * from './external-api';
 export * from './admin-analytics';
 export * from './moderation';
+export * from './agent-debug';
 
 // Validation Schemas
 export * from './schemas';

@@ -28,6 +28,7 @@ import {
   Home,
   AdminPanelSettings,
   Security,
+  BugReport,
 } from '@mui/icons-material';
 import { OverviewTab } from './admin-console/OverviewTab';
 import { TenantActivityTab } from './admin-console/TenantActivityTab';
@@ -35,6 +36,7 @@ import { AgentActivityTab } from './admin-console/AgentActivityTab';
 import { ErrorExplorerTab } from './admin-console/ErrorExplorerTab';
 import { PerformanceTab } from './admin-console/PerformanceTab';
 import { ModerationTab } from './admin-console/ModerationTab';
+import { AgentDebugTabs } from './admin-console/debug/AgentDebugTabs';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -254,6 +256,13 @@ export const AdminConsole: React.FC = () => {
             {...a11yProps(5)}
             sx={{ textTransform: 'none', fontSize: '0.95rem' }}
           />
+          <Tab
+            icon={<BugReport />}
+            iconPosition="start"
+            label="Debug Tools"
+            {...a11yProps(6)}
+            sx={{ textTransform: 'none', fontSize: '0.95rem' }}
+          />
         </Tabs>
       </Paper>
 
@@ -276,6 +285,9 @@ export const AdminConsole: React.FC = () => {
         </TabPanel>
         <TabPanel value={currentTab} index={5}>
           <ModerationTab />
+        </TabPanel>
+        <TabPanel value={currentTab} index={6}>
+          <AgentDebugTabs />
         </TabPanel>
       </Box>
     </Container>

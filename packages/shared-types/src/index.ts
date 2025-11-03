@@ -59,6 +59,7 @@ export * from './agent-feedback';
 export * from './agent-self-eval';
 export * from './multi-agent-dialogue';
 export * from './agent-moderation';
+export * from './agent-escalation';
 
 // Validation Schemas
 export * from './schemas';

@@ -41,6 +41,7 @@ import agentFeedbackRoutes from './agent-feedback';
 import agentSelfEvalRoutes from './agent-self-eval';
 import multiAgentDialogueRoutes from './multi-agent-dialogue';
 import agentModerationRoutes from './agent-moderation';
+import agentEscalationRoutes from './agent-escalation';
 
 const router = Router();
 
@@ -86,5 +87,6 @@ router.use('/agent-feedback', agentFeedbackRoutes);
 router.use('/agent-self-eval', agentSelfEvalRoutes);
 router.use('/multi-agent-dialogue', multiAgentDialogueRoutes);
 router.use('/agent-moderation', agentModerationRoutes);
+router.use('/agent-escalation', agentEscalationRoutes);
 
 export default router;

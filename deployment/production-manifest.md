@@ -230,24 +230,79 @@ JOB_BACKOFF_MS=5000
 
 ### Cloudflare Pages (Frontend)
 
+**Configuration File:** `deployment/cloudflare-pages.toml`
+
+**Build Settings:**
 ```yaml
-# wrangler.toml or Pages settings
 name: pravado-dashboard
 production_branch: main
 build:
-  command: pnpm build
+  command: pnpm install --frozen-lockfile && pnpm build --filter=@pravado/dashboard
   output_directory: apps/dashboard/dist
   root_directory: /
+  cwd: /
 env:
-  NODE_VERSION: 18
+  NODE_VERSION: 20.11.0
+  PNPM_VERSION: 9.0.0
+  REACT_APP_ENV: production
   REACT_APP_API_URL: https://api.pravado.com
   REACT_APP_SUPABASE_URL: https://your-project.supabase.co
-  REACT_APP_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-routes:
-  - include: /*
-    exclude:
-      - /api/*
+  REACT_APP_SUPABASE_ANON_KEY: [SECRET - Set in Cloudflare Dashboard]
+  REACT_APP_SENTRY_DSN: [SECRET - Set in Cloudflare Dashboard]
+  REACT_APP_VERSION: 1.0.0
+  REACT_APP_ENABLE_DEBUG: false
+  REACT_APP_ENABLE_ANALYTICS: true
 ```
+
+**Routing:**
+```yaml
+# SPA Fallback
+redirects:
+  - from: /*
+    to: /index.html
+    status: 200
+
+# API Proxy (optional, via Workers)
+  - from: /api/*
+    to: https://api.pravado.com/:splat
+    status: 200
+```
+
+**Security Headers:**
+```yaml
+headers:
+  /*:
+    X-Frame-Options: DENY
+    X-Content-Type-Options: nosniff
+    X-XSS-Protection: 1; mode=block
+    Referrer-Policy: strict-origin-when-cross-origin
+    Permissions-Policy: geolocation=(), microphone=(), camera=()
+    Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; ...
+
+  /static/*:
+    Cache-Control: public, max-age=31536000, immutable
+
+  /index.html:
+    Cache-Control: public, max-age=0, must-revalidate
+```
+
+**Custom Domains:**
+- Production: `app.pravado.com`
+- Preview: `preview.pravado.com`
+- Development: `dev.pravado.com`
+
+**Deployment Triggers:**
+- Production: Push to `main` branch, Git tags `v*.*.*`
+- Preview: Pull requests, Push to `develop` branch
+
+**Performance:**
+- Compression: gzip, brotli
+- Minification: Enabled
+- Image optimization: Enabled
+- Global CDN: 300+ data centers
+- HTTP/2 and HTTP/3: Enabled
+
+**Setup Guide:** See `deployment/cloudflare-pages-setup.md` for detailed instructions.
 
 ### API Deployment (Node.js)
 
@@ -395,6 +450,137 @@ curl https://api.pravado.com/api/system/production-readiness | jq
 curl -H "Authorization: Bearer <token>" \
   https://api.pravado.com/api/admin-access/roles | jq
 ```
+
+### 6. Runtime Activation & First Admin Login
+
+**Sprint 63: Platform Access & Runtime Activation**
+
+After successful deployment, activate the platform and verify admin access:
+
+```bash
+# 1. Run runtime smoke test
+cd /path/to/pravado-platform
+export API_URL=https://api.pravado.com
+export SUPABASE_URL=https://your-project.supabase.co
+export SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+export ADMIN_EMAIL=admin@pravado.com
+export ADMIN_PASSWORD=YourSecurePassword123!
+
+ts-node scripts/runtime-smoke-test.ts
+
+# Expected output:
+# ✅ Platform activated
+# ✅ Admin user created
+# ✅ All 8 tabs verified
+# ✅ Test tenant/agent created
+# ✅ All smoke tests passed
+```
+
+**Manual Verification Steps:**
+
+1. **Access Admin Console**
+   ```
+   URL: https://app.pravado.com
+   Email: admin@pravado.com
+   Password: [Your secure password]
+   ```
+
+2. **Verify All 8 Admin Console Tabs:**
+   - [ ] Tab 1: Overview - System status, metrics, quick actions
+   - [ ] Tab 2: Tenant Activity - Tenant list, search, create
+   - [ ] Tab 3: Agent Activity - Agent list, conversations, register
+   - [ ] Tab 4: Error Explorer - Error list, filtering, details
+   - [ ] Tab 5: Performance - Response times, endpoint metrics
+   - [ ] Tab 6: Moderation - Moderation queue, review actions
+   - [ ] Tab 7: Debug Tools - Trace viewer, timeline visualization
+   - [ ] Tab 8: Access Controls - Roles, permissions, audit logs
+
+3. **Complete Critical Workflows:**
+
+   **Workflow A: Create Tenant → Register Agent → Send Message**
+   ```bash
+   # Navigate to Tenant Activity → Create Tenant
+   # Fill in: name, domain, plan
+   # Navigate to Agent Activity → Register Agent
+   # Select tenant, configure agent
+   # Test agent → Send test message
+   # Navigate to Debug Tools → View trace
+   ```
+
+   **Workflow B: Generate API Key → Test API Call**
+   ```bash
+   # From tenant details → Generate API Key
+   # Copy key to clipboard
+   curl -H "Authorization: Bearer YOUR_API_KEY" \
+     https://api.pravado.com/api/agents
+   # Verify 200 response
+   ```
+
+   **Workflow C: Moderation Review → Audit Log**
+   ```bash
+   # Submit content for moderation (if applicable)
+   # Navigate to Moderation → Review item
+   # Take action (approve/reject/escalate)
+   # Navigate to Access Controls → Audit Logs
+   # Verify action logged
+   ```
+
+4. **UI Verification Checklist:**
+
+   See `deployment/ui-verification-checklist.md` for comprehensive UI testing (120+ checkpoints).
+
+   Key areas to verify:
+   - [ ] Responsive design (Desktop, Tablet, Mobile)
+   - [ ] Keyboard navigation works
+   - [ ] ARIA labels present
+   - [ ] Color contrast WCAG AA compliant
+   - [ ] All forms validate correctly
+   - [ ] Error handling graceful
+   - [ ] Loading states shown
+   - [ ] No console errors
+
+5. **Performance Verification:**
+   ```bash
+   # Check page load times
+   # First Contentful Paint < 1.5s
+   # Time to Interactive < 3s
+   # Largest Contentful Paint < 2.5s
+
+   # Use Lighthouse or WebPageTest
+   # Target score: 90+ Performance, 100 Accessibility
+   ```
+
+6. **Security Verification:**
+   ```bash
+   # Verify security headers
+   curl -I https://app.pravado.com
+
+   # Should include:
+   # X-Frame-Options: DENY
+   # X-Content-Type-Options: nosniff
+   # Content-Security-Policy: ...
+   # Strict-Transport-Security: ...
+   ```
+
+**Troubleshooting:**
+
+If smoke tests fail:
+- Check all environment variables are set correctly
+- Verify database migrations applied successfully
+- Check API health endpoint returns 200
+- Review bootstrap-runtime.ts logs for errors
+- Ensure super_admin role exists in database
+
+**Sign-Off Checklist:**
+
+- [ ] Runtime smoke test: 100% pass rate
+- [ ] Admin login successful
+- [ ] All 8 tabs load without errors
+- [ ] 3 critical workflows completed
+- [ ] UI verification: 95%+ pass rate
+- [ ] Performance targets met
+- [ ] Security headers validated
+- [ ] No critical console errors
 
 ---
 

@@ -60,6 +60,7 @@ export * from './agent-self-eval';
 export * from './multi-agent-dialogue';
 export * from './agent-moderation';
 export * from './agent-escalation';
+export * from './agent-arbitration';
 
 // Validation Schemas
 export * from './schemas';

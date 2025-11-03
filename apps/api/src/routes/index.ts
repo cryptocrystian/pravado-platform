@@ -42,6 +42,7 @@ import agentSelfEvalRoutes from './agent-self-eval';
 import multiAgentDialogueRoutes from './multi-agent-dialogue';
 import agentModerationRoutes from './agent-moderation';
 import agentEscalationRoutes from './agent-escalation';
+import agentArbitrationRoutes from './agent-arbitration';
 
 const router = Router();
 
@@ -88,5 +89,6 @@ router.use('/agent-self-eval', agentSelfEvalRoutes);
 router.use('/multi-agent-dialogue', multiAgentDialogueRoutes);
 router.use('/agent-moderation', agentModerationRoutes);
 router.use('/agent-escalation', agentEscalationRoutes);
+router.use('/agent-arbitration', agentArbitrationRoutes);
 
 export default router;

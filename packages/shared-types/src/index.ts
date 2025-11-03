@@ -67,6 +67,7 @@ export * from './admin-analytics';
 export * from './moderation';
 export * from './agent-debug';
 export * from './admin-access';
+export * from './system-control';
 
 // Validation Schemas
 export * from './schemas';

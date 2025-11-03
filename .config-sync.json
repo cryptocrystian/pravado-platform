@@ -1,0 +1,107 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2025-11-03T21:55:48.988Z",
+  "configurations": {
+    "abuseDetection": {
+      "enabled": true,
+      "autoBlockThreshold": 0.95,
+      "reviewThreshold": 0.75,
+      "categories": [
+        "harassment",
+        "hate_speech",
+        "violence",
+        "sexual",
+        "spam",
+        "self_harm"
+      ],
+      "retentionDays": 90
+    },
+    "rateLimits": {
+      "api": {
+        "windowMs": 60000,
+        "maxRequests": 100
+      },
+      "agent": {
+        "windowMs": 60000,
+        "maxRequests": 50
+      },
+      "webhook": {
+        "windowMs": 60000,
+        "maxRequests": 30
+      },
+      "export": {
+        "windowMs": 3600000,
+        "maxRequests": 10
+      }
+    },
+    "moderationThresholds": {
+      "autoApprove": 0.2,
+      "autoReject": 0.8,
+      "manualReview": {
+        "min": 0.2,
+        "max": 0.8
+      },
+      "escalationThreshold": 0.9,
+      "categories": {
+        "harassment": 0.75,
+        "hate_speech": 0.85,
+        "violence": 0.8,
+        "sexual": 0.75,
+        "spam": 0.7,
+        "self_harm": 0.95
+      }
+    },
+    "adminRoles": [
+      {
+        "role_name": "super_admin",
+        "display_name": "Super Administrator",
+        "description": "Full system access including role management",
+        "is_system_role": true,
+        "is_active": true
+      },
+      {
+        "role_name": "admin",
+        "display_name": "Administrator",
+        "description": "Administrative access excluding role management",
+        "is_system_role": true,
+        "is_active": true
+      },
+      {
+        "role_name": "analyst",
+        "display_name": "Data Analyst",
+        "description": "Read-only access to analytics and reports",
+        "is_system_role": true,
+        "is_active": true
+      },
+      {
+        "role_name": "support",
+        "display_name": "Support Agent",
+        "description": "Access to user support tools and moderation",
+        "is_system_role": true,
+        "is_active": true
+      },
+      {
+        "role_name": "moderator",
+        "display_name": "Content Moderator",
+        "description": "Access to moderation queue and actions",
+        "is_system_role": true,
+        "is_active": true
+      }
+    ],
+    "webhookRetry": {
+      "maxRetries": 3,
+      "retryDelayMs": [
+        1000,
+        5000,
+        15000
+      ],
+      "timeoutMs": 10000,
+      "successCodes": [
+        200,
+        201,
+        202,
+        204
+      ]
+    }
+  }
+}

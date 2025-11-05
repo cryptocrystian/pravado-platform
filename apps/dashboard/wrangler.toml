@@ -5,5 +5,5 @@ pages_build_output_dir = ".vercel/output/static"
 [env.production]
 name = "pravado-dashboard-production"
 
-[env.staging]
-name = "pravado-dashboard-staging"
+[env.preview]
+name = "pravado-dashboard-preview"

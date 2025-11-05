@@ -1,0 +1,405 @@
+# Pravado Platform - Prometheus Alert Rules
+# Sprint 76 - Track D: Observability & SLOs
+#
+# This file defines alert rules for the Pravado platform.
+# Load this file in Prometheus configuration:
+#
+# rule_files:
+#   - "ops/prometheus_alerts.yml"
+#
+# Alert notifications are sent to Alertmanager, which can route to:
+# - PagerDuty (for critical production incidents)
+# - Slack (for warnings and informational alerts)
+# - Email (for billing and business metrics)
+
+groups:
+  # ============================================================================
+  # API Performance & Latency Alerts
+  # ============================================================================
+  - name: api_performance
+    interval: 30s
+    rules:
+      - alert: HighAPILatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="pravado-api"}[5m])) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+          component: api
+          team: backend
+        annotations:
+          summary: "API p95 latency is high"
+          description: "API p95 latency is {{ $value | humanizeDuration }} (> 500ms) for {{ $labels.route }}"
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#high-api-latency"
+
+      - alert: CriticalAPILatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="pravado-api"}[5m])) > 2
+        for: 1m
+        labels:
+          severity: critical
+          component: api
+          team: backend
+          page: "true"
+        annotations:
+          summary: "CRITICAL: API p95 latency is extremely high"
+          description: "API p95 latency is {{ $value | humanizeDuration }} (> 2s) for {{ $labels.route }}. User experience is degraded."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#critical-api-latency"
+
+      - alert: SlowDatabaseQueries
+        expr: histogram_quantile(0.95, rate(db_query_duration_seconds_bucket{job="pravado-api"}[5m])) > 1
+        for: 2m
+        labels:
+          severity: warning
+          component: database
+          team: backend
+        annotations:
+          summary: "Database queries are slow"
+          description: "Database p95 query time is {{ $value | humanizeDuration }} (> 1s) for {{ $labels.query_type }}"
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#slow-database-queries"
+
+  # ============================================================================
+  # API Error Rate Alerts
+  # ============================================================================
+  - name: api_errors
+    interval: 30s
+    rules:
+      - alert: HighAPIErrorRate
+        expr: |
+          sum(rate(http_requests_total{job="pravado-api",status=~"5.."}[5m])) /
+          sum(rate(http_requests_total{job="pravado-api"}[5m])) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+          component: api
+          team: backend
+        annotations:
+          summary: "API error rate is high"
+          description: "API error rate is {{ $value | humanizePercentage }} (> 5%) over the last 5 minutes"
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#high-error-rate"
+
+      - alert: CriticalAPIErrorRate
+        expr: |
+          sum(rate(http_requests_total{job="pravado-api",status=~"5.."}[5m])) /
+          sum(rate(http_requests_total{job="pravado-api"}[5m])) > 0.20
+        for: 1m
+        labels:
+          severity: critical
+          component: api
+          team: backend
+          page: "true"
+        annotations:
+          summary: "CRITICAL: API error rate is extremely high"
+          description: "API error rate is {{ $value | humanizePercentage }} (> 20%). Service may be down."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#critical-error-rate"
+
+      - alert: DatabaseConnectionErrors
+        expr: rate(db_connection_errors_total{job="pravado-api"}[5m]) > 1
+        for: 2m
+        labels:
+          severity: critical
+          component: database
+          team: backend
+          page: "true"
+        annotations:
+          summary: "Database connection errors detected"
+          description: "Database connection error rate is {{ $value }} errors/sec. Database may be unreachable."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#database-connection-errors"
+
+  # ============================================================================
+  # Cache Performance Alerts
+  # ============================================================================
+  - name: cache_performance
+    interval: 1m
+    rules:
+      - alert: HighCacheMissRatio
+        expr: |
+          sum(rate(cache_misses_total{job="pravado-api"}[5m])) /
+          sum(rate(cache_requests_total{job="pravado-api"}[5m])) > 0.50
+        for: 5m
+        labels:
+          severity: warning
+          component: cache
+          team: backend
+        annotations:
+          summary: "Cache miss ratio is high"
+          description: "Cache miss ratio is {{ $value | humanizePercentage }} (> 50%) for {{ $labels.cache_type }}. Performance may be degraded."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#high-cache-miss-ratio"
+
+      - alert: RedisConnectionFailure
+        expr: redis_up{job="pravado-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: cache
+          team: backend
+          page: "true"
+        annotations:
+          summary: "Redis is down"
+          description: "Cannot connect to Redis instance {{ $labels.instance }}. Caching is unavailable."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#redis-down"
+
+      - alert: RedisHighMemoryUsage
+        expr: redis_memory_used_bytes{job="pravado-api"} / redis_memory_max_bytes{job="pravado-api"} > 0.90
+        for: 5m
+        labels:
+          severity: warning
+          component: cache
+          team: backend
+        annotations:
+          summary: "Redis memory usage is high"
+          description: "Redis memory usage is {{ $value | humanizePercentage }} (> 90%) on {{ $labels.instance }}. May need to scale up or clear cache."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#redis-high-memory"
+
+  # ============================================================================
+  # Billing & Payment Alerts
+  # ============================================================================
+  - name: billing_events
+    interval: 1m
+    rules:
+      - alert: BillingFailureSpike
+        expr: |
+          sum(rate(billing_failures_total{job="pravado-api"}[5m])) /
+          sum(rate(billing_attempts_total{job="pravado-api"}[5m])) > 0.10
+        for: 3m
+        labels:
+          severity: critical
+          component: billing
+          team: product
+          page: "true"
+        annotations:
+          summary: "Billing failure rate is spiking"
+          description: "Billing failure rate is {{ $value | humanizePercentage }} (> 10%). Stripe integration may be down or misconfigured."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/billing_ops.md#billing-failure-spike"
+
+      - alert: StripeWebhookFailures
+        expr: rate(stripe_webhook_failures_total{job="pravado-api"}[5m]) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+          component: billing
+          team: product
+        annotations:
+          summary: "Stripe webhook failures detected"
+          description: "Stripe webhook failure rate is {{ $value }} failures/min. Subscription updates may not be processed."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/billing_ops.md#stripe-webhook-failures"
+
+      - alert: TrialConversionDropOff
+        expr: |
+          sum(rate(trial_conversions_total{job="pravado-api"}[24h])) /
+          sum(rate(trial_starts_total{job="pravado-api"}[24h])) < 0.05
+        for: 1h
+        labels:
+          severity: warning
+          component: billing
+          team: product
+        annotations:
+          summary: "Trial-to-paid conversion rate is low"
+          description: "Trial conversion rate is {{ $value | humanizePercentage }} (< 5%) over the last 24h. May indicate onboarding or pricing issues."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/billing_ops.md#low-trial-conversion"
+
+      - alert: HighChurnRate
+        expr: |
+          sum(rate(subscription_cancellations_total{job="pravado-api"}[7d])) /
+          sum(rate(subscription_starts_total{job="pravado-api"}[7d])) > 0.20
+        for: 1h
+        labels:
+          severity: warning
+          component: billing
+          team: product
+        annotations:
+          summary: "Subscription churn rate is high"
+          description: "Churn rate is {{ $value | humanizePercentage }} (> 20%) over the last 7 days. Investigate customer satisfaction."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/billing_ops.md#high-churn-rate"
+
+  # ============================================================================
+  # LLM & AI Provider Alerts
+  # ============================================================================
+  - name: llm_providers
+    interval: 1m
+    rules:
+      - alert: LLMProviderDown
+        expr: llm_provider_up{job="pravado-api"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: llm
+          team: backend
+          page: "true"
+        annotations:
+          summary: "LLM provider is down"
+          description: "{{ $labels.provider }} is unreachable. AI features are degraded."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#llm-provider-down"
+
+      - alert: HighLLMCost
+        expr: sum(rate(llm_cost_usd_total{job="pravado-api"}[1h])) > 50
+        for: 5m
+        labels:
+          severity: warning
+          component: llm
+          team: product
+        annotations:
+          summary: "LLM costs are high"
+          description: "LLM costs are ${{ $value }}/hour (> $50/hour = $1,200/day). May need to implement guardrails."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#high-llm-costs"
+
+      - alert: LLMRateLimitExceeded
+        expr: rate(llm_rate_limit_errors_total{job="pravado-api"}[5m]) > 5
+        for: 2m
+        labels:
+          severity: warning
+          component: llm
+          team: backend
+        annotations:
+          summary: "LLM provider rate limit exceeded"
+          description: "{{ $labels.provider }} rate limit errors: {{ $value }} errors/min. Consider switching providers or implementing backoff."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#llm-rate-limit"
+
+  # ============================================================================
+  # Supabase & Database Alerts
+  # ============================================================================
+  - name: database_health
+    interval: 1m
+    rules:
+      - alert: SupabaseDown
+        expr: supabase_up{job="pravado-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: database
+          team: backend
+          page: "true"
+        annotations:
+          summary: "Supabase is down"
+          description: "Cannot connect to Supabase. All database operations are failing."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#supabase-down"
+
+      - alert: HighDatabaseConnections
+        expr: db_connections_active{job="pravado-api"} / db_connections_max{job="pravado-api"} > 0.80
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+          team: backend
+        annotations:
+          summary: "Database connection pool is near capacity"
+          description: "Database connections are {{ $value | humanizePercentage }} of max. May need to scale up connection pool."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#high-db-connections"
+
+  # ============================================================================
+  # Mobile Push Notification Alerts (Sprint 76)
+  # ============================================================================
+  - name: mobile_notifications
+    interval: 1m
+    rules:
+      - alert: HighPushNotificationFailureRate
+        expr: |
+          sum(rate(push_notification_failures_total{job="pravado-api"}[5m])) /
+          sum(rate(push_notification_sends_total{job="pravado-api"}[5m])) > 0.20
+        for: 3m
+        labels:
+          severity: warning
+          component: mobile
+          team: mobile
+        annotations:
+          summary: "Push notification failure rate is high"
+          description: "Push notification failure rate is {{ $value | humanizePercentage }} (> 20%). Expo push service may be degraded."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#push-notification-failures"
+
+      - alert: ExpoPushServiceDown
+        expr: expo_push_service_up{job="pravado-api"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: mobile
+          team: mobile
+          page: "true"
+        annotations:
+          summary: "Expo Push Notification service is unreachable"
+          description: "Cannot send push notifications. Expo service may be down."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#expo-push-down"
+
+  # ============================================================================
+  # Application Availability Alerts
+  # ============================================================================
+  - name: availability
+    interval: 30s
+    rules:
+      - alert: APIDown
+        expr: up{job="pravado-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: api
+          team: backend
+          page: "true"
+        annotations:
+          summary: "API is DOWN"
+          description: "Pravado API {{ $labels.instance }} is not responding. Service is unavailable."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#api-down"
+
+      - alert: DashboardDown
+        expr: up{job="pravado-dashboard"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: dashboard
+          team: frontend
+          page: "true"
+        annotations:
+          summary: "Dashboard is DOWN"
+          description: "Pravado Dashboard {{ $labels.instance }} is not responding. Users cannot access the application."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#dashboard-down"
+
+      - alert: HealthCheckFailing
+        expr: http_health_check_success{job="pravado-api"} == 0
+        for: 2m
+        labels:
+          severity: warning
+          component: api
+          team: backend
+        annotations:
+          summary: "Health check is failing"
+          description: "Health check endpoint /health is returning errors on {{ $labels.instance }}"
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#health-check-failing"
+
+  # ============================================================================
+  # Resource Utilization Alerts
+  # ============================================================================
+  - name: resource_utilization
+    interval: 1m
+    rules:
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total{job="pravado-api"}[5m]) > 0.80
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+          team: backend
+        annotations:
+          summary: "CPU usage is high"
+          description: "CPU usage is {{ $value | humanizePercentage }} (> 80%) on {{ $labels.instance }}"
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#high-cpu"
+
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes{job="pravado-api"} / node_memory_MemTotal_bytes > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+          team: backend
+        annotations:
+          summary: "Memory usage is high"
+          description: "Memory usage is {{ $value | humanizePercentage }} (> 85%) on {{ $labels.instance }}"
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#high-memory"
+
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes{job="pravado-api",mountpoint="/"} / node_filesystem_size_bytes) < 0.10
+        for: 5m
+        labels:
+          severity: critical
+          component: infrastructure
+          team: backend
+          page: "true"
+        annotations:
+          summary: "Disk space is critically low"
+          description: "Only {{ $value | humanizePercentage }} disk space remaining on {{ $labels.instance }}. System may fail soon."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#disk-space-low"

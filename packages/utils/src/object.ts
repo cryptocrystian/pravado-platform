@@ -39,7 +39,7 @@ export const deepMerge = <T extends object>(...objects: Partial<T>[]): T => {
     return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
   };
 
-  return objects.reduce((result, current) => {
+  return objects.reduce<T>((result, current) => {
     Object.keys(current).forEach((key) => {
       const resultValue = (result as Record<string, unknown>)[key];
       const currentValue = (current as Record<string, unknown>)[key];

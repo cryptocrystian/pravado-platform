@@ -1,132 +1,225 @@
-import { useState, useEffect } from 'react';
+// =====================================================
+// ONBOARDING HOOKS
+// Sprint 73: User Onboarding + Trial-to-Paid Conversion Automation
+// =====================================================
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type {
-  OnboardingSession,
-  IntakeStep,
-  CreateIntakeResponseInput,
-} from '@pravado/shared-types';
+import { api } from '@/lib/api';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+// =====================================================
+// TYPES
+// =====================================================
 
-export function useOnboarding() {
+export interface OnboardingState {
+  organizationId: string;
+  currentStep: number;
+  step1OrgSetup: boolean;
+  step2ApiKeys: boolean;
+  step3FirstAgent: boolean;
+  step4UsageDemo: boolean;
+  wizardCompleted: boolean;
+  wizardCompletedAt: Date | null;
+  trialStartedAt: Date;
+  trialExpiresAt: Date;
+  trialExpired: boolean;
+  inGracePeriod: boolean;
+  trialBudgetUsd: number;
+  trialBudgetUsedUsd: number;
+  daysRemaining: number;
+  budgetRemaining: number;
+}
+
+export interface TrialStatus {
+  trialActive: boolean;
+  trialExpired: boolean;
+  inGracePeriod: boolean;
+  daysRemaining: number;
+  budgetRemaining: number;
+  budgetUsedPercent: number;
+  trialExpiresAt: Date;
+  gracePeriodEndsAt: Date | null;
+}
+
+export interface SignupData {
+  email: string;
+  password: string;
+  organizationName: string;
+  fullName?: string;
+  inviteCode?: string;
+}
+
+// =====================================================
+// QUERY HOOKS
+// =====================================================
+
+/**
+ * Get onboarding state
+ */
+export function useOnboardingState(organizationId: string) {
+  return useQuery({
+    queryKey: ['onboarding-state', organizationId],
+    queryFn: async () => {
+      const response = await api.get(`/onboarding/${organizationId}/state`);
+      return response.data.data as OnboardingState;
+    },
+    enabled: !!organizationId,
+    staleTime: 60000,
+  });
+}
+
+/**
+ * Get trial status
+ */
+export function useTrialStatus(organizationId: string) {
+  return useQuery({
+    queryKey: ['trial-status', organizationId],
+    queryFn: async () => {
+      const response = await api.get(`/onboarding/${organizationId}/trial-status`);
+      return response.data.data as TrialStatus;
+    },
+    enabled: !!organizationId,
+    staleTime: 30000,
+    refetchInterval: 60000,
+  });
+}
+
+/**
+ * Get onboarding progress percentage
+ */
+export function useOnboardingProgress(organizationId: string) {
+  return useQuery({
+    queryKey: ['onboarding-progress', organizationId],
+    queryFn: async () => {
+      const response = await api.get(`/onboarding/${organizationId}/progress`);
+      return response.data.data.progress as number;
+    },
+    enabled: !!organizationId,
+    staleTime: 60000,
+  });
+}
+
+/**
+ * Check if should show upgrade prompt
+ */
+export function useUpgradePrompt(organizationId: string) {
+  return useQuery({
+    queryKey: ['upgrade-prompt', organizationId],
+    queryFn: async () => {
+      const response = await api.get(`/onboarding/${organizationId}/upgrade-prompt`);
+      return response.data.data as { shouldPrompt: boolean; reason?: string };
+    },
+    enabled: !!organizationId,
+    staleTime: 30000,
+  });
+}
+
+/**
+ * Check if can execute new jobs
+ */
+export function useCanExecuteJobs(organizationId: string) {
+  return useQuery({
+    queryKey: ['can-execute', organizationId],
+    queryFn: async () => {
+      const response = await api.get(`/onboarding/${organizationId}/can-execute`);
+      return response.data.data as { allowed: boolean; reason?: string };
+    },
+    enabled: !!organizationId,
+    staleTime: 10000,
+  });
+}
+
+// =====================================================
+// MUTATION HOOKS
+// =====================================================
+
+/**
+ * Sign up new organization
+ */
+export function useSignup() {
+  return useMutation({
+    mutationFn: async (data: SignupData) => {
+      const response = await api.post('/onboarding/signup', data);
+      return response.data.data as {
+        organizationId: string;
+        userId: string;
+        trialExpiresAt: Date;
+      };
+    },
+  });
+}
+
+/**
+ * Complete onboarding step
+ */
+export function useCompleteStep() {
   const queryClient = useQueryClient();
 
-  // Fetch current session
-  const {
-    data: session,
-    isLoading,
-    error,
-  } = useQuery<OnboardingSession>({
-    queryKey: ['onboarding', 'current'],
-    queryFn: async () => {
-      const res = await fetch(`${API_BASE}/onboarding/sessions/current`, {
-        credentials: 'include',
-      });
-      if (!res.ok) {
-        if (res.status === 404) return null;
-        throw new Error('Failed to fetch session');
-      }
-      return res.json();
-    },
-    retry: false,
-  });
-
-  // Create session mutation
-  const createSessionMutation = useMutation({
-    mutationFn: async () => {
-      const res = await fetch(`${API_BASE}/onboarding/sessions`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (!res.ok) throw new Error('Failed to create session');
-      return res.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['onboarding'] });
-    },
-  });
-
-  // Save intake response mutation
-  const saveResponseMutation = useMutation({
+  return useMutation({
     mutationFn: async ({
-      sessionId,
-      step,
-      data,
+      organizationId,
+      stepNumber,
     }: {
-      sessionId: string;
-      step: IntakeStep;
-      data: any;
+      organizationId: string;
+      stepNumber: number;
     }) => {
-      const res = await fetch(`${API_BASE}/onboarding/sessions/${sessionId}/intake`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ step, data }),
-      });
-      if (!res.ok) throw new Error('Failed to save response');
-      return res.json();
+      const response = await api.post(`/onboarding/${organizationId}/step/${stepNumber}`);
+      return response.data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['onboarding'] });
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['onboarding-state', variables.organizationId] });
+      queryClient.invalidateQueries({
+        queryKey: ['onboarding-progress', variables.organizationId],
+      });
     },
   });
+}
 
-  // Start processing mutation
-  const startProcessingMutation = useMutation({
-    mutationFn: async (sessionId: string) => {
-      const res = await fetch(`${API_BASE}/onboarding/sessions/${sessionId}/start-processing`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+/**
+ * Create checkout link for upgrade
+ */
+export function useCreateCheckoutLink() {
+  return useMutation({
+    mutationFn: async ({
+      organizationId,
+      tier,
+      successUrl,
+      cancelUrl,
+    }: {
+      organizationId: string;
+      tier: 'pro' | 'enterprise';
+      successUrl?: string;
+      cancelUrl?: string;
+    }) => {
+      const response = await api.post(`/onboarding/${organizationId}/checkout-link`, {
+        tier,
+        successUrl,
+        cancelUrl,
       });
-      if (!res.ok) throw new Error('Failed to start processing');
-      return res.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['onboarding'] });
+      return response.data.data.checkoutUrl as string;
     },
   });
+}
 
-  // Get result query
-  const getResultQuery = (sessionId: string | null) =>
-    useQuery({
-      queryKey: ['onboarding', sessionId, 'result'],
-      queryFn: async () => {
-        if (!sessionId) return null;
-        const res = await fetch(`${API_BASE}/onboarding/sessions/${sessionId}/result`, {
-          credentials: 'include',
-        });
-        if (!res.ok) throw new Error('Failed to fetch result');
-        return res.json();
-      },
-      enabled: !!sessionId,
-    });
-
-  // Complete onboarding mutation
-  const completeOnboardingMutation = useMutation({
-    mutationFn: async (sessionId: string) => {
-      const res = await fetch(`${API_BASE}/onboarding/sessions/${sessionId}/complete`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (!res.ok) throw new Error('Failed to complete onboarding');
-      return res.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['onboarding'] });
+/**
+ * Generate invite code
+ */
+export function useGenerateInviteCode() {
+  return useMutation({
+    mutationFn: async (organizationId: string) => {
+      const response = await api.post(`/onboarding/${organizationId}/invite-code`);
+      return response.data.data.inviteCode as string;
     },
   });
+}
 
-  return {
-    session,
-    isLoading,
-    error,
-    createSession: createSessionMutation.mutate,
-    saveIntakeResponse: saveResponseMutation.mutateAsync,
-    startProcessing: startProcessingMutation.mutateAsync,
-    getResult: getResultQuery,
-    completeOnboarding: completeOnboardingMutation.mutateAsync,
-  };
+/**
+ * Validate invite code
+ */
+export function useValidateInviteCode() {
+  return useMutation({
+    mutationFn: async (inviteCode: string) => {
+      const response = await api.post('/onboarding/validate-invite', { inviteCode });
+      return response.data.data.organizationId as string;
+    },
+  });
 }

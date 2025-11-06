@@ -2,18 +2,16 @@
   "name": "@pravado/shared-types",
   "version": "1.0.0",
   "private": true,
+  "deprecated": "This package has been split into @pravado/types and @pravado/validators. Please migrate your imports.",
+  "description": "DEPRECATED: Use @pravado/types for type definitions and @pravado/validators for Zod schemas",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "clean": "rm -rf dist",
-    "type-check": "tsc --noEmit"
+    "build": "echo 'DEPRECATED: @pravado/shared-types is no longer built. Use @pravado/types and @pravado/validators instead.' && exit 0",
+    "dev": "echo 'DEPRECATED: @pravado/shared-types is no longer built. Use @pravado/types and @pravado/validators instead.' && exit 0",
+    "clean": "echo 'No-op: Package is deprecated' && exit 0",
+    "type-check": "echo 'No-op: Package is deprecated' && exit 0"
   },
-  "dependencies": {
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "typescript": "^5.3.3"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

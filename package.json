@@ -5,7 +5,8 @@
   "description": "AI-powered PR, content, and SEO orchestration platform using agentic workflows",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "!packages/shared-types"
   ],
   "scripts": {
     "dev": "turbo run dev",

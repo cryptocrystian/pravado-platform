@@ -8,6 +8,10 @@ on:
       - 'apps/dashboard/**'
       - 'packages/**'
       - '.github/workflows/deploy-cloudflare.yml'
+      - 'tsconfig.json'
+      - 'pnpm-workspace.yaml'
+      - '.npmrc'
+  workflow_dispatch:
 
 jobs:
   deploy:

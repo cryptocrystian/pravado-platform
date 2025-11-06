@@ -2,6 +2,7 @@ export enum UserRole {
   // System & Admin Roles
   ADMIN = 'admin',
   DEVELOPER = 'developer',
+  MANAGER = 'manager',
 
   // Core Team Roles
   AGENT = 'agent',
@@ -11,6 +12,7 @@ export enum UserRole {
   STRATEGIST = 'strategist',
   ANALYST = 'analyst',
   ACCOUNT_MANAGER = 'account_manager',
+  CONTRIBUTOR = 'contributor',
 
   // Client & External Roles
   CLIENT = 'client',
@@ -22,6 +24,7 @@ export enum UserRole {
 
   // Limited Access Roles
   GUEST = 'guest',
+  VIEWER = 'viewer',
 }
 
 export enum UserStatus {

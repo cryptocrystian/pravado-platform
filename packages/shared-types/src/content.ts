@@ -129,60 +129,6 @@ export type UpdateContentInput = Partial<
 };
 
 // =====================================================
-// KEYWORD CLUSTERS
-// =====================================================
-
-export interface KeywordCluster {
-  id: string;
-  name: string;
-  description: string | null;
-  clusterKeywords: string[];
-  primaryKeyword: string | null;
-  searchVolume: number;
-  difficultyScore: number | null;
-  recommendedTopics: string[];
-  contentGaps: string[];
-  avgCpc: number | null;
-  competitionLevel: string | null;
-  trendDirection: string | null;
-  organizationId: string;
-  createdBy: string;
-  updatedBy: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-}
-
-export interface CreateKeywordClusterInput {
-  name: string;
-  description?: string;
-  clusterKeywords: string[];
-  primaryKeyword?: string;
-  searchVolume?: number;
-  difficultyScore?: number;
-  recommendedTopics?: string[];
-  contentGaps?: string[];
-  avgCpc?: number;
-  competitionLevel?: string;
-  trendDirection?: string;
-  organizationId: string;
-}
-
-export interface UpdateKeywordClusterInput {
-  name?: string;
-  description?: string;
-  clusterKeywords?: string[];
-  primaryKeyword?: string;
-  searchVolume?: number;
-  difficultyScore?: number;
-  recommendedTopics?: string[];
-  contentGaps?: string[];
-  avgCpc?: number;
-  competitionLevel?: string;
-  trendDirection?: string;
-}
-
-// =====================================================
 // CONTENT ITEMS (New Schema)
 // =====================================================
 
@@ -328,67 +274,6 @@ export interface UpdateContentCalendarInput {
   theme?: string;
   goals?: string;
   notes?: string;
-}
-
-// =====================================================
-// SEO AUDITS
-// =====================================================
-
-export interface SEOAudit {
-  id: string;
-  url: string;
-  title: string | null;
-  auditScore: number | null;
-  performanceScore: number | null;
-  seoScore: number | null;
-  accessibilityScore: number | null;
-  bestPracticesScore: number | null;
-  issues: SEOIssue[];
-  suggestions: SEOSuggestion[];
-  metaData: Record<string, unknown>;
-  headings: Record<string, unknown>;
-  imagesAnalyzed: number;
-  linksAnalyzed: number;
-  pageLoadTimeMs: number | null;
-  pageSizeKb: number | null;
-  totalRequests: number | null;
-  primaryKeywords: string[];
-  keywordDensity: Record<string, number>;
-  missingKeywords: string[];
-  wordCount: number | null;
-  readabilityScore: number | null;
-  contentQualityScore: number | null;
-  backlinksCount: number | null;
-  domainAuthority: number | null;
-  pageAuthority: number | null;
-  mobileFriendly: boolean | null;
-  mobileIssues: SEOIssue[];
-  auditType: string | null;
-  auditedAt: Date;
-  contentItemId: string | null;
-  organizationId: string;
-  createdBy: string;
-  createdAt: Date;
-  deletedAt: Date | null;
-}
-
-export interface SEOIssue {
-  severity: 'error' | 'warning' | 'info';
-  message: string;
-  location?: string;
-}
-
-export interface SEOSuggestion {
-  priority: 'high' | 'medium' | 'low';
-  action: string;
-  impact?: string;
-}
-
-export interface CreateSEOAuditInput {
-  url: string;
-  title?: string;
-  contentItemId?: string;
-  organizationId: string;
 }
 
 // =====================================================

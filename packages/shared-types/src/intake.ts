@@ -30,14 +30,14 @@ export interface Goals {
 }
 
 // Competitive Landscape
-export interface Competitor {
+export interface IntakeCompetitor {
   name: string;
   website?: string;
   strengths?: string;
 }
 
 export interface CompetitiveInfo {
-  competitors: Competitor[];
+  competitors: IntakeCompetitor[];
   marketPosition?: 'LEADER' | 'CHALLENGER' | 'FOLLOWER' | 'NICHE';
   uniqueValueProposition: string;
 }
@@ -111,7 +111,7 @@ export interface IntakeResponse {
   timeline?: string;
   budgetRange?: string;
 
-  competitors?: Competitor[];
+  competitors?: IntakeCompetitor[];
   marketPosition?: string;
   uniqueValueProposition?: string;
 

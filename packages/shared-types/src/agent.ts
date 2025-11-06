@@ -1,3 +1,6 @@
+// Import PlaybookAgentContext from agent-playbook (canonical source)
+import { PlaybookAgentContext } from './agent-playbook';
+
 export enum AgentType {
   CONTENT_GENERATOR = 'CONTENT_GENERATOR',
   SEO_OPTIMIZER = 'SEO_OPTIMIZER',
@@ -27,7 +30,7 @@ export interface AgentTask {
   type: AgentType;
   status: AgentTaskStatus;
   priority: AgentPriority;
-  context: AgentContext;
+  context: PlaybookAgentContext;
   output: AgentOutput | null;
   error: AgentError | null;
   userId: string;
@@ -38,15 +41,6 @@ export interface AgentTask {
   estimatedDuration: number | null;
   createdAt: Date;
   updatedAt: Date;
-}
-
-export interface AgentContext {
-  campaignId?: string;
-  contentId?: string;
-  keywordClusterId?: string;
-  instructions: string;
-  parameters: Record<string, unknown>;
-  constraints: AgentConstraints;
 }
 
 export interface AgentConstraints {

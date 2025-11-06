@@ -3,9 +3,9 @@
 // =====================================================
 
 /**
- * Goal status enumeration
+ * Agent goal status enumeration
  */
-export enum GoalStatus {
+export enum AgentGoalStatus {
   PENDING = 'PENDING',
   ACTIVE = 'ACTIVE',
   COMPLETED = 'COMPLETED',
@@ -44,7 +44,7 @@ export interface AgentGoal {
   description: string | null;
 
   // Status
-  status: GoalStatus;
+  status: AgentGoalStatus;
   priority: number; // 1-10
 
   // Metadata
@@ -97,16 +97,16 @@ export interface CreateAgentGoalInput {
 export interface UpdateAgentGoalInput {
   title?: string;
   description?: string;
-  status?: GoalStatus;
+  status?: AgentGoalStatus;
   priority?: number;
   tags?: string[];
   dueDate?: Date;
 }
 
 /**
- * Agent task - individual execution step
+ * Agent planning task - individual execution step within a goal
  */
-export interface AgentTask {
+export interface AgentPlanTask {
   id: string;
   goalId: string;
   parentTaskId: string | null;
@@ -144,9 +144,9 @@ export interface AgentTask {
 }
 
 /**
- * Input for creating a new task
+ * Input for creating a new planning task
  */
-export interface CreateAgentTaskInput {
+export interface CreateAgentPlanTaskInput {
   goalId: string;
   agentId: string;
   stepNumber: number;
@@ -161,9 +161,9 @@ export interface CreateAgentTaskInput {
 }
 
 /**
- * Input for updating a task
+ * Input for updating a planning task
  */
-export interface UpdateAgentTaskInput {
+export interface UpdateAgentPlanTaskInput {
   status?: PlanTaskStatus;
   outputSummary?: string;
   outputData?: Record<string, any>;
@@ -225,7 +225,7 @@ export interface ExecutionGraph {
   maxDepth: number;
 
   // Execution tracking
-  executionStatus: GoalStatus;
+  executionStatus: AgentGoalStatus;
   currentNodeId: string | null;
 
   // Timestamps
@@ -258,7 +258,7 @@ export interface CreateExecutionGraphInput {
 export interface GoalSummary {
   goalId: string;
   title: string;
-  status: GoalStatus;
+  status: AgentGoalStatus;
   totalTasks: number;
   pendingTasks: number;
   inProgressTasks: number;
@@ -293,7 +293,7 @@ export interface PlanningRequest {
  * Planning result with generated tasks and graph
  */
 export interface PlanningResult {
-  tasks: CreateAgentTaskInput[];
+  tasks: CreateAgentPlanTaskInput[];
   graph: {
     nodes: GraphNode[];
     edges: GraphEdge[];
@@ -320,6 +320,6 @@ export interface GraphExecutionProgress {
   completedNodes: number;
   totalNodes: number;
   failedNodes: number;
-  status: GoalStatus;
+  status: AgentGoalStatus;
   errors: string[];
 }

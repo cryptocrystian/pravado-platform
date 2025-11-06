@@ -7,6 +7,8 @@
 // Provides: Feedback collection, analysis, improvement plans
 //
 
+import { TrendDataPoint } from './keyword';
+
 // =====================================================
 // ENUMS
 // =====================================================
@@ -268,16 +270,15 @@ export interface FeedbackExample {
  */
 export interface RatingTrends {
   agentId: string;
-  trends: TrendDataPoint[];
+  trends: FeedbackTrendDataPoint[];
   overallTrend: 'improving' | 'stable' | 'declining';
   changeRate: number; // Percentage change per period
 }
 
 /**
- * Single trend data point
+ * Single feedback trend data point (extends keyword TrendDataPoint)
  */
-export interface TrendDataPoint {
-  date: string;
+export interface FeedbackTrendDataPoint extends TrendDataPoint {
   avgRating: number;
   count: number;
   movingAverage?: number; // 7-day or 30-day moving average

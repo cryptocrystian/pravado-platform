@@ -3,6 +3,8 @@
 // Sprint 34: Multi-level goals, OKR snapshots, AI insights
 // =====================================================
 
+import { GoalStatus, GoalType as BaseGoalType, GoalTypeConfig as BaseGoalTypeConfig, GoalStatusConfig as BaseGoalStatusConfig, GOAL_TYPE_CONFIGS as BASE_GOAL_TYPE_CONFIGS, GOAL_STATUS_CONFIGS as BASE_GOAL_STATUS_CONFIGS } from './goals';
+
 // =====================================================
 // ENUMS
 // =====================================================
@@ -14,7 +16,7 @@ export enum GoalScope {
   CAMPAIGN = 'CAMPAIGN',
 }
 
-export enum GoalType {
+export enum TrackingGoalType {
   OUTREACH = 'OUTREACH',
   CONVERSION = 'CONVERSION',
   PLACEMENT = 'PLACEMENT',
@@ -22,15 +24,6 @@ export enum GoalType {
   SENTIMENT = 'SENTIMENT',
   RESPONSE_RATE = 'RESPONSE_RATE',
   CUSTOM = 'CUSTOM',
-}
-
-export enum GoalStatus {
-  DRAFT = 'DRAFT',
-  ACTIVE = 'ACTIVE',
-  ON_TRACK = 'ON_TRACK',
-  AT_RISK = 'AT_RISK',
-  COMPLETED = 'COMPLETED',
-  FAILED = 'FAILED',
 }
 
 export enum GoalEventType {
@@ -60,7 +53,7 @@ export interface Goal {
   scope: GoalScope;
   scope_id: string;
   parent_goal_id?: string;
-  goal_type: GoalType;
+  goal_type: TrackingGoalType;
   title: string;
   description?: string;
   target_value: number;
@@ -140,19 +133,12 @@ export interface GoalScopeConfig {
   icon: string;
 }
 
-export interface GoalTypeConfig {
+export interface TrackingGoalTypeConfig {
   label: string;
   description: string;
   color: string;
   icon: string;
   defaultUnit: string;
-}
-
-export interface GoalStatusConfig {
-  label: string;
-  description: string;
-  color: string;
-  icon: string;
 }
 
 export interface RiskLevelConfig {
@@ -200,94 +186,55 @@ export const GOAL_SCOPE_CONFIGS: Record<GoalScope, GoalScopeConfig> = {
   },
 };
 
-export const GOAL_TYPE_CONFIGS: Record<GoalType, GoalTypeConfig> = {
-  [GoalType.OUTREACH]: {
+export const TRACKING_GOAL_TYPE_CONFIGS: Record<TrackingGoalType, TrackingGoalTypeConfig> = {
+  [TrackingGoalType.OUTREACH]: {
     label: 'Outreach Volume',
     description: 'Number of contacts reached or messages sent',
     color: 'blue',
     icon: 'Send',
     defaultUnit: 'contacts',
   },
-  [GoalType.CONVERSION]: {
+  [TrackingGoalType.CONVERSION]: {
     label: 'Conversion Rate',
     description: 'Percentage of conversions or successful outcomes',
     color: 'green',
     icon: 'TrendingUp',
     defaultUnit: '%',
   },
-  [GoalType.PLACEMENT]: {
+  [TrackingGoalType.PLACEMENT]: {
     label: 'Media Placements',
     description: 'Number of media mentions or coverage pieces',
     color: 'purple',
     icon: 'Newspaper',
     defaultUnit: 'placements',
   },
-  [GoalType.LEAD_SCORE]: {
+  [TrackingGoalType.LEAD_SCORE]: {
     label: 'Lead Quality Score',
     description: 'Average lead score or quality rating',
     color: 'yellow',
     icon: 'Star',
     defaultUnit: 'points',
   },
-  [GoalType.SENTIMENT]: {
+  [TrackingGoalType.SENTIMENT]: {
     label: 'Sentiment Score',
     description: 'Brand or response sentiment rating',
     color: 'pink',
     icon: 'Heart',
     defaultUnit: 'score',
   },
-  [GoalType.RESPONSE_RATE]: {
+  [TrackingGoalType.RESPONSE_RATE]: {
     label: 'Response Rate',
     description: 'Percentage of responses received',
     color: 'indigo',
     icon: 'MessageSquare',
     defaultUnit: '%',
   },
-  [GoalType.CUSTOM]: {
+  [TrackingGoalType.CUSTOM]: {
     label: 'Custom Metric',
     description: 'User-defined metric or KPI',
     color: 'gray',
     icon: 'Settings',
     defaultUnit: 'units',
-  },
-};
-
-export const GOAL_STATUS_CONFIGS: Record<GoalStatus, GoalStatusConfig> = {
-  [GoalStatus.DRAFT]: {
-    label: 'Draft',
-    description: 'Goal is being planned and not yet active',
-    color: 'gray',
-    icon: 'FileEdit',
-  },
-  [GoalStatus.ACTIVE]: {
-    label: 'Active',
-    description: 'Goal is currently in progress',
-    color: 'blue',
-    icon: 'Play',
-  },
-  [GoalStatus.ON_TRACK]: {
-    label: 'On Track',
-    description: 'Goal is progressing well toward target',
-    color: 'green',
-    icon: 'CheckCircle',
-  },
-  [GoalStatus.AT_RISK]: {
-    label: 'At Risk',
-    description: 'Goal may not be achieved without intervention',
-    color: 'yellow',
-    icon: 'AlertTriangle',
-  },
-  [GoalStatus.COMPLETED]: {
-    label: 'Completed',
-    description: 'Goal has been successfully achieved',
-    color: 'green',
-    icon: 'CheckCircle2',
-  },
-  [GoalStatus.FAILED]: {
-    label: 'Failed',
-    description: 'Goal was not achieved by deadline',
-    color: 'red',
-    icon: 'XCircle',
   },
 };
 
@@ -369,7 +316,7 @@ export interface CreateGoalInput {
   scope: GoalScope;
   scopeId: string;
   parentGoalId?: string;
-  goalType: GoalType;
+  goalType: TrackingGoalType;
   title: string;
   description?: string;
   targetValue: number;
@@ -443,7 +390,7 @@ export interface GetGoalsInput {
   organizationId: string;
   scope?: GoalScope;
   scopeId?: string;
-  goalType?: GoalType;
+  goalType?: TrackingGoalType;
   status?: GoalStatus;
   ownerId?: string;
   parentGoalId?: string;
@@ -506,7 +453,7 @@ export interface GoalDashboard {
     avg_completion_rate: number;
   };
   by_type: Array<{
-    goal_type: GoalType;
+    goal_type: TrackingGoalType;
     count: number;
     avg_completion: number;
   }>;
@@ -562,7 +509,7 @@ export interface StretchGoalRecommendation {
   recommended_goal: {
     title: string;
     description: string;
-    goal_type: GoalType;
+    goal_type: TrackingGoalType;
     target_value: number;
     unit: string;
   };
@@ -598,7 +545,7 @@ export interface GoalVelocityChartData {
 }
 
 export interface GoalCompletionChartData {
-  goal_type: GoalType;
+  goal_type: TrackingGoalType;
   completed: number;
   active: number;
   at_risk: number;

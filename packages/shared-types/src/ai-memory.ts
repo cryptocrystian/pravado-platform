@@ -2,18 +2,7 @@
 // AI MEMORY + LONG-TERM STRATEGY TYPES
 // =====================================================
 
-/**
- * Memory type enumeration
- */
-export enum MemoryType {
-  OBSERVATION = 'OBSERVATION',
-  GOAL = 'GOAL',
-  DECISION = 'DECISION',
-  DIALOGUE = 'DIALOGUE',
-  CONTEXT = 'CONTEXT',
-  CORRECTION = 'CORRECTION',
-  INSIGHT = 'INSIGHT',
-}
+import { MemoryType } from './agent-memory';
 
 /**
  * Knowledge graph node type

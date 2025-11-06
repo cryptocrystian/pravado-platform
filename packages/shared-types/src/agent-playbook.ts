@@ -13,7 +13,7 @@ import {
  * Agent context for playbook selection
  * Includes all relevant information for the LLM to make intelligent playbook decisions
  */
-export interface AgentContext {
+export interface PlaybookAgentContext {
   /** Unique identifier for the agent */
   agentId: string;
 
@@ -73,7 +73,7 @@ export interface PlaybookChainConfig {
   initialInput?: Record<string, any>;
 
   /** Agent context for decision logging */
-  agentContext?: AgentContext;
+  agentContext?: PlaybookAgentContext;
 
   /** Whether to log each step in the chain */
   logChainSteps?: boolean;
@@ -140,7 +140,7 @@ export interface AgentPlaybookDecisionLog {
   userPrompt: string;
 
   /** Full agent context provided to LLM */
-  agentContext: AgentContext;
+  agentContext: PlaybookAgentContext;
 
   /** LLM's reasoning for playbook selection */
   reasoning: string;
@@ -180,7 +180,7 @@ export interface AgentPlaybookDecisionLog {
  */
 export interface PlaybookSelectionRequest {
   /** Agent context */
-  context: AgentContext;
+  context: PlaybookAgentContext;
 
   /** Available playbooks to choose from (optional, otherwise fetches all) */
   availablePlaybooks?: Playbook[];
@@ -228,7 +228,7 @@ export interface TriggerPlaybookRequest {
   userPrompt: string;
 
   /** Additional context */
-  additionalContext?: Partial<AgentContext>;
+  additionalContext?: Partial<PlaybookAgentContext>;
 
   /** Override playbook ID (skip selection) */
   playbookId?: string;

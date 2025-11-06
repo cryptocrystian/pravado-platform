@@ -139,9 +139,9 @@ export interface ExecutionSummary {
 }
 
 /**
- * Task execution result
+ * Graph node execution result
  */
-export interface TaskExecutionResult {
+export interface GraphNodeExecutionResult {
   nodeId: string;
   status: GraphTaskStatus;
   output?: Record<string, any>;

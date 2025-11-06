@@ -197,9 +197,9 @@ export interface CreateAgentChatThreadInput {
 }
 
 /**
- * Agent message - individual message in thread
+ * Agent collaboration message - individual message in thread
  */
-export interface AgentMessage {
+export interface AgentCollaborationMessage {
   id: string;
   threadId: string;
 
@@ -228,9 +228,9 @@ export interface AgentMessage {
 }
 
 /**
- * Input for creating a message
+ * Input for creating a collaboration message
  */
-export interface CreateAgentMessageInput {
+export interface CreateAgentCollaborationMessageInput {
   threadId: string;
   senderAgentId?: string;
   senderUserId?: string;
@@ -257,9 +257,9 @@ export interface CollaborationSummary {
 }
 
 /**
- * Handoff request from agent
+ * Agent handoff request from one agent to another
  */
-export interface HandoffRequest {
+export interface AgentHandoffRequest {
   taskId: string;
   targetAgent: string;
   reason: string;

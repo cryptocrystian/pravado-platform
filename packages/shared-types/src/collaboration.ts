@@ -6,7 +6,7 @@
 // ENUMS
 // =====================================================
 
-export enum HandoffStatus {
+export enum CollaborationHandoffStatus {
   PENDING = 'PENDING',
   ACCEPTED = 'ACCEPTED',
   DECLINED = 'DECLINED',
@@ -42,7 +42,7 @@ export interface HandoffRequest {
   handoffType: HandoffType;
   message: string;
   metadata: Record<string, unknown>;
-  status: HandoffStatus;
+  status: CollaborationHandoffStatus;
   responseMessage?: string;
   respondedAt?: string;
   expiresAt?: string;
@@ -244,7 +244,7 @@ export interface HandoffRequestResult {
 export interface HandoffActionResult {
   success: boolean;
   requestId: string;
-  status: HandoffStatus;
+  status: CollaborationHandoffStatus;
   message?: string;
 }
 
@@ -292,7 +292,7 @@ export interface ListHandoffRequestsQuery {
   campaignId?: string;
   fromUserId?: string;
   toUserId?: string;
-  status?: HandoffStatus;
+  status?: CollaborationHandoffStatus;
   handoffType?: HandoffType;
   limit?: number;
   offset?: number;

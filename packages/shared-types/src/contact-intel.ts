@@ -2,12 +2,7 @@
 // CONTACT INTELLIGENCE TYPES
 // =====================================================
 
-export enum EnrichmentStatus {
-  PENDING = 'PENDING',
-  PROCESSING = 'PROCESSING',
-  COMPLETED = 'COMPLETED',
-  FAILED = 'FAILED',
-}
+import { EnrichmentStatus } from './contact';
 
 export enum ClusterGenerationMethod {
   AI_GENERATED = 'AI_GENERATED',
@@ -170,7 +165,7 @@ export interface CreateContactEnrichmentInput {
   organizationId: string;
 }
 
-export interface EnrichmentResult {
+export interface ContactIntelligenceResult {
   topics: string[];
   tone: string;
   outletSentiment: string;

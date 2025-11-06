@@ -272,9 +272,9 @@ export interface TaskMetrics {
 }
 
 /**
- * Goal Metrics
+ * Reporting Goal Metrics
  */
-export interface GoalMetrics {
+export interface ReportingGoalMetrics {
   total: number;
   achieved: number;
   inProgress: number;

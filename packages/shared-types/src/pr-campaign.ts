@@ -16,7 +16,7 @@ export enum PressReleaseStatus {
   CANCELLED = 'CANCELLED',
 }
 
-export enum InteractionType {
+export enum CampaignInteractionType {
   PITCH_SENT = 'PITCH_SENT',
   EMAIL_OPENED = 'EMAIL_OPENED',
   LINK_CLICKED = 'LINK_CLICKED',
@@ -231,7 +231,7 @@ export interface CampaignInteraction {
   contactId: string;
 
   // Interaction Details
-  interactionType: InteractionType;
+  interactionType: CampaignInteractionType;
   channel: string | null;
 
   // Pitch Content
@@ -271,7 +271,7 @@ export interface CreateCampaignInteractionInput {
   campaignId: string;
   pressReleaseId?: string;
   contactId: string;
-  interactionType: InteractionType;
+  interactionType: CampaignInteractionType;
   channel?: string;
   pitchSubject?: string;
   pitchBody?: string;

@@ -1,3 +1,5 @@
+import { CampaignGoal } from './goals';
+
 export enum CampaignStatus {
   PLANNED = 'PLANNED',
   ACTIVE = 'ACTIVE',
@@ -30,14 +32,6 @@ export interface Campaign {
   updatedAt: Date;
 }
 
-export interface CampaignGoal {
-  id: string;
-  metric: string;
-  target: number;
-  current: number;
-  unit: string;
-}
-
 export interface CampaignMetrics {
   impressions: number;
   engagements: number;
@@ -50,7 +44,7 @@ export type CreateCampaignInput = Pick<
   Campaign,
   'name' | 'description' | 'type' | 'startDate' | 'endDate' | 'budget' | 'organizationId' | 'ownerId'
 > & {
-  goals?: Omit<CampaignGoal, 'id' | 'current'>[];
+  goals?: CampaignGoal[];
 };
 
 export type UpdateCampaignInput = Partial<

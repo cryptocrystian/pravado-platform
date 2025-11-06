@@ -3,9 +3,9 @@
 // =====================================================
 
 /**
- * Campaign status enumeration
+ * Autonomous campaign status enumeration
  */
-export enum CampaignStatus {
+export enum AutonomousCampaignStatus {
   PLANNING = 'PLANNING',
   READY = 'READY',
   RUNNING = 'RUNNING',
@@ -16,9 +16,9 @@ export enum CampaignStatus {
 }
 
 /**
- * Campaign type enumeration
+ * Autonomous campaign type enumeration
  */
-export enum CampaignType {
+export enum AutonomousCampaignType {
   AI_STARTUP_LAUNCH = 'AI_STARTUP_LAUNCH',
   PRODUCT_ANNOUNCEMENT = 'PRODUCT_ANNOUNCEMENT',
   THOUGHT_LEADERSHIP = 'THOUGHT_LEADERSHIP',
@@ -163,10 +163,10 @@ export interface AutonomousCampaign {
   // Campaign metadata
   title: string;
   description: string | null;
-  campaignType: CampaignType;
+  campaignType: AutonomousCampaignType;
 
   // Lifecycle
-  status: CampaignStatus;
+  status: AutonomousCampaignStatus;
   agentCreated: boolean;
 
   // Agent information
@@ -240,7 +240,7 @@ export interface CampaignTemplate {
   // Template metadata
   name: string;
   description: string | null;
-  campaignType: CampaignType;
+  campaignType: AutonomousCampaignType;
 
   // Template configuration
   templateConfig: Record<string, any>;
@@ -306,7 +306,7 @@ export interface CampaignStatistics {
 export interface CreateAutonomousCampaignInput {
   title?: string;
   description?: string;
-  campaignType?: CampaignType;
+  campaignType?: AutonomousCampaignType;
   originalPrompt: string; // Natural language campaign goal
   requiresApproval?: boolean;
   scheduledStart?: Date;
@@ -320,7 +320,7 @@ export interface CreateAutonomousCampaignInput {
 export interface UpdateAutonomousCampaignInput {
   title?: string;
   description?: string;
-  status?: CampaignStatus;
+  status?: AutonomousCampaignStatus;
   planningOutput?: CampaignPlanningOutput;
   executionMetadata?: ExecutionMetadata;
   qualityScore?: number;
@@ -332,7 +332,7 @@ export interface UpdateAutonomousCampaignInput {
  */
 export interface CampaignPlanningRequest {
   prompt: string;
-  campaignType?: CampaignType;
+  campaignType?: AutonomousCampaignType;
   constraints?: {
     maxContacts?: number;
     maxBudget?: number;
@@ -362,7 +362,7 @@ export interface CampaignProgressUpdate {
   currentTask: string;
   completedTasks: number;
   totalTasks: number;
-  status: CampaignStatus;
+  status: AutonomousCampaignStatus;
   errors: string[];
 }
 

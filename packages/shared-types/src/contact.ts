@@ -3,6 +3,8 @@
 // =====================================================
 // Types for media contact management system
 
+import { ContactInteraction } from './crm';
+
 export enum ContactTier {
   TIER_1 = '1', // Top-tier (major publications, high-reach influencers)
   TIER_2 = '2', // Mid-tier (niche publications, growing influencers)
@@ -158,23 +160,6 @@ export interface ContactEnrichmentJob {
   // Audit
   createdAt: Date;
   updatedAt: Date;
-}
-
-// Contact Interaction
-export interface ContactInteraction {
-  id: string;
-  contactId: string;
-
-  interactionType: string; // 'pitch_sent', 'response_received', 'meeting_scheduled', etc.
-  channel: string | null; // 'email', 'phone', 'linkedin', etc.
-
-  subject: string | null;
-  notes: string | null;
-
-  organizationId: string;
-  userId: string;
-
-  createdAt: Date;
 }
 
 // Input Types

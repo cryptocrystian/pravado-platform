@@ -386,9 +386,9 @@ export interface EnrichmentRequest {
 }
 
 /**
- * Enrichment result
+ * CRM enrichment result
  */
-export interface EnrichmentResult {
+export interface CrmEnrichmentResult {
   contactId: string;
   insight: CrmInsight;
   enrichedFields: string[];
@@ -449,16 +449,16 @@ export interface ScoreCalculationResult {
 }
 
 /**
- * Interaction summary
+ * Contact interaction analytics summary
  */
-export interface InteractionSummary {
+export interface ContactInteractionAnalytics {
   contactId: string;
   totalInteractions: number;
-  interactionsByType: Record<InteractionType, number>;
+  interactionsByType: Record<string, number>;
   interactionsByChannel: Record<string, number>;
   successRate: number;
   avgResponseTimeHours: number;
-  recentInteractions: CrmInteraction[];
+  recentInteractions: any[];
   sentimentBreakdown: {
     positive: number;
     neutral: number;

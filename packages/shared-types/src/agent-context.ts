@@ -21,7 +21,7 @@ export interface EnhancedAgentContext {
   userId?: string;
 
   /** User preferences and settings */
-  preferences?: UserPreferences;
+  preferences?: AgentUserPreferences;
 
   /** Agent-specific settings */
   agentSettings?: AgentSettings;
@@ -49,9 +49,9 @@ export interface EnhancedAgentContext {
 }
 
 /**
- * User preferences for personalization
+ * User preferences for personalization (agent context version)
  */
-export interface UserPreferences {
+export interface AgentUserPreferences {
   /** Communication tone preference */
   tone?: 'professional' | 'casual' | 'conversational' | 'formal';
 

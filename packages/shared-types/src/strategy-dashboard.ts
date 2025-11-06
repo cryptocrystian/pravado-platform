@@ -21,7 +21,7 @@ export enum TrendDirection {
 // METRICS
 // =====================================================
 
-export interface CampaignMetrics {
+export interface DashboardCampaignMetrics {
   totalWorkflows: number;
   completedWorkflows: number;
   totalSent: number;
@@ -31,7 +31,7 @@ export interface CampaignMetrics {
   replyRate: number;
 }
 
-export interface ContentMetrics {
+export interface DashboardContentMetrics {
   totalItems: number;
   publishedItems: number;
   avgSeoScore: number;
@@ -39,14 +39,14 @@ export interface ContentMetrics {
   totalWordCount: number;
 }
 
-export interface ContactMetrics {
+export interface DashboardContactMetrics {
   totalContacts: number;
   tier1Count: number;
   tier2Count: number;
   tier3Count: number;
 }
 
-export interface AgentMetrics {
+export interface DashboardAgentMetrics {
   totalExecutions: number;
   successfulExecutions: number;
   failedExecutions: number;
@@ -56,10 +56,10 @@ export interface AgentMetrics {
 }
 
 export interface StrategySummary {
-  campaigns: CampaignMetrics;
-  content: ContentMetrics;
-  contacts: ContactMetrics;
-  agents: AgentMetrics;
+  campaigns: DashboardCampaignMetrics;
+  content: DashboardContentMetrics;
+  contacts: DashboardContactMetrics;
+  agents: DashboardAgentMetrics;
 }
 
 // =====================================================
@@ -80,7 +80,7 @@ export interface MetricTrend {
   label?: string;
 }
 
-export interface PerformanceTrends {
+export interface DashboardPerformanceTrends {
   pitchVolume: MetricTrend[];
   openRate: MetricTrend[];
   contentOutput: MetricTrend[];
@@ -161,7 +161,7 @@ export interface CreateStrategyScorecardInput {
 export interface DashboardMetrics {
   summary: StrategySummary;
   performanceMetrics: PerformanceMetric[];
-  trends: PerformanceTrends;
+  trends: DashboardPerformanceTrends;
   coverage: CoverageHeatmap;
   scorecard: StrategyScorecard | null;
   period: {

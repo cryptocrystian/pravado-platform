@@ -3,7 +3,8 @@
 // Sprint 43 Phase 3.5.2
 // =====================================================
 
-import { AgentContext } from './agent-playbook';
+import { PlaybookAgentContext } from './agent-playbook';
+import { CollaborationStats } from './collaboration';
 
 /**
  * Escalation request to transfer task to higher-permission agent
@@ -390,39 +391,6 @@ export interface AgentMatch {
   roleMatch: boolean;
 }
 
-/**
- * Collaboration statistics
- */
-export interface CollaborationStats {
-  /** Total collaborations */
-  totalCollaborations: number;
-
-  /** Escalations */
-  totalEscalations: number;
-
-  /** Delegations */
-  totalDelegations: number;
-
-  /** Coordinations */
-  totalCoordinations: number;
-
-  /** Success rate */
-  successRate: number;
-
-  /** Average confidence score */
-  avgConfidence: number;
-
-  /** Most frequent collaborator */
-  mostFrequentCollaborator?: {
-    agentId: string;
-    agentName: string;
-    count: number;
-  };
-
-  /** Time period */
-  periodStart: Date;
-  periodEnd: Date;
-}
 
 /**
  * Escalation policy configuration

@@ -8,7 +8,6 @@
     "allowJs": true,
     "checkJs": false,
     "outDir": "./dist",
-    "rootDir": "./",
     "removeComments": true,
     "strict": true,
     "noImplicitAny": true,
@@ -27,9 +26,8 @@
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "composite": true,
-    "incremental": true
+    "sourceMap": true
   },
-  "exclude": ["node_modules", "dist", ".next", "coverage"]
+  "exclude": ["node_modules", "dist", ".next", "coverage"],
+  "files": []
 }

@@ -10,7 +10,7 @@ export * from './strategy-plan';
 export * from './api';
 export * from './auth';
 export * from './team';
-export * from './press-release';
+// Note: press-release types are exported from './pr-campaign' (more complete schema)
 export * from './seo-audit';
 export * from './style-guide';
 export * from './task';

@@ -2,6 +2,8 @@
 // CONTENT & SEO TYPES
 // =====================================================
 
+import { TaskStatus } from './task';
+
 export enum ContentType {
   BLOG_POST = 'BLOG_POST',
   PRESS_RELEASE = 'PRESS_RELEASE',

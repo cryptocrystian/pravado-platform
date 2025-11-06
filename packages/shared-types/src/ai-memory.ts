@@ -5,6 +5,16 @@
 /**
  * Memory type enumeration
  */
+export enum MemoryType {
+  OBSERVATION = 'OBSERVATION',
+  GOAL = 'GOAL',
+  DECISION = 'DECISION',
+  DIALOGUE = 'DIALOGUE',
+  CONTEXT = 'CONTEXT',
+  CORRECTION = 'CORRECTION',
+  INSIGHT = 'INSIGHT',
+}
+
 /**
  * Knowledge graph node type
  */

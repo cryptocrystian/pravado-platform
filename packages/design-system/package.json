@@ -13,8 +13,8 @@
     "./styles": "./dist/styles.css"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --external react",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --external react --watch",
+    "build": "tsup src/index.ts --format cjs,esm --dts --external react --tsconfig tsconfig.build.json",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --external react --watch --tsconfig tsconfig.build.json",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",

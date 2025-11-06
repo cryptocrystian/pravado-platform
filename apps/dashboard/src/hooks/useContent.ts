@@ -19,7 +19,7 @@ import {
   UpdateContentTaskInput,
   GenerateContentIdeasInput,
   GeneratedContentIdea,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // KEYWORD CLUSTERS
 export function useKeywordClusters() {

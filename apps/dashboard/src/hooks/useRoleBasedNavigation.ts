@@ -11,7 +11,7 @@ import {
   UserRole,
   RolePermissions,
   ROLE_CONFIGS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { NAVIGATION_CONFIG, getNavigationForRole } from '@/config/navigation.config';
 
 /**

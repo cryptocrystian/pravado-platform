@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "pnpm run -w @pravado/types build && pnpm run -w @pravado/validators build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "pages:build": "pnpm dlx @cloudflare/next-on-pages",
+    "pages:build": "pnpm run prebuild && pnpm dlx @cloudflare/next-on-pages",
     "pages:dev": "pnpm dlx @cloudflare/next-on-pages --watch",
     "pages:deploy": "pnpm pages:build && wrangler pages deploy .vercel/output/static"
   },
@@ -19,7 +20,7 @@
     "@mui/material": "^5.15.6",
     "@mui/x-date-pickers": "^6.19.0",
     "@pravado/design-system": "workspace:*",
-    "@pravado/shared-types": "workspace:*",
+    "@pravado/types": "workspace:*",
     "@pravado/utils": "workspace:*",
     "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.7",

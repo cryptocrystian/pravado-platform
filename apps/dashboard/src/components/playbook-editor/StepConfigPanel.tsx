@@ -8,7 +8,7 @@ import {
   PlaybookStep,
   PlaybookStepType,
   STEP_TYPE_CONFIGS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { X, Save, Trash2 } from 'lucide-react';
 
 export interface StepConfigPanelProps {

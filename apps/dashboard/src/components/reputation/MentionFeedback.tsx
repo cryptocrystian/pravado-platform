@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSubmitFeedback } from '../../hooks/useReputation';
-import type { FeedbackType, MentionSentiment } from '@pravado/shared-types';
+import type { FeedbackType, MentionSentiment } from '@pravado/types';
 
 export interface MentionFeedbackProps {
   mentionId: string;

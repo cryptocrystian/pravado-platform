@@ -6,7 +6,7 @@ import { ContactFilters } from '@/components/contacts/ContactFilters';
 import { ContactForm } from '@/components/contacts/ContactForm';
 import { EnrichmentButton } from '@/components/contacts/EnrichmentButton';
 import { useContacts, useContactStats } from '@/hooks/useContacts';
-import type { ContactSearchParams } from '@pravado/shared-types';
+import type { ContactSearchParams } from '@pravado/types';
 
 export default function ContactsPage() {
   const [searchParams, setSearchParams] = useState<ContactSearchParams>({

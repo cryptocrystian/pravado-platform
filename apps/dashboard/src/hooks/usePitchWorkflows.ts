@@ -13,7 +13,7 @@ import {
   UpdatePitchWorkflowInput,
   PitchWorkflowStatus,
   PitchJobStatus,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // WORKFLOWS

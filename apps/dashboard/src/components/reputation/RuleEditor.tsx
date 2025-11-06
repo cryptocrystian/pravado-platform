@@ -14,7 +14,7 @@ import type {
   MentionType,
   Medium,
   MentionSentiment,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export interface RuleEditorProps {
   rule?: MonitoringRule;

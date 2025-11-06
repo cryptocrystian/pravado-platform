@@ -20,7 +20,7 @@ import type {
   GOAL_TYPE_CONFIGS,
   GOAL_PRIORITY_CONFIGS,
   GOAL_STATUS_CONFIGS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
 

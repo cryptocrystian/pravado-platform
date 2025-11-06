@@ -9,7 +9,7 @@ import {
   PlaybookStepType,
   CreatePlaybookStepInput,
   UpdatePlaybookStepInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 /**
  * Position of a step on the canvas

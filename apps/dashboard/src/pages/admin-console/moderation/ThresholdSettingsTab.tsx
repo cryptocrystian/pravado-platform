@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { Box, Alert, CircularProgress, Typography } from '@mui/material';
 import { ModerationPanelHeader } from '../../../components/admin/moderation/ModerationPanelHeader';
 import { ThresholdEditor } from '../../../components/admin/moderation/ThresholdEditor';
-import { AbuseDetectionConfig } from '@pravado/shared-types';
+import { AbuseDetectionConfig } from '@pravado/types';
 
 export const ThresholdSettingsTab: React.FC = () => {
   const [config, setConfig] = useState<AbuseDetectionConfig | null>(null);

@@ -20,7 +20,7 @@ import {
   DialogActions,
 } from '@mui/material';
 import { FileDownload } from '@mui/icons-material';
-import { AuditActionType, ExportFormat } from '@pravado/shared-types';
+import { AuditActionType, ExportFormat } from '@pravado/types';
 import { useAuditLogs, useExportAuditLogs } from '../../../hooks/useAdminAPI';
 import { ModerationPanelHeader } from '../../../components/admin/moderation/ModerationPanelHeader';
 import { AuditLogTable } from '../../../components/admin/moderation/AuditLogTable';

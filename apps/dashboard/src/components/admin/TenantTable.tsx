@@ -22,7 +22,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { FileDownload } from '@mui/icons-material';
-import { TenantActivity } from '@pravado/shared-types';
+import { TenantActivity } from '@pravado/types';
 
 export interface TenantTableProps {
   tenants: TenantActivity[];

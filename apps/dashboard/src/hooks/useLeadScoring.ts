@@ -24,7 +24,7 @@ import type {
   RAG_STATUS_CONFIGS,
   DISQUALIFICATION_REASON_CONFIGS,
   SCORE_THRESHOLDS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
 

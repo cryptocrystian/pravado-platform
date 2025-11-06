@@ -1,7 +1,7 @@
 'use client';
 
 import { useUserFollowUps, useCompleteFollowUp, useDeleteFollowUp } from '../../hooks/useCRM';
-import { FollowUpStatus, FollowUpPriority } from '@pravado/shared-types';
+import { FollowUpStatus, FollowUpPriority } from '@pravado/types';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';

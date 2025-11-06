@@ -34,7 +34,7 @@ import {
   CriteriaComparisonChartData,
   SourceDistributionChartData,
   PerformanceDistributionChartData,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // API FUNCTIONS

@@ -21,7 +21,7 @@ import {
   TraceSeverity,
   TraceNodeType,
   TraceSearchFilters,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export interface AgentTraceSearchInputProps {
   onSearch: (filters: TraceSearchFilters) => void;

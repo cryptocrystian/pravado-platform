@@ -4,7 +4,7 @@
 // =====================================================
 
 import { useMemo } from 'react';
-import { PlaybookStep, STEP_TYPE_CONFIGS } from '@pravado/shared-types';
+import { PlaybookStep, STEP_TYPE_CONFIGS } from '@pravado/types';
 import { AlertCircle, CheckCircle2, XCircle, Grip } from 'lucide-react';
 import { ValidationIssue } from '../../hooks/usePlaybookEditor';
 

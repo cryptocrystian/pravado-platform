@@ -25,7 +25,7 @@ import {
   Button,
 } from '@mui/material';
 import { Visibility } from '@mui/icons-material';
-import { AbuseReport } from '@pravado/shared-types';
+import { AbuseReport } from '@pravado/types';
 import { AbuseScoreBadge } from './AbuseScoreBadge';
 
 export interface AbuseReportTableProps {

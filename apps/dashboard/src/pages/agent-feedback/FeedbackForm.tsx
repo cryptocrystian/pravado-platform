@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { useSubmitFeedback } from '../../hooks/useAgentFeedback';
-import type { AgentFeedbackInput, FeedbackRating, FeedbackScope } from '@pravado/shared-types';
+import type { AgentFeedbackInput, FeedbackRating, FeedbackScope } from '@pravado/types';
 
 interface FeedbackFormProps {
   agentId: string;

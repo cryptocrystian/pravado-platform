@@ -30,7 +30,7 @@ import {
   Alert,
 } from '@mui/material';
 import { Add, Delete } from '@mui/icons-material';
-import { UserRoleSummary, AdminRole, ROLE_DISPLAY_NAMES } from '@pravado/shared-types';
+import { UserRoleSummary, AdminRole, ROLE_DISPLAY_NAMES } from '@pravado/types';
 import { RoleTag } from './RoleTag';
 
 export interface RoleAssignmentTableProps {

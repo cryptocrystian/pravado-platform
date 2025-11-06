@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 import { useAgentTemplates, useAgentStats } from '@/hooks/useAgents';
-import { AgentCategory } from '@pravado/shared-types';
+import { AgentCategory } from '@pravado/types';
 import { Loader2, Sparkles, TrendingUp, CheckCircle2, XCircle } from 'lucide-react';
 import AgentCard from '@/components/agents/AgentCard';
 import AgentRunner from '@/components/agents/AgentRunner';

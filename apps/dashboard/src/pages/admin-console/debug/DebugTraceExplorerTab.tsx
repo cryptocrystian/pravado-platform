@@ -26,7 +26,7 @@ import {
   TraceSearchFilters,
   AgentTraceSummary,
   TraceSearchResults,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { AgentTraceSearchInput } from '../../../components/admin/debug/AgentTraceSearchInput';
 import axios from 'axios';
 

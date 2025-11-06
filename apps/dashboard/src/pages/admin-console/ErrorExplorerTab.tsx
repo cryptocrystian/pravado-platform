@@ -17,7 +17,7 @@ import {
   SelectChangeEvent,
   Chip,
 } from '@mui/material';
-import { AnalyticsTimeRange, ErrorSeverity, ErrorCategory } from '@pravado/shared-types';
+import { AnalyticsTimeRange, ErrorSeverity, ErrorCategory } from '@pravado/types';
 import { useErrorLogs } from '../../hooks/useAdminAPI';
 import { ErrorLogViewer } from '../../components/admin/ErrorLogViewer';
 

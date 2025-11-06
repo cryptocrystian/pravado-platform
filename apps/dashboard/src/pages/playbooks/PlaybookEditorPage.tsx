@@ -14,7 +14,7 @@ import {
   PlaybookStatus,
   PlaybookStepType,
   STEP_TYPE_CONFIGS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { usePlaybookEditor } from '../../hooks/usePlaybookEditor';
 import { PlaybookEditorCanvas } from '../../components/playbook-editor/PlaybookEditorCanvas';
 import { StepConfigPanel } from '../../components/playbook-editor/StepConfigPanel';

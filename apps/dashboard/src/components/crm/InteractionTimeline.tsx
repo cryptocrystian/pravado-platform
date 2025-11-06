@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useContactInteractions, useDeleteInteraction } from '../../hooks/useCRM';
-import { ContactInteraction, InteractionSentiment } from '@pravado/shared-types';
+import { ContactInteraction, InteractionSentiment } from '@pravado/types';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';

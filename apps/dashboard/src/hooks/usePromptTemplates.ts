@@ -22,7 +22,7 @@ import {
   SLOT_RESOLUTION_CONFIGS,
   PROMPT_USE_CASE_CONFIGS,
   SLOT_TYPE_CONFIGS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // TEMPLATE CRUD HOOKS

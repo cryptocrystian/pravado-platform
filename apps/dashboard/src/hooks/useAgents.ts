@@ -12,7 +12,7 @@ import {
   CreateAgentTemplateInput,
   UpdateAgentTemplateInput,
   AgentCategory,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // AGENT TEMPLATES

@@ -6,7 +6,7 @@ import {
   useCreateRelationship,
   useUpdateRelationship,
 } from '../../hooks/useCRM';
-import { RelationshipType } from '@pravado/shared-types';
+import { RelationshipType } from '@pravado/types';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';

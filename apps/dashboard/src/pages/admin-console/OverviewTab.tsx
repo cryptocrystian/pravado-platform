@@ -23,7 +23,7 @@ import {
   Business,
   SmartToy,
 } from '@mui/icons-material';
-import { AnalyticsTimeRange } from '@pravado/shared-types';
+import { AnalyticsTimeRange } from '@pravado/types';
 import { useOverviewStats } from '../../hooks/useAdminAPI';
 import { StatsCard } from '../../components/admin/StatsCard';
 import { PeakUsageChart } from '../../components/admin/PeakUsageChart';

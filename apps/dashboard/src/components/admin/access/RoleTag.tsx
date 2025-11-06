@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Chip } from '@mui/material';
-import { AdminRole, ROLE_DISPLAY_NAMES } from '@pravado/shared-types';
+import { AdminRole, ROLE_DISPLAY_NAMES } from '@pravado/types';
 
 export interface RoleTagProps {
   role: AdminRole;

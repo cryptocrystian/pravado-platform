@@ -16,7 +16,7 @@ import {
   ExecutePlaybookInput,
   PlaybooksQueryFilters,
   ExecutionsQueryFilters,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { apiClient } from '../lib/api';
 
 // =====================================================

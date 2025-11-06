@@ -7,7 +7,7 @@ import {
   InteractionDirection,
   InteractionChannel,
   InteractionSentiment,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 

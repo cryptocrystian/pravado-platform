@@ -24,7 +24,7 @@ import {
   Info as InfoIcon,
   CheckCircle,
 } from '@mui/icons-material';
-import { TraceNode, TraceSeverity, TraceNodeType } from '@pravado/shared-types';
+import { TraceNode, TraceSeverity, TraceNodeType } from '@pravado/types';
 
 export interface TraceNodeCardProps {
   node: TraceNode;

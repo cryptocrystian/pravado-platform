@@ -4,7 +4,7 @@
 // =====================================================
 
 import React, { useState } from 'react';
-import type { ImprovementPlan, ImprovementPriority, ImprovementStatus } from '@pravado/shared-types';
+import type { ImprovementPlan, ImprovementPriority, ImprovementStatus } from '@pravado/types';
 
 interface ImprovementPlanViewerProps {
   plans: ImprovementPlan[];

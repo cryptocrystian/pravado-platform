@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ContactTier, ContactRole, type ContactSearchParams } from '@pravado/shared-types';
+import { ContactTier, ContactRole, type ContactSearchParams } from '@pravado/types';
 import { useContactTags } from '@/hooks/useContacts';
 
 interface ContactFiltersProps {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { IntakeStep, type OnboardingSession } from '@pravado/shared-types';
+import { IntakeStep, type OnboardingSession } from '@pravado/types';
 import { BusinessInfoStep } from './steps/BusinessInfoStep';
 import { GoalsStep } from './steps/GoalsStep';
 import { CompetitorsStep } from './steps/CompetitorsStep';

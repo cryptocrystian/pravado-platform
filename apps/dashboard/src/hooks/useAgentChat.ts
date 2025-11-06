@@ -17,7 +17,7 @@ import type {
   SendMessageRequest,
   StartConversationRequest,
   MessageMetadata,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // API CLIENT

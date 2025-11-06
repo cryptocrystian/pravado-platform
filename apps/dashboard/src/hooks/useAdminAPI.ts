@@ -30,7 +30,7 @@ import {
   BanTokenResponse,
   ModerationStats,
   ExportFormat,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 

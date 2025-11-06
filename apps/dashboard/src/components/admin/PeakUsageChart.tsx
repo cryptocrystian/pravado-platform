@@ -17,7 +17,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import { PeakUsageWindow } from '@pravado/shared-types';
+import { PeakUsageWindow } from '@pravado/types';
 
 export interface PeakUsageChartProps {
   peakWindows: PeakUsageWindow[];

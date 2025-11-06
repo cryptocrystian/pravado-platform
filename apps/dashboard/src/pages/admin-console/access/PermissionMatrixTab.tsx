@@ -9,7 +9,7 @@ import {
   Typography,
   Alert,
 } from '@mui/material';
-import { AdminRole, AdminPermission } from '@pravado/shared-types';
+import { AdminRole, AdminPermission } from '@pravado/types';
 import { PermissionMatrix } from '../../../components/admin/access/PermissionMatrix';
 import {
   useAdminRoles,

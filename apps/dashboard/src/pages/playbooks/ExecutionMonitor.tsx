@@ -12,7 +12,7 @@ import {
   EXECUTION_STATUS_CONFIGS,
   STEP_RESULT_STATUS_CONFIGS,
   PlaybookExecutionStatus,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { Loader2, Clock, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 
 export function ExecutionMonitor({ executionId }: { executionId: string }) {

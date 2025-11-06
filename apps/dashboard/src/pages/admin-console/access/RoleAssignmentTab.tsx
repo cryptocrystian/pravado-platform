@@ -11,7 +11,7 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material';
-import { AdminRole } from '@pravado/shared-types';
+import { AdminRole } from '@pravado/types';
 import { RoleAssignmentTable } from '../../../components/admin/access/RoleAssignmentTable';
 import {
   useUsersWithRoles,

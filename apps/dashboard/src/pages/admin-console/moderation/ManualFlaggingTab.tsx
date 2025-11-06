@@ -8,7 +8,7 @@ import { Box, Alert } from '@mui/material';
 import { useFlagClient } from '../../../hooks/useAdminAPI';
 import { ModerationPanelHeader } from '../../../components/admin/moderation/ModerationPanelHeader';
 import { ManualFlagForm } from '../../../components/admin/moderation/ManualFlagForm';
-import { FlagClientRequest } from '@pravado/shared-types';
+import { FlagClientRequest } from '@pravado/types';
 
 export const ManualFlaggingTab: React.FC = () => {
   const { flagClient, flagging, error } = useFlagClient();

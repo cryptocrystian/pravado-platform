@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { IntakeStep, OnboardingStatus } from '@pravado/shared-types';
+import { IntakeStep, OnboardingStatus } from '@pravado/types';
 import { OnboardingWizard } from '@/components/onboarding/OnboardingWizard';
 import { OnboardingProgress } from '@/components/onboarding/OnboardingProgress';
 import { OnboardingResult } from '@/components/onboarding/OnboardingResult';

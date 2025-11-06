@@ -18,7 +18,7 @@ import {
   Paper,
 } from '@mui/material';
 import { Flag } from '@mui/icons-material';
-import { FlagClientRequest, ModerationFlagType, ModerationSeverity } from '@pravado/shared-types';
+import { FlagClientRequest, ModerationFlagType, ModerationSeverity } from '@pravado/types';
 
 export interface ManualFlagFormProps {
   onSubmit: (request: FlagClientRequest) => Promise<boolean>;

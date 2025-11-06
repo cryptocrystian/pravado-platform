@@ -25,7 +25,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
-import { AnalyticsTimeRange } from '@pravado/shared-types';
+import { AnalyticsTimeRange } from '@pravado/types';
 import { useAgentActivity, useAgentLoadHeatmap } from '../../hooks/useAdminAPI';
 import { AgentHeatmap } from '../../components/admin/AgentHeatmap';
 import { StatsCard } from '../../components/admin/StatsCard';

@@ -4,7 +4,7 @@
 // =====================================================
 
 import React, { useState, useMemo } from 'react';
-import type { AgentFeedbackEntry, FeedbackRating } from '@pravado/shared-types';
+import type { AgentFeedbackEntry, FeedbackRating } from '@pravado/types';
 
 interface FeedbackHistoryTableProps {
   feedback: AgentFeedbackEntry[];

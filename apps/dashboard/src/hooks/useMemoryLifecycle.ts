@@ -26,7 +26,7 @@ import type {
   MemoryArchivalRecommendation,
   MemoryImportanceAssessment,
   MemoryLifecycleDashboard,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // MUTATION HOOKS - LIFECYCLE OPERATIONS

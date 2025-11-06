@@ -43,7 +43,7 @@ import {
   GoalVelocityChartData,
   GoalCompletionChartData,
   RiskDistributionChartData,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // API FUNCTIONS

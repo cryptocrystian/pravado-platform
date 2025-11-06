@@ -24,7 +24,7 @@ import {
   AdminRole,
   AdminPermission,
   RoleAuditActionType,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { AccessAuditTable } from '../../../components/admin/access/AccessAuditTable';
 import { useAccessAuditLogs } from '../../../hooks/useAdminAccessAPI';
 

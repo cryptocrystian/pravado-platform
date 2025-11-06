@@ -17,7 +17,7 @@ import {
   LinearProgress,
   Box,
 } from '@mui/material';
-import { ModerationFlag } from '@pravado/shared-types';
+import { ModerationFlag } from '@pravado/types';
 
 export interface ModerationFlagTableProps {
   flags: ModerationFlag[];

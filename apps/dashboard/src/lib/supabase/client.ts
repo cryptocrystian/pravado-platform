@@ -1,5 +1,5 @@
 import { createBrowserClient } from '@supabase/ssr';
-import type { Database } from '@pravado/shared-types';
+import type { Database } from '@pravado/types';
 
 export const createClient = () => {
   return createBrowserClient<Database>(

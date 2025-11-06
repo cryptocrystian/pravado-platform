@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useCampaigns, useDeleteCampaign } from '@/hooks/usePRCampaigns';
-import { CampaignStatus } from '@pravado/shared-types';
+import { CampaignStatus } from '@pravado/types';
 import Link from 'next/link';
 import { formatDistance } from 'date-fns';
 

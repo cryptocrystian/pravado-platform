@@ -14,7 +14,7 @@ import {
   TextField,
   Alert,
 } from '@mui/material';
-import { AbuseScore } from '@pravado/shared-types';
+import { AbuseScore } from '@pravado/types';
 import { useAbuseReports } from '../../../hooks/useAdminAPI';
 import { ModerationPanelHeader } from '../../../components/admin/moderation/ModerationPanelHeader';
 import { AbuseReportTable } from '../../../components/admin/moderation/AbuseReportTable';

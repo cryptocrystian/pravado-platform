@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useCreateCampaign, useUpdateCampaign } from '@/hooks/usePRCampaigns';
-import { PRCampaign, CampaignStatus } from '@pravado/shared-types';
+import { PRCampaign, CampaignStatus } from '@pravado/types';
 
 interface CampaignFormProps {
   campaign?: PRCampaign;

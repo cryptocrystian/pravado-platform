@@ -29,7 +29,7 @@ import {
   Warning,
   Info,
 } from '@mui/icons-material';
-import { ErrorLogEntry, ErrorSeverity } from '@pravado/shared-types';
+import { ErrorLogEntry, ErrorSeverity } from '@pravado/types';
 
 export interface ErrorLogViewerProps {
   logs: ErrorLogEntry[];

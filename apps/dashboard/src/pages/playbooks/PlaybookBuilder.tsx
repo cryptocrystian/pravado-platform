@@ -15,7 +15,7 @@ import {
   PlaybookStepType,
   STEP_TYPE_CONFIGS,
   PLAYBOOK_STATUS_CONFIGS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { Button } from '../../components/ui/button';
 import { Loader2, Plus, Save, Play } from 'lucide-react';
 

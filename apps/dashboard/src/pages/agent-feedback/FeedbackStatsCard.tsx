@@ -4,7 +4,7 @@
 // =====================================================
 
 import React from 'react';
-import type { FeedbackMetrics } from '@pravado/shared-types';
+import type { FeedbackMetrics } from '@pravado/types';
 
 interface FeedbackStatsCardProps {
   metrics: FeedbackMetrics | null;

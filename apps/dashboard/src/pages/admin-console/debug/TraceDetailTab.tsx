@@ -16,7 +16,7 @@ import {
   Button,
 } from '@mui/material';
 import { ArrowBack, Timeline } from '@mui/icons-material';
-import { AgentTraceTree, TracePerformanceMetrics } from '@pravado/shared-types';
+import { AgentTraceTree, TracePerformanceMetrics } from '@pravado/types';
 import { TraceNodeCard } from '../../../components/admin/debug/TraceNodeCard';
 import axios from 'axios';
 

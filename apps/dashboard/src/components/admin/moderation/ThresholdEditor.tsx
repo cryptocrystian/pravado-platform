@@ -15,7 +15,7 @@ import {
   Divider,
 } from '@mui/material';
 import { Save, RestartAlt } from '@mui/icons-material';
-import { AbuseDetectionConfig } from '@pravado/shared-types';
+import { AbuseDetectionConfig } from '@pravado/types';
 
 export interface ThresholdEditorProps {
   config: AbuseDetectionConfig | null;

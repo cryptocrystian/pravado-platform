@@ -39,7 +39,7 @@ import type {
   MemoryAccessTrendData,
   MemoryImportanceDistributionData,
   MemoryAgingData,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // MUTATION HOOKS

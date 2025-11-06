@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Card, CardContent, Typography, Box, Tooltip as MuiTooltip } from '@mui/material';
-import { AgentLoadHeatmapData } from '@pravado/shared-types';
+import { AgentLoadHeatmapData } from '@pravado/types';
 
 export interface AgentHeatmapProps {
   heatmapData: AgentLoadHeatmapData[];

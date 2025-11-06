@@ -32,7 +32,7 @@ import type {
   INTEL_SOURCE_TYPE_CONFIGS,
   INTEL_SEVERITY_CONFIGS,
   ACTIVITY_LEVEL_CONFIGS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
 

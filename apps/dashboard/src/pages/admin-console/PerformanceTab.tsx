@@ -35,7 +35,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import { AnalyticsTimeRange } from '@pravado/shared-types';
+import { AnalyticsTimeRange } from '@pravado/types';
 import { usePerformanceMetrics } from '../../hooks/useAdminAPI';
 import { StatsCard } from '../../components/admin/StatsCard';
 

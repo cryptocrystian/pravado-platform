@@ -8,7 +8,7 @@
 //
 
 import React from 'react';
-import type { AgentMessage } from '@pravado/shared-types';
+import type { AgentMessage } from '@pravado/types';
 import { formatDistanceToNow } from 'date-fns';
 
 // =====================================================

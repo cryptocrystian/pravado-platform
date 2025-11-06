@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useCreateContact } from '@/hooks/useContacts';
-import { ContactTier, ContactRole, PitchMethod } from '@pravado/shared-types';
+import { ContactTier, ContactRole, PitchMethod } from '@pravado/types';
 
 interface ContactFormProps {
   onClose: () => void;

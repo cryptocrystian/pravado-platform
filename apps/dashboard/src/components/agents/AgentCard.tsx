@@ -2,7 +2,7 @@
 // AGENT CARD COMPONENT
 // =====================================================
 
-import { AgentTemplate } from '@pravado/shared-types';
+import { AgentTemplate } from '@pravado/types';
 import { Play, TrendingUp, Clock, CheckCircle } from 'lucide-react';
 
 interface AgentCardProps {

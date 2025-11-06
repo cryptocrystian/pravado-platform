@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BusinessInfoSchema } from '@pravado/shared-types';
+import { BusinessInfoSchema } from '@pravado/types';
 
 interface BusinessInfoStepProps {
   initialData?: any;

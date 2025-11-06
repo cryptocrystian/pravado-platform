@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMediaMentions } from '../../hooks/useReputation';
-import type { MentionSearchParams, MentionType, Medium, MentionSentiment } from '@pravado/shared-types';
+import type { MentionSearchParams, MentionType, Medium, MentionSentiment } from '@pravado/types';
 import { MentionCard } from './MentionCard';
 
 export interface MentionFeedProps {

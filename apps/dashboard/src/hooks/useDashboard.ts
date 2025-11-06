@@ -11,7 +11,7 @@ import {
   CreateReportSnapshotInput,
   StrategyScorecard,
   ScorecardCategory,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // STRATEGY METRICS

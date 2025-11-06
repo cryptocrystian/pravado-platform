@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Chip } from '@mui/material';
-import { AbuseScore } from '@pravado/shared-types';
+import { AbuseScore } from '@pravado/types';
 
 export interface AbuseScoreBadgeProps {
   score: AbuseScore;

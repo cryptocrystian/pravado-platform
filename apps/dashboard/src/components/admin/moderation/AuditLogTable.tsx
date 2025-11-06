@@ -29,7 +29,7 @@ import {
   Error as ErrorIcon,
   FileDownload,
 } from '@mui/icons-material';
-import { AuditLogEntry } from '@pravado/shared-types';
+import { AuditLogEntry } from '@pravado/types';
 
 export interface AuditLogTableProps {
   logs: AuditLogEntry[];

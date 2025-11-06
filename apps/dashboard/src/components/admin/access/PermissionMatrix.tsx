@@ -26,7 +26,7 @@ import {
   AdminRole,
   AdminPermission,
   ROLE_DISPLAY_NAMES,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export interface PermissionMatrixProps {
   roles: RoleDetails[];

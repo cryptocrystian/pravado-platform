@@ -8,7 +8,7 @@
 //
 
 import React from 'react';
-import type { AppliedToneStyle } from '@pravado/shared-types';
+import type { AppliedToneStyle } from '@pravado/types';
 
 // =====================================================
 // TYPES

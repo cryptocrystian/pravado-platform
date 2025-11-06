@@ -22,7 +22,7 @@ import {
   PressReleaseStats,
   GeneratedPitch,
   RecommendedTarget,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // CAMPAIGN HOOKS

@@ -21,7 +21,7 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import { AnalyticsTimeRange } from '@pravado/shared-types';
+import { AnalyticsTimeRange } from '@pravado/types';
 import { useTenantActivity, useExportTenantActivity } from '../../hooks/useAdminAPI';
 import { TenantTable } from '../../components/admin/TenantTable';
 

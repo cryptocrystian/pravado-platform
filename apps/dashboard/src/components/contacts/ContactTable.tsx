@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { Contact } from '@pravado/shared-types';
+import type { Contact } from '@pravado/types';
 import Link from 'next/link';
 
 interface ContactTableProps {

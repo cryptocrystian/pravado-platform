@@ -4,7 +4,7 @@
 // =====================================================
 
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { PlaybookStep } from '@pravado/shared-types';
+import { PlaybookStep } from '@pravado/types';
 import {
   StepPosition,
   StepConnection,

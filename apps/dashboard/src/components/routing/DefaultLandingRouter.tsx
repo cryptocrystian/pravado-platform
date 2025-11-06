@@ -88,8 +88,8 @@ export function DefaultLandingRouter() {
  */
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRoles?: import('@pravado/shared-types').UserRole[];
-  requiredPermission?: keyof import('@pravado/shared-types').RolePermissions;
+  requiredRoles?: import('@pravado/types').UserRole[];
+  requiredPermission?: keyof import('@pravado/types').RolePermissions;
   fallback?: React.ReactNode;
 }
 

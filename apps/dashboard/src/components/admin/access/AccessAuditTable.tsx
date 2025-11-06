@@ -26,7 +26,7 @@ import {
   Edit,
   Delete,
 } from '@mui/icons-material';
-import { RoleAuditEntry, RoleAuditActionType } from '@pravado/shared-types';
+import { RoleAuditEntry, RoleAuditActionType } from '@pravado/types';
 import { RoleTag } from './RoleTag';
 
 export interface AccessAuditTableProps {

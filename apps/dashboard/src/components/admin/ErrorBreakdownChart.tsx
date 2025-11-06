@@ -6,7 +6,7 @@
 import React from 'react';
 import { Card, CardContent, Typography, Box, Chip } from '@mui/material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { ErrorBreakdownItem, ErrorSeverity } from '@pravado/shared-types';
+import { ErrorBreakdownItem, ErrorSeverity } from '@pravado/types';
 
 export interface ErrorBreakdownChartProps {
   errorBreakdown: ErrorBreakdownItem[];

@@ -19,7 +19,7 @@ import type {
   REPORT_TYPE_CONFIGS,
   REPORT_STATUS_CONFIGS,
   REPORT_SECTION_TYPE_CONFIGS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
 

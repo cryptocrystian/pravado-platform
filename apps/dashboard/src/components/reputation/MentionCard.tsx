@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { MediaMention } from '@pravado/shared-types';
+import type { MediaMention } from '@pravado/types';
 import { MentionFeedback } from './MentionFeedback';
 import { useSimilarMentions } from '../../hooks/useReputation';
 

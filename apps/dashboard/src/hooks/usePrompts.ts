@@ -24,7 +24,7 @@ import type {
   USE_CASE_TAG_CONFIGS,
   MODEL_SCOPE_CONFIGS,
   TOKEN_ESTIMATION,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
 

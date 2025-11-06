@@ -3,7 +3,7 @@
 // Sprint 39 Phase 3.3.1: Role-Aware Defaults System
 // =====================================================
 
-import { NavigationItem, UserRole } from '@pravado/shared-types';
+import { NavigationItem, UserRole } from '@pravado/types';
 
 /**
  * Complete navigation structure for Pravado platform

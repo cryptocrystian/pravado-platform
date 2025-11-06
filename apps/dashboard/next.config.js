@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@pravado/design-system', '@pravado/shared-types', '@pravado/utils'],
+  transpilePackages: ['@pravado/design-system', '@pravado/types', '@pravado/utils'],
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

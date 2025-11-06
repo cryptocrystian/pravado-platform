@@ -48,6 +48,19 @@ export enum ModerationSource {
   MANUAL_REVIEW = 'manual_review',
 }
 
+export enum ModerationSeverity {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  CRITICAL = 'critical',
+}
+
+export interface ModerationFlag {
+  category: ModerationCategory;
+  reason: string;
+  suggestedFix?: string;
+}
+
 // =====================================================
 // CORE INTERFACES
 // =====================================================

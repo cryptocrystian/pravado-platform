@@ -352,27 +352,3 @@ export interface FeedbackAnalytics {
   improvementVelocity: number; // Rate of score improvement
 }
 
-// =====================================================
-// EXPORTS
-// =====================================================
-
-export type {
-  AgentFeedbackInput,
-  AgentFeedbackEntry,
-  FeedbackMetrics,
-  FeedbackSummary,
-  IssueSummary,
-  ImprovementPlan,
-  ProposedChange,
-  FeedbackDistribution,
-  FeedbackDataPoint,
-  CommonIssues,
-  IssuePattern,
-  FeedbackExample,
-  RatingTrends,
-  TrendDataPoint,
-  FeedbackQueryOptions,
-  ImprovementApplicationResult,
-  AppliedChange,
-  FeedbackAnalytics,
-};

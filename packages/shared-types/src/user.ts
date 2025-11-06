@@ -1,10 +1,3 @@
-export enum UserRole {
-  ADMIN = 'ADMIN',
-  MANAGER = 'MANAGER',
-  CONTRIBUTOR = 'CONTRIBUTOR',
-  VIEWER = 'VIEWER',
-}
-
 export enum UserStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',

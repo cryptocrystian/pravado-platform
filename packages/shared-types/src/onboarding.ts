@@ -16,11 +16,6 @@ export enum OnboardingStatus {
   ABANDONED = 'ABANDONED',
 }
 
-export enum AgentType {
-  STRATEGY = 'strategy',
-  PLANNER = 'planner',
-}
-
 // Onboarding Session
 export interface OnboardingSession {
   id: string;

@@ -5,17 +5,6 @@
 /**
  * Memory type enumeration
  */
-export enum MemoryType {
-  PLANNING = 'PLANNING',
-  INSIGHT = 'INSIGHT',
-  ERROR = 'ERROR',
-  SUCCESS = 'SUCCESS',
-  STRATEGY = 'STRATEGY',
-  LEARNING = 'LEARNING',
-  DECISION = 'DECISION',
-  OUTCOME = 'OUTCOME',
-}
-
 /**
  * Knowledge graph node type
  */
@@ -314,16 +303,7 @@ export interface ContextInjectionInput {
 /**
  * Context injection result
  */
-export interface ContextInjectionResult {
-  memories: MemoryQueryResult[];
-  knowledgeGraph: CampaignKnowledgeGraph | null;
-  contextPrompt: string;
-  stats: {
-    memoryCount: number;
-    avgSimilarity: number;
-    nodeCount: number;
-    edgeCount: number;
-  };
+;
 }
 
 /**
@@ -339,13 +319,6 @@ export interface MemoryCompressionRequest {
 /**
  * Memory compression result
  */
-export interface MemoryCompressionResult {
-  originalCount: number;
-  compressedCount: number;
-  summaryMemory: AgentMemory;
-  deletedMemoryIds: string[];
-}
-
 /**
  * Memory analytics
  */
@@ -432,8 +405,3 @@ export interface MemorySearchRequest {
 /**
  * Memory search result
  */
-export interface MemorySearchResult {
-  results: MemoryQueryResult[];
-  count: number;
-  query: string;
-}

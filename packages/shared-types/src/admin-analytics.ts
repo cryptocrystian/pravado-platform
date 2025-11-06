@@ -444,13 +444,6 @@ export interface GetPerformanceMetricsResponse {
 /**
  * Admin role types
  */
-export enum AdminRole {
-  SUPER_ADMIN = 'super_admin',
-  ADMIN = 'admin',
-  ANALYST = 'analyst',
-  SUPPORT = 'support',
-}
-
 /**
  * Admin user permissions
  */

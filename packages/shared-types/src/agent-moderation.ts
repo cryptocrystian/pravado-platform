@@ -32,13 +32,6 @@ export enum ModerationAction {
   BLOCK = 'block',
 }
 
-export enum ModerationSeverity {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-  CRITICAL = 'critical',
-}
-
 export enum RuleType {
   REGEX = 'regex',
   KEYWORD = 'keyword',
@@ -80,15 +73,7 @@ export interface ModerationResult {
   timestamp: Date;
 }
 
-export interface ModerationFlag {
-  category: ModerationCategory;
-  severity: ModerationSeverity;
-  confidence: number;
-  location?: {
-    start: number;
-    end: number;
-    text: string;
-  };
+;
   reason: string;
   suggestedFix?: string;
 }

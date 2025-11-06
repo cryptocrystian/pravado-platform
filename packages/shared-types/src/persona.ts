@@ -30,12 +30,6 @@ export enum VoiceMode {
 /**
  * Confidence levels for persona assignment
  */
-export enum ConfidenceLevel {
-  HIGH = 'HIGH',       // 80-100% confidence
-  MEDIUM = 'MEDIUM',   // 50-79% confidence
-  LOW = 'LOW',         // 0-49% confidence
-}
-
 /**
  * Assignment sources
  */

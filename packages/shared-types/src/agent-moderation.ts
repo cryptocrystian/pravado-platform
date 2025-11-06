@@ -73,11 +73,6 @@ export interface ModerationResult {
   timestamp: Date;
 }
 
-;
-  reason: string;
-  suggestedFix?: string;
-}
-
 /**
  * Input for moderation
  */

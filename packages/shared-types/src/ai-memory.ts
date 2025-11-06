@@ -301,12 +301,6 @@ export interface ContextInjectionInput {
 }
 
 /**
- * Context injection result
- */
-;
-}
-
-/**
  * Memory compression request
  */
 export interface MemoryCompressionRequest {

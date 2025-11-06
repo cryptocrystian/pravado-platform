@@ -3,9 +3,9 @@
 // =====================================================
 
 /**
- * Task status enumeration
+ * Execution graph task status enumeration
  */
-export enum TaskStatus {
+export enum GraphTaskStatus {
   PENDING = 'PENDING',
   RUNNING = 'RUNNING',
   COMPLETED = 'COMPLETED',
@@ -38,7 +38,7 @@ export interface CampaignTaskGraph {
   dependsOn: string[];
 
   // Execution state
-  status: TaskStatus;
+  status: GraphTaskStatus;
   output: Record<string, any> | null;
   errorMessage: string | null;
 
@@ -74,7 +74,7 @@ export interface CampaignTaskExecution {
   agentRunId: string | null;
 
   // Execution details
-  status: TaskStatus;
+  status: GraphTaskStatus;
   input: Record<string, any> | null;
   output: Record<string, any> | null;
   errorMessage: string | null;
@@ -116,7 +116,7 @@ export interface ExecutableTask {
  */
 export interface StatusPropagationResult {
   nodeId: string;
-  newStatus: TaskStatus;
+  newStatus: GraphTaskStatus;
   affectedCount: number;
   downstreamNodes: string[];
 }
@@ -143,7 +143,7 @@ export interface ExecutionSummary {
  */
 export interface TaskExecutionResult {
   nodeId: string;
-  status: TaskStatus;
+  status: GraphTaskStatus;
   output?: Record<string, any>;
   error?: string;
   errorStack?: string;
@@ -185,7 +185,7 @@ export interface CreateTaskGraphNodeInput {
 export interface UpdateTaskStatusInput {
   campaignId: string;
   nodeId: string;
-  status: TaskStatus;
+  status: GraphTaskStatus;
   output?: Record<string, any>;
   errorMessage?: string;
   organizationId: string;
@@ -200,7 +200,7 @@ export interface CreateTaskExecutionInput {
   nodeId: string;
   agentId?: string;
   agentRunId?: string;
-  status: TaskStatus;
+  status: GraphTaskStatus;
   input?: Record<string, any>;
   output?: Record<string, any>;
   errorMessage?: string;
@@ -247,7 +247,7 @@ export interface SkipTaskResult {
 export interface TaskExecutionLog {
   nodeId: string;
   taskType: string;
-  status: TaskStatus;
+  status: GraphTaskStatus;
   attempts: CampaignTaskExecution[];
   totalAttempts: number;
   totalDurationMs: number;
@@ -382,7 +382,7 @@ export interface GraphEvent {
     | 'graph-failed';
   campaignId: string;
   nodeId?: string;
-  status?: TaskStatus;
+  status?: GraphTaskStatus;
   data?: Record<string, any>;
   timestamp: Date;
 }
@@ -412,7 +412,7 @@ export interface GraphVisualizationNode {
   id: string;
   label: string;
   type: string;
-  status: TaskStatus;
+  status: GraphTaskStatus;
   dependencies: string[];
   metadata?: Record<string, any>;
 }

@@ -16,7 +16,7 @@ export enum GoalStatus {
 /**
  * Task status enumeration
  */
-export enum TaskStatus {
+export enum PlanTaskStatus {
   PENDING = 'PENDING',
   IN_PROGRESS = 'IN_PROGRESS',
   COMPLETED = 'COMPLETED',
@@ -119,7 +119,7 @@ export interface AgentTask {
   strategy: TaskStrategy;
 
   // Status
-  status: TaskStatus;
+  status: PlanTaskStatus;
 
   // Execution
   agentExecutionId: string | null;
@@ -164,7 +164,7 @@ export interface CreateAgentTaskInput {
  * Input for updating a task
  */
 export interface UpdateAgentTaskInput {
-  status?: TaskStatus;
+  status?: PlanTaskStatus;
   outputSummary?: string;
   outputData?: Record<string, any>;
   errorMessage?: string;
@@ -178,7 +178,7 @@ export interface GraphNode {
   id: string;
   taskId: string | null;
   type: 'START' | 'TASK' | 'DECISION' | 'END';
-  status: TaskStatus;
+  status: PlanTaskStatus;
   data: Record<string, any>;
   position?: { x: number; y: number }; // For visualization
 }
@@ -271,7 +271,7 @@ export interface GoalSummary {
  */
 export interface TaskExecutionResult {
   taskId: string;
-  status: TaskStatus;
+  status: PlanTaskStatus;
   outputSummary: string | null;
   outputData: Record<string, any> | null;
   errorMessage: string | null;

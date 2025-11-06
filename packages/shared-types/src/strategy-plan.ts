@@ -24,9 +24,9 @@ export interface StrategyPlan {
   type: string;
   status: string;
   goals: StrategyGoal[];
-  tactics: StrategyTactic[];
-  timeline: StrategyTimeline;
-  budget: StrategyBudget | null;
+  tactics: PlanTactic[];
+  timeline: PlanTimeline;
+  budget: PlanBudget | null;
   metrics: Record<string, unknown>;
   organizationId: string;
   ownerId: string | null;
@@ -49,7 +49,7 @@ export interface StrategyGoal {
   priority: number;
 }
 
-export interface StrategyTactic {
+export interface PlanTactic {
   id: string;
   name: string;
   description: string;
@@ -59,7 +59,7 @@ export interface StrategyTactic {
   kpis: string[];
 }
 
-export interface StrategyTimeline {
+export interface PlanTimeline {
   startDate: Date;
   endDate: Date | null;
   milestones: StrategyMilestone[];
@@ -83,7 +83,7 @@ export interface StrategyPhase {
   objectives: string[];
 }
 
-export interface StrategyBudget {
+export interface PlanBudget {
   total: number;
   allocated: number;
   spent: number;
@@ -106,9 +106,9 @@ export type CreateStrategyPlanInput = Pick<
   ownerId?: string;
   parentStrategyId?: string;
   goals?: Omit<StrategyGoal, 'id' | 'currentValue'>[];
-  tactics?: Omit<StrategyTactic, 'id'>[];
-  timeline?: Partial<StrategyTimeline>;
-  budget?: Omit<StrategyBudget, 'spent'>;
+  tactics?: Omit<PlanTactic, 'id'>[];
+  timeline?: Partial<PlanTimeline>;
+  budget?: Omit<PlanBudget, 'spent'>;
 };
 
 export type UpdateStrategyPlanInput = Partial<

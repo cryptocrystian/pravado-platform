@@ -81,6 +81,7 @@ export enum Permission {
 
 export const RolePermissions: Record<UserRole, Permission[]> = {
   [UserRole.ADMIN]: Object.values(Permission),
+  [UserRole.DEVELOPER]: Object.values(Permission),
   [UserRole.MANAGER]: [
     Permission.USER_READ,
     Permission.USER_WRITE,
@@ -94,12 +95,77 @@ export const RolePermissions: Record<UserRole, Permission[]> = {
     Permission.AGENT_EXECUTE,
     Permission.AGENT_MANAGE,
   ],
+  [UserRole.AGENT]: [
+    Permission.CAMPAIGN_READ,
+    Permission.CAMPAIGN_WRITE,
+    Permission.CONTENT_READ,
+    Permission.CONTENT_WRITE,
+    Permission.AGENT_EXECUTE,
+  ],
+  [UserRole.CAMPAIGN_MANAGER]: [
+    Permission.USER_READ,
+    Permission.CAMPAIGN_READ,
+    Permission.CAMPAIGN_WRITE,
+    Permission.CAMPAIGN_DELETE,
+    Permission.CONTENT_READ,
+    Permission.CONTENT_WRITE,
+    Permission.AGENT_EXECUTE,
+  ],
+  [UserRole.CONTENT_CREATOR]: [
+    Permission.CAMPAIGN_READ,
+    Permission.CONTENT_READ,
+    Permission.CONTENT_WRITE,
+    Permission.CONTENT_PUBLISH,
+  ],
+  [UserRole.EDITOR]: [
+    Permission.CAMPAIGN_READ,
+    Permission.CONTENT_READ,
+    Permission.CONTENT_WRITE,
+    Permission.CONTENT_PUBLISH,
+    Permission.CONTENT_DELETE,
+  ],
+  [UserRole.STRATEGIST]: [
+    Permission.CAMPAIGN_READ,
+    Permission.CAMPAIGN_WRITE,
+    Permission.CONTENT_READ,
+    Permission.AGENT_EXECUTE,
+  ],
+  [UserRole.ANALYST]: [
+    Permission.USER_READ,
+    Permission.CAMPAIGN_READ,
+    Permission.CONTENT_READ,
+  ],
+  [UserRole.ACCOUNT_MANAGER]: [
+    Permission.USER_READ,
+    Permission.USER_WRITE,
+    Permission.CAMPAIGN_READ,
+    Permission.CAMPAIGN_WRITE,
+    Permission.CONTENT_READ,
+  ],
   [UserRole.CONTRIBUTOR]: [
     Permission.USER_READ,
     Permission.CAMPAIGN_READ,
     Permission.CONTENT_READ,
     Permission.CONTENT_WRITE,
     Permission.AGENT_EXECUTE,
+  ],
+  [UserRole.CLIENT]: [
+    Permission.CAMPAIGN_READ,
+    Permission.CONTENT_READ,
+  ],
+  [UserRole.EXECUTIVE]: [
+    Permission.CAMPAIGN_READ,
+    Permission.CONTENT_READ,
+  ],
+  [UserRole.TEAM_MEMBER]: [
+    Permission.CAMPAIGN_READ,
+    Permission.CONTENT_READ,
+  ],
+  [UserRole.MEDIA_CONTACT]: [
+    Permission.CONTENT_READ,
+  ],
+  [UserRole.GUEST]: [
+    Permission.CONTENT_READ,
   ],
   [UserRole.VIEWER]: [
     Permission.USER_READ,

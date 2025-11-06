@@ -4,14 +4,7 @@
 // Types for PR campaign management, press releases, and pitch tracking
 
 import { ContactTier } from './contact';
-
-export enum CampaignStatus {
-  PLANNED = 'PLANNED',
-  ACTIVE = 'ACTIVE',
-  PAUSED = 'PAUSED',
-  COMPLETED = 'COMPLETED',
-  CANCELLED = 'CANCELLED',
-}
+import { CampaignStatus } from './campaign';
 
 export enum PressReleaseStatus {
   DRAFT = 'DRAFT',

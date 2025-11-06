@@ -30,6 +30,13 @@ export enum VoiceMode {
 /**
  * Confidence levels for persona assignment
  */
+export enum ConfidenceLevel {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  VERY_HIGH = 'very_high',
+}
+
 /**
  * Assignment sources
  */
@@ -598,6 +605,13 @@ export const VOICE_MODE_CONFIGS: Record<VoiceMode, VoiceModeConfig> = {
 };
 
 export const CONFIDENCE_LEVEL_CONFIGS: Record<ConfidenceLevel, ConfidenceLevelConfig> = {
+  [ConfidenceLevel.VERY_HIGH]: {
+    level: ConfidenceLevel.VERY_HIGH,
+    label: 'Very High',
+    color: '#10B981',
+    minScore: 0.9,
+    maxScore: 1.0,
+  },
   [ConfidenceLevel.HIGH]: {
     level: ConfidenceLevel.HIGH,
     label: 'High Confidence',

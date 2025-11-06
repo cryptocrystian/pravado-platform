@@ -196,7 +196,7 @@ export interface MetricsSnapshot {
   sentiment?: SentimentMetrics;
   agents?: AgentMetrics;
   tasks?: TaskMetrics;
-  goals?: GoalMetrics;
+  goals?: ReportingGoalMetrics;
   custom?: Record<string, unknown>;
 }
 

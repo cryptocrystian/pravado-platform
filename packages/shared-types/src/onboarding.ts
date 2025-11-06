@@ -3,6 +3,7 @@
 // =====================================================
 // Types for the AI-driven onboarding session management
 
+import { AgentType } from './agent';
 import { IntakeStep } from './intake';
 
 export enum OnboardingStatus {

@@ -13,8 +13,8 @@ import {
 // ENUMS
 // =====================================================
 
-export const CampaignStatusSchema = z.nativeEnum(AutonomousCampaignStatus);
-export const CampaignTypeSchema = z.nativeEnum(AutonomousCampaignType);
+export const AutonomousCampaignStatusSchema = z.nativeEnum(AutonomousCampaignStatus);
+export const AutonomousCampaignTypeSchema = z.nativeEnum(AutonomousCampaignType);
 export const CampaignTaskTypeSchema = z.nativeEnum(CampaignTaskType);
 
 // =====================================================
@@ -116,10 +116,10 @@ export const AutonomousCampaignSchema = z.object({
   // Campaign metadata
   title: z.string(),
   description: z.string().nullable(),
-  campaignType: CampaignTypeSchema,
+  campaignType: AutonomousCampaignTypeSchema,
 
   // Lifecycle
-  status: CampaignStatusSchema,
+  status: AutonomousCampaignStatusSchema,
   agentCreated: z.boolean(),
 
   // Agent information
@@ -190,7 +190,7 @@ export const CampaignTemplateSchema = z.object({
   // Template metadata
   name: z.string().min(1).max(255),
   description: z.string().nullable(),
-  campaignType: CampaignTypeSchema,
+  campaignType: AutonomousCampaignTypeSchema,
 
   // Template configuration
   templateConfig: z.record(z.any()),
@@ -251,7 +251,7 @@ export const CampaignStatisticsSchema = z.object({
 export const CreateAutonomousCampaignInputSchema = z.object({
   title: z.string().min(1).max(500).optional(),
   description: z.string().max(5000).optional(),
-  campaignType: CampaignTypeSchema.default(CampaignType.CUSTOM),
+  campaignType: AutonomousCampaignTypeSchema.default(AutonomousCampaignType.CUSTOM),
   originalPrompt: z.string().min(10, 'Campaign prompt must be at least 10 characters').max(5000),
   requiresApproval: z.boolean().default(false),
   scheduledStart: z.date().optional(),
@@ -262,7 +262,7 @@ export const CreateAutonomousCampaignInputSchema = z.object({
 export const UpdateAutonomousCampaignInputSchema = z.object({
   title: z.string().min(1).max(500).optional(),
   description: z.string().max(5000).optional(),
-  status: CampaignStatusSchema.optional(),
+  status: AutonomousCampaignStatusSchema.optional(),
   planningOutput: CampaignPlanningOutputSchema.optional(),
   executionMetadata: ExecutionMetadataSchema.optional(),
   qualityScore: z.number().min(0).max(1).optional(),
@@ -271,7 +271,7 @@ export const UpdateAutonomousCampaignInputSchema = z.object({
 
 export const CampaignPlanningRequestSchema = z.object({
   prompt: z.string().min(10).max(5000),
-  campaignType: CampaignTypeSchema.optional(),
+  campaignType: AutonomousCampaignTypeSchema.optional(),
   constraints: z.object({
     maxContacts: z.number().int().positive().optional(),
     maxBudget: z.number().positive().optional(),
@@ -295,6 +295,6 @@ export const CampaignProgressUpdateSchema = z.object({
   currentTask: z.string(),
   completedTasks: z.number().int().min(0),
   totalTasks: z.number().int().min(1),
-  status: CampaignStatusSchema,
+  status: AutonomousCampaignStatusSchema,
   errors: z.array(z.string()),
 });

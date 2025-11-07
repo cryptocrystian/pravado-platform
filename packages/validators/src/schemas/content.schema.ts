@@ -84,7 +84,7 @@ export const UpdateContentInputSchema = z.object({
 
 export const ContentItemStatusSchema = z.nativeEnum(ContentItemStatus);
 export const ContentFormatSchema = z.nativeEnum(ContentFormat);
-export const TaskStatusSchema = z.nativeEnum(TaskStatus);
+export const ContentTaskStatusSchema = z.nativeEnum(TaskStatus);
 export const TaskTypeSchema = z.nativeEnum(TaskType);
 
 // =====================================================
@@ -139,7 +139,7 @@ export const CreateContentItemSchema = z.object({
   slug: z.string().max(500).optional(),
   excerpt: z.string().max(1000).optional(),
   bodyMd: z.string().max(100000).optional(),
-  status: ContentItemStatusSchema.default('IDEA'),
+  status: ContentItemStatusSchema.default(ContentItemStatus.IDEA),
   format: ContentFormatSchema,
   scheduledDate: z.coerce.date().optional(),
   metaTitle: z.string().max(200).optional(),
@@ -231,7 +231,7 @@ export const CreateContentTaskSchema = z.object({
   title: z.string().min(1).max(255),
   description: z.string().max(5000).optional(),
   type: TaskTypeSchema,
-  status: TaskStatusSchema.default('TODO'),
+  status: ContentTaskStatusSchema.default(TaskStatus.TODO),
   priority: z.number().int().min(1).max(5).default(3),
   dueDate: z.coerce.date().optional(),
   assignedTo: z.string().uuid().optional(),
@@ -246,7 +246,7 @@ export const UpdateContentTaskSchema = z.object({
   title: z.string().min(1).max(255).optional(),
   description: z.string().max(5000).optional(),
   type: TaskTypeSchema.optional(),
-  status: TaskStatusSchema.optional(),
+  status: ContentTaskStatusSchema.optional(),
   priority: z.number().int().min(1).max(5).optional(),
   dueDate: z.coerce.date().optional(),
   completedAt: z.coerce.date().optional(),

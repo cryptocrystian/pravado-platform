@@ -3,7 +3,6 @@
 // =====================================================
 
 export * from './schemas/user.schema';
-export * from './schemas/auth.schema';
 export * from './schemas/campaign.schema';
 export * from './schemas/content.schema';
 export * from './schemas/contact.schema';

@@ -235,7 +235,7 @@ export const EnrichmentResultSchema = z.object({
 // INTERACTION SCHEMAS
 // =====================================================
 
-export const ContactInteractionSchema = z.object({
+export const SimpleContactInteractionSchema = z.object({
   id: z.string().uuid(),
   contactId: z.string().uuid(),
   interactionType: z.string().min(1).max(50),

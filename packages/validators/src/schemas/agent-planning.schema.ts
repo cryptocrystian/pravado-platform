@@ -9,8 +9,8 @@ import { AgentGoalStatus, PlanTaskStatus, TaskStrategy } from '@pravado/types';
 // ENUMS
 // =====================================================
 
-export const GoalStatusSchema = z.nativeEnum(AgentGoalStatus);
-export const TaskStatusSchema = z.nativeEnum(PlanTaskStatus);
+export const AgentGoalStatusSchema = z.nativeEnum(AgentGoalStatus);
+export const PlanTaskStatusSchema = z.nativeEnum(PlanTaskStatus);
 export const TaskStrategySchema = z.nativeEnum(TaskStrategy);
 
 // =====================================================
@@ -34,7 +34,7 @@ export const CreateAgentGoalInputSchema = z.object({
 export const UpdateAgentGoalInputSchema = z.object({
   title: z.string().min(1).max(500).optional(),
   description: z.string().max(5000).optional(),
-  status: GoalStatusSchema.optional(),
+  status: AgentGoalStatusSchema.optional(),
   priority: z.number().int().min(1).max(10).optional(),
   tags: z.array(z.string()).optional(),
   dueDate: z.date().optional(),
@@ -46,7 +46,7 @@ export const AgentGoalSchema = z.object({
   title: z.string(),
   description: z.string().nullable(),
 
-  status: GoalStatusSchema,
+  status: AgentGoalStatusSchema,
   priority: z.number().int().min(1).max(10),
 
   tags: z.array(z.string()),
@@ -90,7 +90,7 @@ export const CreateAgentTaskInputSchema = z.object({
 });
 
 export const UpdateAgentTaskInputSchema = z.object({
-  status: TaskStatusSchema.optional(),
+  status: PlanTaskStatusSchema.optional(),
   outputSummary: z.string().max(5000).optional(),
   outputData: z.record(z.any()).optional(),
   errorMessage: z.string().max(2000).optional(),
@@ -108,7 +108,7 @@ export const AgentTaskSchema = z.object({
   description: z.string().nullable(),
   strategy: TaskStrategySchema,
 
-  status: TaskStatusSchema,
+  status: PlanTaskStatusSchema,
 
   agentExecutionId: z.string().nullable(),
   outputSummary: z.string().nullable(),
@@ -136,7 +136,7 @@ export const GraphNodeSchema = z.object({
   id: z.string(),
   taskId: z.string().nullable(),
   type: z.enum(['START', 'TASK', 'DECISION', 'END']),
-  status: TaskStatusSchema,
+  status: PlanTaskStatusSchema,
   data: z.record(z.any()),
   position: z.object({ x: z.number(), y: z.number() }).optional(),
 });
@@ -180,7 +180,7 @@ export const ExecutionGraphSchema = z.object({
   failedNodes: z.number().int().min(0),
   maxDepth: z.number().int().min(0).max(20),
 
-  executionStatus: GoalStatusSchema,
+  executionStatus: AgentGoalStatusSchema,
   currentNodeId: z.string().nullable(),
 
   createdAt: z.date(),
@@ -218,7 +218,7 @@ export const GraphTraversalOptionsSchema = z.object({
 export const GoalSummarySchema = z.object({
   goalId: z.string().uuid(),
   title: z.string(),
-  status: GoalStatusSchema,
+  status: AgentGoalStatusSchema,
   totalTasks: z.number().int().min(0),
   pendingTasks: z.number().int().min(0),
   inProgressTasks: z.number().int().min(0),
@@ -228,7 +228,7 @@ export const GoalSummarySchema = z.object({
 
 export const TaskExecutionResultSchema = z.object({
   taskId: z.string().uuid(),
-  status: TaskStatusSchema,
+  status: PlanTaskStatusSchema,
   outputSummary: z.string().nullable(),
   outputData: z.record(z.any()).nullable(),
   errorMessage: z.string().nullable(),
@@ -241,6 +241,6 @@ export const GraphExecutionProgressSchema = z.object({
   completedNodes: z.number().int().min(0),
   totalNodes: z.number().int().min(0),
   failedNodes: z.number().int().min(0),
-  status: GoalStatusSchema,
+  status: AgentGoalStatusSchema,
   errors: z.array(z.string()),
 });

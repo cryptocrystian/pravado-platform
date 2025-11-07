@@ -10,7 +10,7 @@ import { ContactTier } from '@pravado/types';
 // ENUMS
 // =====================================================
 
-export const CampaignStatusSchema = z.enum([
+export const PRCampaignStatusSchema = z.enum([
   'PLANNED',
   'ACTIVE',
   'PAUSED',
@@ -28,7 +28,7 @@ export const PressReleaseStatusSchema = z.enum([
   'CANCELLED',
 ]);
 
-export const InteractionTypeSchema = z.enum([
+export const PRCampaignInteractionTypeSchema = z.enum([
   'PITCH_SENT',
   'EMAIL_OPENED',
   'LINK_CLICKED',
@@ -47,7 +47,7 @@ export const CreatePRCampaignSchema = z.object({
   title: z.string().min(1).max(500),
   description: z.string().max(5000).optional(),
   goal: z.string().max(1000).optional(),
-  status: CampaignStatusSchema.default('PLANNED'),
+  status: PRCampaignStatusSchema.default('PLANNED'),
   startDate: z.coerce.date().optional(),
   endDate: z.coerce.date().optional(),
   targetImpressions: z.number().int().positive().optional(),
@@ -77,7 +77,7 @@ export const UpdatePRCampaignSchema = z.object({
   title: z.string().min(1).max(500).optional(),
   description: z.string().max(5000).optional(),
   goal: z.string().max(1000).optional(),
-  status: CampaignStatusSchema.optional(),
+  status: PRCampaignStatusSchema.optional(),
   startDate: z.coerce.date().optional(),
   endDate: z.coerce.date().optional(),
   targetImpressions: z.number().int().positive().optional(),
@@ -176,7 +176,7 @@ export const CreateCampaignInteractionSchema = z.object({
   campaignId: z.string().uuid(),
   pressReleaseId: z.string().uuid().optional(),
   contactId: z.string().uuid(),
-  interactionType: InteractionTypeSchema,
+  interactionType: PRCampaignInteractionTypeSchema,
   channel: z.string().max(100).optional(),
   pitchSubject: z.string().max(500).optional(),
   pitchBody: z.string().max(10000).optional(),

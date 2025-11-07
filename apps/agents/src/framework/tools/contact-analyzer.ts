@@ -3,7 +3,7 @@
 // =====================================================
 // Analyze and score contacts for targeting
 
-import { AgentTool, AgentContext } from '@pravado/shared-types';
+import { AgentTool, AgentContext } from '@pravado/types';
 import { supabase } from '../../lib/supabase';
 import { logger } from '../../lib/logger';
 

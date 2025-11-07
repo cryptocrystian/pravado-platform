@@ -5,7 +5,7 @@
 import { Request, Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import * as service from '../services/agent-template.service';
-import { CreateAgentTemplateInput, UpdateAgentTemplateInput } from '@pravado/shared-types';
+import { CreateAgentTemplateInput, UpdateAgentTemplateInput } from '@pravado/types';
 import { z } from 'zod';
 
 // =====================================================

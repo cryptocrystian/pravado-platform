@@ -10,7 +10,7 @@ import type {
   GetTimelineStatsInput,
   TimelineEventType,
   TimelineEntityType,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // TIMELINE QUERIES

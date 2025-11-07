@@ -27,7 +27,7 @@ import type {
   MemoryCompressionResult,
   MemoryAgingMetrics,
   MemoryLifecycleEvent,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const supabaseUrl = process.env.SUPABASE_URL || '';
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';

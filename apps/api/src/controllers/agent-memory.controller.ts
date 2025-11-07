@@ -17,7 +17,7 @@ import type {
   SummarizeMemoryInput,
   CompressMemoryInput,
   LogMemoryEventInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // MEMORY EPISODE ENDPOINTS

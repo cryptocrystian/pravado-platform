@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { NotFoundError } from '@pravado/utils';
-import type { UpdateUserInput } from '@pravado/shared-types';
+import type { UpdateUserInput } from '@pravado/types';
 
 class UserService {
   async getUserById(id: string) {

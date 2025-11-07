@@ -10,7 +10,7 @@ import type {
   ReadinessStatus,
   CampaignTargetingSummary,
   TargetingMode,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 /**
  * Campaign Readiness Engine

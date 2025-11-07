@@ -16,7 +16,7 @@ import {
   CreatePitchEventInput,
   PitchWorkflowStatus,
   PitchJobStatus,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { runAgent } from '../../../agents/src/framework/agent-runner';
 import { getAgentConfig } from '../../../agents/src/framework/agent-registry';
 

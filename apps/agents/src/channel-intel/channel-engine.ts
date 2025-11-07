@@ -25,7 +25,7 @@ import type {
   ChannelType,
   EngagementType,
   EngagementSentiment,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { timelineEngine } from '../timeline/timeline-engine';
 
 // Initialize clients

@@ -9,7 +9,7 @@ import type {
   RecalculateLeadScoreInput,
   UpdateLeadStageInput,
   SummarizeLeadPerformanceInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // SCORE MANAGEMENT ENDPOINTS

@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { NotFoundError } from '@pravado/utils';
-import type { CreateCampaignInput, UpdateCampaignInput } from '@pravado/shared-types';
+import type { CreateCampaignInput, UpdateCampaignInput } from '@pravado/types';
 
 class CampaignService {
   async getCampaigns(organizationId: string, filters: Record<string, unknown>) {

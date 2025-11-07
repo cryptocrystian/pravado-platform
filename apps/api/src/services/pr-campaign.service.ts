@@ -23,7 +23,7 @@ import {
   GeneratedPitch,
   RecommendedTarget,
   Contact,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

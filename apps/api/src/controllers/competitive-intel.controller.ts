@@ -18,7 +18,7 @@ import type {
   SummarizeCompetitorInput,
   SummarizeMarketInput,
   GetDashboardInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // COMPETITOR ENDPOINTS

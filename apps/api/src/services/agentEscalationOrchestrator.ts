@@ -29,7 +29,7 @@ import type {
   AgentHandoffStats,
   AgentAvailability,
   AgentSelectionCriteria,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // AGENT ESCALATION ORCHESTRATOR CLASS

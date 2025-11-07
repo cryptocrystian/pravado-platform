@@ -29,7 +29,7 @@ import type {
   ModelScope,
   TOKEN_ESTIMATION,
   PROMPT_VALIDATION_THRESHOLDS,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // Initialize clients
 const supabase = createClient(

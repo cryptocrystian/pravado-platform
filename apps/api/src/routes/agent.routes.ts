@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { agentController } from '../controllers/agent.controller';
 import { authenticate, authorize } from '../middleware/auth';
-import { Permission } from '@pravado/shared-types';
+import { Permission } from '@pravado/types';
 
 const router = Router();
 

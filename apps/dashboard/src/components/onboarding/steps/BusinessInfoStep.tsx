@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BusinessInfoSchema } from '@pravado/types';
+import { BusinessInfoSchema } from '@pravado/validators';
 
 interface BusinessInfoStepProps {
   initialData?: any;

@@ -28,7 +28,7 @@ import type {
   SyncStatus,
   PlaybookMappingSource,
   BehaviorAlignment,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { db } from '../database';
 
 /**

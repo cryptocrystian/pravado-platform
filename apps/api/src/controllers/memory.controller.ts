@@ -11,7 +11,7 @@ import type {
   LinkKGNodesInput,
   MemorySearchRequest,
   KGNodeType,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 /**
  * Store memory manually

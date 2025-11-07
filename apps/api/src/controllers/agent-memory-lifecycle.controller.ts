@@ -16,7 +16,7 @@ import type {
   GetRetentionPlanInput,
   ReinforceMemoryInput,
   GetLifecycleDashboardInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // AGING ENDPOINTS

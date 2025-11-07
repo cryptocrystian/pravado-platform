@@ -17,7 +17,7 @@ import {
   AgentCollaborationLogEntity,
   FindAgentRequest,
   AgentMatch,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { agentPlaybookOrchestrator } from './agentPlaybookOrchestrator';
 import { playbookExecutionEngine } from './playbookExecutionEngine';
 import { OpenAI } from 'openai';

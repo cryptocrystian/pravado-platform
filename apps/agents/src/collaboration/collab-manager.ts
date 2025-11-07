@@ -12,7 +12,7 @@ import type {
   CollaborationScope,
   CollaborationStatus,
   CollaborationSummary,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../../../api/src/lib/logger';
 
 const supabaseUrl = process.env.SUPABASE_URL!;

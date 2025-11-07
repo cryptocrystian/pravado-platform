@@ -5,7 +5,7 @@
 
 import { Router, Request, Response } from 'express';
 import { AgentDebugService } from '../services/agentDebugService';
-import { LogTraceRequest, TraceSearchFilters } from '@pravado/shared-types';
+import { LogTraceRequest, TraceSearchFilters } from '@pravado/types';
 
 const router = Router();
 

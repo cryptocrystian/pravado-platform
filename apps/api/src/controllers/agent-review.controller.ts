@@ -9,13 +9,13 @@ import type {
   UpdateAgentReviewInput,
   SubmitReviewDecisionInput,
   CreateReviewCommentInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import {
   CreateAgentReviewInputSchema,
   UpdateAgentReviewInputSchema,
   SubmitReviewDecisionInputSchema,
   CreateReviewCommentInputSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // REVIEW CRUD OPERATIONS

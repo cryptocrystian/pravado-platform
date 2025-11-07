@@ -10,7 +10,7 @@ import type {
   TakeTurnInput,
   InterruptDialogueInput,
   ResolveInterruptionInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

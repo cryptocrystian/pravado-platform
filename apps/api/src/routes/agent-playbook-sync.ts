@@ -11,7 +11,7 @@ import type {
   AutoCorrectDriftInput,
   SyncLogQuery,
   DriftLogQuery,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

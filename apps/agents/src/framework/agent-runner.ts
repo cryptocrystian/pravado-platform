@@ -15,7 +15,7 @@ import {
   AgentTool,
   AgentMemory,
   MemoryType,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { memoryStore, calculateMemoryImportance } from '../memory';
 import { collabManager, handoffEngine, messageCenter } from '../collaboration';
 import { reviewEngine } from '../review/review-engine';
@@ -29,7 +29,7 @@ import type {
   AgentReview,
   GoalContextForAgent,
   AttributionEventType,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 

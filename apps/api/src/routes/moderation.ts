@@ -11,7 +11,7 @@ import {
   FlagClientRequest,
   BanTokenRequest,
   ExportFormat,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = Router();
 

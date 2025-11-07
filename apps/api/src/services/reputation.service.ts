@@ -20,7 +20,7 @@ import type {
   MentionTrendsResponse,
   MonitoringStats,
   SimilarMention,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export class ReputationService {
   // =====================================================

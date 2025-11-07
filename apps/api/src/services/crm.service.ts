@@ -24,7 +24,7 @@ import type {
   InteractionChannel,
   InteractionSentiment,
   InteractionDirection,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export class CRMService {
   // =====================================================

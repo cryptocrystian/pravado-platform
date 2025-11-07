@@ -2,7 +2,7 @@
 // AGENT REGISTRY - Centralized Agent Management
 // =====================================================
 
-import { AgentCategory, AgentRunnerConfig, AgentTool } from '@pravado/shared-types';
+import { AgentCategory, AgentRunnerConfig, AgentTool } from '@pravado/types';
 import { logger } from '../lib/logger';
 
 // =====================================================

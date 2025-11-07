@@ -11,7 +11,7 @@ import type {
   CreateReportTemplateInput,
   UpdateReportTemplateInput,
   GenerateSummaryInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const supabase = createClient(
   process.env.SUPABASE_URL || '',

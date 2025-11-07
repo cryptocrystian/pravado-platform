@@ -16,7 +16,7 @@ import type {
   UpdateContactTagInput,
   TriggerEnrichmentInput,
   ContactStats,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export class ContactService {
   /**

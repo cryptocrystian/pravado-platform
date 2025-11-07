@@ -15,7 +15,7 @@ import {
   UpdatePitchTemplateSchema,
   GeneratePitchRequestSchema,
   GetRecommendedTargetsSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import * as campaignService from '../services/pr-campaign.service';
 
 // =====================================================

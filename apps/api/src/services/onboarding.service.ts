@@ -11,7 +11,7 @@ import {
   type CreateOnboardingSessionInput,
   type UpdateOnboardingSessionInput,
   type CreateIntakeResponseInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export class OnboardingService {
   /**

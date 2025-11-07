@@ -14,7 +14,7 @@ import type {
   OverrideToneInput,
   UpdatePersonaFromEngagementInput,
   GetAdaptiveStrategyInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const supabase = createClient(
   process.env.SUPABASE_URL || '',

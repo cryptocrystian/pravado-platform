@@ -19,7 +19,7 @@ import {
   TracePerformanceMetrics,
   TraceSeverity,
   TraceNodeType,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export class AgentDebugService {
   /**

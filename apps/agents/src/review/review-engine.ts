@@ -17,12 +17,12 @@ import type {
   ReviewDecisionResult,
   CreateReviewCommentInput,
   ReviewComment,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import {
   CreateAgentReviewInputSchema,
   UpdateAgentReviewInputSchema,
   SubmitReviewDecisionInputSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { memoryService } from '../memory/memory-service';
 import { EventEmitter } from 'events';
 

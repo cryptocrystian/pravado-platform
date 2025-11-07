@@ -1,9 +1,7 @@
 // =====================================================
 // CAMPAIGN EXECUTION GRAPH TEMPLATES
 // =====================================================
-// Predef
-
-ined DAG templates for common campaign types
+// Predefined DAG templates for common campaign types
 
 import type {
   ExecutionGraphData,
@@ -11,7 +9,7 @@ import type {
   GraphEdge,
   CampaignType,
   CampaignPlanningOutput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../lib/logger';
 
 /**

@@ -22,7 +22,7 @@ import type {
   VoiceMode,
   AssignmentSource,
   ConfidenceLevel,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { timelineEngine } from '../timeline/timeline-engine';
 
 // Initialize clients

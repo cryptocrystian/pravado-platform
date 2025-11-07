@@ -1,4 +1,4 @@
-import type { AgentType, AgentContext } from '@pravado/shared-types';
+import type { AgentType, AgentContext } from '@pravado/types';
 
 export interface AgentJobData {
   taskId: string;

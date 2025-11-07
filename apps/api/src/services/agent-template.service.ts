@@ -15,7 +15,7 @@ import {
   CreateAgentExecutionResultInput,
   AgentStats,
   AgentExecutionStatus,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // AGENT TEMPLATES

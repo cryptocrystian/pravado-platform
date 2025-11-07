@@ -14,7 +14,7 @@ import type {
   APILogEvent,
   APIAnalytics,
   APIRequestStatus,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { db } from '../database';
 import { webhookDispatcherService } from './webhookDispatcherService';
 

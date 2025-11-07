@@ -15,7 +15,8 @@
     "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
-    "@pravado/shared-types": "workspace:*",
+    "@pravado/types": "workspace:*",
+    "@pravado/validators": "workspace:*",
     "@pravado/utils": "workspace:*",
     "@supabase/supabase-js": "^2.39.7",
     "bullmq": "^5.1.9",

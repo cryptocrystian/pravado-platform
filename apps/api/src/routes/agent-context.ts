@@ -17,7 +17,7 @@ import type {
   MemorySummary,
   ContextInjectionResult,
   MemoryScope,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

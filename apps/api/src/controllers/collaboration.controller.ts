@@ -9,7 +9,7 @@ import type {
   CreateCollaborationThreadInput,
   CreateCollaborationCommentInput,
   SummarizeThreadInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // HANDOFF ENDPOINTS

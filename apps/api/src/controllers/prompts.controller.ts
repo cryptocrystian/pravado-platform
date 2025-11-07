@@ -15,7 +15,7 @@ import type {
   BlockType,
   UseCaseTag,
   ModelScope,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // PROMPT BLOCK ENDPOINTS

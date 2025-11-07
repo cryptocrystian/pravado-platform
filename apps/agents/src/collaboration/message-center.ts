@@ -12,7 +12,7 @@ import type {
   MessageRequest,
   EscalationRequest,
   AgentMessageType,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../../../api/src/lib/logger';
 import { EventEmitter } from 'events';
 

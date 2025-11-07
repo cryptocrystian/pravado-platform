@@ -10,7 +10,7 @@ import {
   AnalyticsTimeRange,
   ErrorCategory,
   ErrorSeverity,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = Router();
 const adminAnalyticsService = new AdminAnalyticsService(dbPool);

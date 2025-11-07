@@ -20,7 +20,7 @@ import type {
   AgentConversation,
   AgentMessage,
   AppliedToneStyle,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

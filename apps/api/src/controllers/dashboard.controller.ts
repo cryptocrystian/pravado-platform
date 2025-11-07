@@ -5,7 +5,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import * as service from '../services/dashboard.service';
-import { DashboardFilters, CreateReportSnapshotInput, ScorecardCategory } from '@pravado/shared-types';
+import { DashboardFilters, CreateReportSnapshotInput, ScorecardCategory } from '@pravado/types';
 
 // =====================================================
 // STRATEGY METRICS

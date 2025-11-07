@@ -5,7 +5,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import * as service from '../services/pitch-workflow.service';
-import { CreatePitchWorkflowInput, UpdatePitchWorkflowInput, PitchWorkflowStatus } from '@pravado/shared-types';
+import { CreatePitchWorkflowInput, UpdatePitchWorkflowInput, PitchWorkflowStatus } from '@pravado/types';
 
 // =====================================================
 // WORKFLOWS

@@ -1,4 +1,4 @@
-import { AgentType } from '@pravado/shared-types';
+import { AgentType } from '@pravado/types';
 import type { AgentJobData } from '../types';
 import { logger } from '../lib/logger';
 import { supabase } from '../lib/supabase';

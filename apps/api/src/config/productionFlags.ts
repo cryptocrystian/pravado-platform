@@ -3,7 +3,7 @@
 // Sprint 61 Phase 5.8
 // =====================================================
 
-import { ProductionFlags, SystemLockdown } from '@pravado/shared-types';
+import { ProductionFlags, SystemLockdown } from '@pravado/types';
 
 /**
  * In-memory production flags (can be toggled via API)

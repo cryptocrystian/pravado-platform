@@ -12,8 +12,8 @@ import type {
   AgentBenchmark,
   InsightSummary,
   AgentPerformanceComparison,
-} from '@pravado/shared-types';
-import { CreatePerformanceInsightInputSchema } from '@pravado/shared-types';
+} from '@pravado/types';
+import { CreatePerformanceInsightInputSchema } from '@pravado/types';
 import { memoryService } from '../memory/memory-service';
 
 const supabaseUrl = process.env.SUPABASE_URL!;

@@ -24,7 +24,7 @@ import type {
   LeadStage,
   LeadScoreSource,
   RAGStatus,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { timelineEngine } from '../timeline/timeline-engine';
 
 // Initialize clients

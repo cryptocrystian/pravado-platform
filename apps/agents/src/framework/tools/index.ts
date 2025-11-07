@@ -2,7 +2,7 @@
 // AGENT TOOLS INDEX
 // =====================================================
 
-import { AgentTool } from '@pravado/shared-types';
+import { AgentTool } from '@pravado/types';
 import { dataFetcherTools } from './data-fetcher';
 import { documentWriterTools } from './document-writer';
 import { contactAnalyzerTools } from './contact-analyzer';

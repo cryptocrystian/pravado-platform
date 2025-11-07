@@ -8,7 +8,7 @@ import type {
   AgentGoal,
   GoalStatus,
   GoalSummary,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../lib/logger';
 import { memoryStore } from '../memory';
 

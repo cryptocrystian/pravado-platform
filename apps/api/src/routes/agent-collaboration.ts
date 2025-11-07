@@ -10,7 +10,7 @@ import {
   EscalationRequest,
   DelegationRequest,
   CollaborationRequest,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = Router();
 

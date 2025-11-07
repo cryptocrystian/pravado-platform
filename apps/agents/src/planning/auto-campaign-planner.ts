@@ -15,7 +15,7 @@ import type {
   WorkflowConfig,
   MonitoringSetup,
   CampaignKPIs,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../lib/logger';
 import { memoryStore } from '../memory';
 import { memoryEngine } from '../memory/memory-engine';

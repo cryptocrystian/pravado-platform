@@ -24,7 +24,7 @@ import {
   PermissionCheckResult,
   RoleStatistics,
   UserRoleSummary,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export class RoleAccessService {
   /**

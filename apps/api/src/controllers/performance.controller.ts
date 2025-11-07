@@ -11,7 +11,7 @@ import type {
   CreatePerformanceFeedbackInput,
   ABTestAssignmentRequest,
   RecordExperimentOutcomeInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // PERFORMANCE INSIGHTS

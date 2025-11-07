@@ -27,7 +27,7 @@ import type {
   GoalPriority,
   AttributionEventType,
   GoalStatus,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { timelineEngine } from '../timeline/timeline-engine';
 
 // Initialize Supabase client

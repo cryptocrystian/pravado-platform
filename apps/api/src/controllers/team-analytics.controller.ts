@@ -15,7 +15,7 @@ import type {
   SummarizeTeamPatternsInput,
   RecommendCoachingInput,
   ResolveAnomalyInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // ACTIVITY LOGGING ENDPOINTS

@@ -12,7 +12,7 @@ import {
   UpdateAutonomousCampaignInputSchema,
   CampaignPlanningRequestSchema,
   CampaignExecutionRequestSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;

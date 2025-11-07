@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AuthenticationError, AuthorizationError } from '@pravado/utils';
-import type { JWTPayload, Permission } from '@pravado/shared-types';
-import { RolePermissions } from '@pravado/shared-types';
+import type { JWTPayload, Permission } from '@pravado/types';
+import { RolePermissions } from '@pravado/types';
 
 export interface AuthRequest extends Request {
   user?: JWTPayload;

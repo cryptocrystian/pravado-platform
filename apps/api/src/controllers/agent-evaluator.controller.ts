@@ -17,7 +17,7 @@ import type {
   GetEvaluationDashboardInput,
   RecommendImprovementsInput,
   GetTemplatesInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // EVALUATION ENDPOINTS

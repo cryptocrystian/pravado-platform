@@ -10,7 +10,7 @@ import type {
   ResolveAgentHandoffInput,
   HandoffStatus,
   HandoffRequest,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../../../api/src/lib/logger';
 import { collabManager } from './collab-manager';
 

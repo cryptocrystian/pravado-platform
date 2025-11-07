@@ -12,7 +12,7 @@ import {
   CreateContentTaskSchema,
   UpdateContentTaskSchema,
   GenerateContentIdeasSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import * as contentService from '../services/content.service';
 
 // KEYWORD CLUSTERS

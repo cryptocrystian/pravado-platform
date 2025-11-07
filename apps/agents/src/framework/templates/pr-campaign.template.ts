@@ -2,7 +2,7 @@
 // PR CAMPAIGN AGENT TEMPLATE
 // =====================================================
 
-import { RegisteredAgent, AgentCategory } from '@pravado/shared-types';
+import { RegisteredAgent, AgentCategory } from '@pravado/types';
 import { z } from 'zod';
 
 export const prCampaignTemplate: RegisteredAgent = {

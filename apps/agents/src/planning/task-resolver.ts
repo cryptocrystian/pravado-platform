@@ -4,7 +4,7 @@
 // Resolves tasks using tools and agent capabilities
 
 import { createClient } from '@supabase/supabase-js';
-import type { AgentTask, TaskStatus } from '@pravado/shared-types';
+import type { AgentTask, TaskStatus } from '@pravado/types';
 import { logger } from '../lib/logger';
 
 const supabaseUrl = process.env.SUPABASE_URL!;

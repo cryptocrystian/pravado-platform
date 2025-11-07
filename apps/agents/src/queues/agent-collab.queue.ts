@@ -13,7 +13,7 @@ import type {
   ResolveAgentHandoffInput,
   CreateAgentMessageInput,
   EscalationRequest,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const REDIS_CONNECTION = {
   host: process.env.REDIS_HOST || 'localhost',

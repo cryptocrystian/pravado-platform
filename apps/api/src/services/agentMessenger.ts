@@ -23,7 +23,7 @@ import type {
   AgentPersona,
   PersonalityTone,
   UserAlignment,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // Initialize OpenAI client
 const openai = new OpenAI({

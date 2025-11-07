@@ -22,7 +22,7 @@ import {
   ToneModifier,
   StyleModifier,
   AgentPersonalityProfileEntity,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 /**
  * Agent Personality Engine

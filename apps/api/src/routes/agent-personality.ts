@@ -17,7 +17,7 @@ import type {
   AgentPersona,
   PersonaTraitsAnalytics,
   ApplyPersonalityResult,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

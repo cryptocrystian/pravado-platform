@@ -15,7 +15,7 @@ import type {
   WebhookEventType,
   WebhookDeliveryStatus,
   WebhookAnalytics,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { db } from '../database';
 
 /**

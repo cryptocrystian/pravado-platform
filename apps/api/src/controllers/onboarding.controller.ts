@@ -14,7 +14,7 @@ import {
   CreateOnboardingSessionInputSchema,
   CreateIntakeResponseInputSchema,
   IntakeStepSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 class OnboardingController {
   /**

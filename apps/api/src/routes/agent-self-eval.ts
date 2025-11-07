@@ -11,7 +11,7 @@ import type {
   SelfImprovementInput,
   SelfEvalLogQuery,
   SelfImprovementSuggestionQuery,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

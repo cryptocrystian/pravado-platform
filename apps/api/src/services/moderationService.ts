@@ -23,7 +23,7 @@ import {
   ModeratorPermissions,
   ModerationFlagType,
   ModerationSeverity,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export class ModerationService {
   private db: Pool;

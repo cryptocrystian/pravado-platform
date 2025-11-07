@@ -9,7 +9,7 @@ import type {
   UpdateCampaignGoalInput,
   TrackAttributionEventInput,
   SummarizeGoalPerformanceInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // GOAL MANAGEMENT ENDPOINTS

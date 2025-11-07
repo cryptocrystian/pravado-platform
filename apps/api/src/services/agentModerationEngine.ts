@@ -27,7 +27,7 @@ import type {
   ModerationActionResult,
   AIModerationResponse,
   GuardrailConfig,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // AGENT MODERATION ENGINE CLASS

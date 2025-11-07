@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { CompetitiveInfoSchema } from '@pravado/types';
+import { CompetitiveInfoSchema } from '@pravado/validators';
 
 interface CompetitorsStepProps {
   initialData?: any;

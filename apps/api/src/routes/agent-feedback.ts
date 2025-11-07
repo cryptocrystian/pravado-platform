@@ -5,7 +5,7 @@
 
 import express, { Request, Response } from 'express';
 import { agentFeedbackEngine } from '../services/agentFeedbackEngine';
-import type { AgentFeedbackInput } from '@pravado/shared-types';
+import type { AgentFeedbackInput } from '@pravado/types';
 
 const router = express.Router();
 

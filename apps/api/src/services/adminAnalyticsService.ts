@@ -24,7 +24,7 @@ import {
   WebhookDeliveryPerformance,
   SlowestRequest,
   PerformanceMetricsFilters,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 export class AdminAnalyticsService {
   private db: Pool;

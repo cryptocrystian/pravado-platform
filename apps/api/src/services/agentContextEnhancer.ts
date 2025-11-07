@@ -19,7 +19,7 @@ import {
   SummarizeMemoryRequest,
   ContextInjectionResult,
   AgentMemorySummaryEntity,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { OpenAI } from 'openai';
 
 // Initialize OpenAI client

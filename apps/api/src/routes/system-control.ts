@@ -11,7 +11,7 @@ import {
   FLAG_DESCRIPTIONS,
   validateFlags,
 } from '../config/productionFlags';
-import { LockdownRequest, UnlockRequest, FlagUpdateRequest } from '@pravado/shared-types';
+import { LockdownRequest, UnlockRequest, FlagUpdateRequest } from '@pravado/types';
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { Queue, Worker, QueueEvents } from 'bullmq';
 import { redis } from './redis';
 import { logger } from './logger';
-import type { AgentTask, AgentType } from '@pravado/shared-types';
+import type { AgentTask, AgentType } from '@pravado/types';
 
 const connection = redis;
 

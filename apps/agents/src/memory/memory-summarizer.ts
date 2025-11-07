@@ -10,7 +10,7 @@ import type {
   AgentMemorySnapshot,
   GenerateSnapshotParams,
   CreateMemorySnapshotInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../../../api/src/lib/logger';
 import { memoryStore } from './memory-store';
 

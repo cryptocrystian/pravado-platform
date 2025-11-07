@@ -12,7 +12,7 @@ import type {
   CampaignTaskGraph,
   CampaignTaskExecution,
   TaskExecutionLog,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // Store active graph runners
 const activeRunners = new Map<string, GraphRunner>();

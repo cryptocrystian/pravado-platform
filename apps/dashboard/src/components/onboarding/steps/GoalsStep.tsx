@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { GoalsSchema } from '@pravado/types';
+import { GoalsSchema } from '@pravado/validators';
 
 interface GoalsStepProps {
   initialData?: any;

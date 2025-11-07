@@ -10,7 +10,7 @@ import type {
   CampaignReadinessRequest,
   SuitableContactsRequest,
   UpdateCampaignContactMatchInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 /**
  * Match contacts to campaign

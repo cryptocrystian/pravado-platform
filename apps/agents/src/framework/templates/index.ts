@@ -2,7 +2,7 @@
 // AGENT TEMPLATES INDEX
 // =====================================================
 
-import { RegisteredAgent } from '@pravado/shared-types';
+import { RegisteredAgent } from '@pravado/types';
 import { prCampaignTemplate } from './pr-campaign.template';
 import { contentBriefTemplate } from './content-brief.template';
 

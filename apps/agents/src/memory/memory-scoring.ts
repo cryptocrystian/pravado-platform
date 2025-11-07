@@ -3,7 +3,7 @@
 // =====================================================
 // Calculate importance scores for memories based on multiple factors
 
-import type { ImportanceScoringConfig, MemoryType } from '@pravado/shared-types';
+import type { ImportanceScoringConfig, MemoryType } from '@pravado/types';
 import { logger } from '../../../api/src/lib/logger';
 
 /**

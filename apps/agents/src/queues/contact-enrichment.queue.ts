@@ -21,7 +21,7 @@ const openai = new OpenAI({
 });
 
 // Job Data Interface
-interface ContactEnrichmentJobData {
+export interface ContactEnrichmentJobData {
   jobId: string;
   contactIds: string[];
   organizationId: string;

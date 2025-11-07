@@ -9,7 +9,7 @@ import type {
   ReviewType,
   ReviewPriority,
   ReviewableEntityType,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../lib/logger';
 
 const supabaseUrl = process.env.SUPABASE_URL!;

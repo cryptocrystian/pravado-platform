@@ -18,7 +18,7 @@ import type {
   GetGoalsInput,
   GetGoalTimelineInput,
   GetGoalDashboardInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // GOAL CRUD ENDPOINTS

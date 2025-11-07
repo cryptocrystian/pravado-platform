@@ -10,7 +10,7 @@ import type {
   HandoffToAgentInput,
   FallbackToDefaultInput,
   EscalationHistoryQuery,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

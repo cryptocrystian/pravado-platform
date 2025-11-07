@@ -10,7 +10,7 @@ import type {
   LogModerationEventInput,
   ModerationHistoryQuery,
   ModerationRuleQuery,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

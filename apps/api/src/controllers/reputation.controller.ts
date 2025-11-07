@@ -12,7 +12,7 @@ import {
   CreateMonitoringRuleInputSchema,
   UpdateMonitoringRuleInputSchema,
   SubmitFeedbackInputSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 class ReputationController {
   // =====================================================

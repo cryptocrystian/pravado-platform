@@ -3,7 +3,7 @@
 // =====================================================
 // Generate formatted documents and save to database
 
-import { AgentTool, AgentContext } from '@pravado/shared-types';
+import { AgentTool, AgentContext } from '@pravado/types';
 import { supabase } from '../../lib/supabase';
 import { logger } from '../../lib/logger';
 

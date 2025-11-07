@@ -11,7 +11,7 @@ import type {
   LogConflictResolutionInput,
   ConflictHistoryQuery,
   ResolutionOutcomeQuery,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = express.Router();
 

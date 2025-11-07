@@ -7,7 +7,7 @@ import { Queue, Worker, Job } from 'bullmq';
 import { supabase } from '../lib/supabase';
 import { logger } from '../lib/logger';
 import { mediaMonitoringAgent } from '../flows/media-monitoring.agent';
-import type { CreateMentionInput } from '@pravado/shared-types';
+import type { CreateMentionInput } from '@pravado/types';
 
 const REDIS_CONNECTION = {
   host: process.env.REDIS_HOST || 'localhost',

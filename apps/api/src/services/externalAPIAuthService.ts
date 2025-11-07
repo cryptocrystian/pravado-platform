@@ -20,7 +20,7 @@ import type {
   RateLimitTier,
   AccessLevel,
   APIAccessScope,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { db } from '../database';
 
 /**

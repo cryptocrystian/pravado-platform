@@ -11,7 +11,7 @@ import type {
   SubmitExternalTaskInput,
   RegisterWebhookInput,
   RotateAPITokenInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import fs from 'fs';
 import path from 'path';
 

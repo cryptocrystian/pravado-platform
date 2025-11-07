@@ -5,7 +5,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
-import type { QualityMetrics } from '@pravado/shared-types';
+import type { QualityMetrics } from '@pravado/types';
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;

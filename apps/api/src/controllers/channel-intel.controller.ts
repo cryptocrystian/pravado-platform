@@ -10,7 +10,7 @@ import type {
   AnalyzeSentimentInput,
   GetChannelRecommendationsInput,
   SummarizeSentimentTrendsInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // ENGAGEMENT LOGGING ENDPOINTS

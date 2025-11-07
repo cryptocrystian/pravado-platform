@@ -29,7 +29,7 @@ import type {
   DialogueStatus,
   TurnType,
   InterruptionReason,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // MULTI-AGENT DIALOGUE MANAGER CLASS

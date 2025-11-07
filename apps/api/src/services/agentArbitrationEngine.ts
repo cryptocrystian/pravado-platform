@@ -31,7 +31,7 @@ import type {
   ConflictTrend,
   StrategyPerformance,
   AgentConflictProfile,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // AGENT ARBITRATION ENGINE CLASS

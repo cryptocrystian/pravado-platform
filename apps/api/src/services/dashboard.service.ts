@@ -13,7 +13,7 @@ import {
   ScorecardCategory,
   PerformanceTrends,
   MetricTrend,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 // =====================================================
 // DASHBOARD METRICS

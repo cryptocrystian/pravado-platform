@@ -14,7 +14,7 @@ import {
   CreateFollowUpInputSchema,
   UpdateFollowUpInputSchema,
   CompleteFollowUpInputSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 class CRMController {
   // =====================================================

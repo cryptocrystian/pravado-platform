@@ -22,7 +22,7 @@ import type {
   ReportStatus,
   ReportType,
   ChartConfig,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { timelineEngine } from '../timeline/timeline-engine';
 
 // Initialize clients

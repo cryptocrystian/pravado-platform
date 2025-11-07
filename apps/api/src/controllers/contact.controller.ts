@@ -14,7 +14,7 @@ import {
   UpdateContactTagInputSchema,
   TriggerEnrichmentInputSchema,
   BulkDeleteContactsInputSchema,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 class ContactController {
   /**

@@ -1,7 +1,7 @@
 import { supabase } from '../lib/supabase';
 import { NotFoundError } from '@pravado/utils';
-import { AgentTaskStatus } from '@pravado/shared-types';
-import type { CreateAgentTaskInput } from '@pravado/shared-types';
+import { AgentTaskStatus } from '@pravado/types';
+import type { CreateAgentTaskInput } from '@pravado/types';
 import { enqueueAgentTask } from '../lib/queue';
 
 class AgentService {

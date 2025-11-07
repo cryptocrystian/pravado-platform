@@ -18,7 +18,7 @@ import type {
   TaskExecutionContext,
   GraphEvent,
   StatusPropagationResult,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 /**
  * Default retry policy

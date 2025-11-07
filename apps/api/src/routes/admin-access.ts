@@ -11,7 +11,7 @@ import {
   GrantPermissionRequest,
   RevokePermissionRequest,
   RoleAuditFilters,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const router = Router();
 

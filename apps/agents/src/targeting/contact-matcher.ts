@@ -15,7 +15,7 @@ import type {
   SuitableContactsRequest,
   TargetingSuggestion,
   MatchReason,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 /**
  * Contact Matcher Engine

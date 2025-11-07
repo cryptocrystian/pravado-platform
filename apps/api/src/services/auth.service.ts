@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { AuthenticationError } from '@pravado/utils';
-import type { LoginCredentials, RegisterCredentials } from '@pravado/shared-types';
+import type { LoginCredentials, RegisterCredentials } from '@pravado/types';
 
 class AuthService {
   async register(credentials: RegisterCredentials) {

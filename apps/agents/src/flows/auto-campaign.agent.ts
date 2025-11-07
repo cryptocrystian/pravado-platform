@@ -12,7 +12,7 @@ import type {
   CampaignType,
   CampaignStatus,
   CreateAgentGoalInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../lib/logger';
 import { autoCampaignPlanner } from '../planning/auto-campaign-planner';
 import {

@@ -28,7 +28,7 @@ import type {
   SummarizeCompetitorInput,
   SummarizeMarketInput,
   GetDashboardInput,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 
 const supabase = createClient(
   process.env.SUPABASE_URL || '',

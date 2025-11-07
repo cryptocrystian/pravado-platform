@@ -12,7 +12,7 @@ import {
   ConfigSyncStatus,
   ProductionReadinessReport,
   ChecklistItem,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import {
   getProductionFlags,
   getSystemLockdown,

@@ -32,12 +32,15 @@ importers:
 
   apps/agents:
     dependencies:
-      '@pravado/shared-types':
+      '@pravado/types':
         specifier: workspace:*
-        version: link:../../packages/shared-types
+        version: link:../../packages/types
       '@pravado/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      '@pravado/validators':
+        specifier: workspace:*
+        version: link:../../packages/validators
       '@supabase/supabase-js':
         specifier: ^2.39.7
         version: 2.78.0
@@ -75,12 +78,15 @@ importers:
 
   apps/api:
     dependencies:
-      '@pravado/shared-types':
+      '@pravado/types':
         specifier: workspace:*
-        version: link:../../packages/shared-types
+        version: link:../../packages/types
       '@pravado/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      '@pravado/validators':
+        specifier: workspace:*
+        version: link:../../packages/validators
       '@supabase/supabase-js':
         specifier: ^2.39.7
         version: 2.78.0

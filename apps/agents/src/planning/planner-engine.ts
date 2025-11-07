@@ -20,7 +20,7 @@ import type {
   TaskStatus,
   GoalStatus,
   TaskStrategy,
-} from '@pravado/shared-types';
+} from '@pravado/types';
 import { logger } from '../lib/logger';
 import { runAgent } from '../framework/agent-runner';
 

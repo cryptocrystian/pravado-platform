@@ -96,7 +96,7 @@ export const PeakUsageChart: React.FC<PeakUsageChartProps> = ({
                             <strong>Requests:</strong> {payload[0].value?.toLocaleString()}
                           </Typography>
                           <Typography variant="caption" display="block" color="success.main">
-                            <strong>Avg Response:</strong> {payload[1]?.value?.toFixed(2)}ms
+                            <strong>Avg Response:</strong> {typeof payload[1]?.value === 'number' ? payload[1].value.toFixed(2) : payload[1]?.value}ms
                           </Typography>
                         </Box>
                       );

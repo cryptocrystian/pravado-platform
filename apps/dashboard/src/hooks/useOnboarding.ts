@@ -157,17 +157,14 @@ export function useOnboarding() {
   );
 
   const saveIntakeResponse = useCallback(
-    async (step: IntakeStep, data: Record<string, any>) => {
-      if (!sessionId) {
-        throw new Error('No active session. Create a session first.');
-      }
+    async (payload: { sessionId: string; step: IntakeStep; data: any }) => {
       return saveIntakeMutation.mutateAsync({
-        sessionId,
-        step,
-        data,
+        sessionId: payload.sessionId,
+        step: payload.step,
+        data: payload.data,
       });
     },
-    [sessionId, saveIntakeMutation]
+    [saveIntakeMutation]
   );
 
   const startProcessing = useCallback(

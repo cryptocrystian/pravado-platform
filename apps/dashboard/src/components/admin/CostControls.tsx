@@ -64,16 +64,6 @@ function BudgetStatusCard({ organizationId }: { organizationId: string }) {
     }
   };
 
-  const getProgressColor = (status: string) => {
-    switch (status) {
-      case 'normal': return 'bg-green-500';
-      case 'warning': return 'bg-yellow-500';
-      case 'critical': return 'bg-orange-500';
-      case 'exceeded': return 'bg-red-500';
-      default: return 'bg-gray-500';
-    }
-  };
-
   return (
     <Card>
       <CardHeader>

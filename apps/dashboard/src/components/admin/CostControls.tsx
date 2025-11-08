@@ -445,11 +445,11 @@ function GuardrailStatusCard({ organizationId }: { organizationId: string }) {
 // MAIN DASHBOARD COMPONENT
 // =====================================================
 
-export default function CostControlsDashboard() {
-  const { user } = useAuth();
-  const organizationId = user?.organizationId || '';
+export default function CostControlsDashboard({ organizationId }: { organizationId?: string }) {
+  // TODO: Integrate with actual auth when this component is used
+  const effectiveOrgId = organizationId || '';
 
-  if (!organizationId) {
+  if (!effectiveOrgId) {
     return (
       <div className="p-6">
         <Alert>
@@ -474,16 +474,16 @@ export default function CostControlsDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <BudgetStatusCard organizationId={organizationId} />
+          <BudgetStatusCard organizationId={effectiveOrgId} />
         </div>
         <div>
-          <GuardrailStatusCard organizationId={organizationId} />
+          <GuardrailStatusCard organizationId={effectiveOrgId} />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <UsageTrendCard organizationId={organizationId} />
-        <PolicySummaryCard organizationId={organizationId} />
+        <UsageTrendCard organizationId={effectiveOrgId} />
+        <PolicySummaryCard organizationId={effectiveOrgId} />
       </div>
 
       <div>

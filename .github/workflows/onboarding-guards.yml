@@ -1,0 +1,161 @@
+name: Onboarding Architectural Guards
+
+on:
+  pull_request:
+    paths:
+      - 'apps/dashboard/**'
+      - 'apps/api/src/routes/onboarding*'
+      - 'apps/api/src/controllers/onboarding*'
+      - 'apps/api/src/services/onboarding*'
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  # Guard 1: Dashboard must NOT import @pravado/validators
+  validate-no-validators-import:
+    name: 'Guard 1: No @pravado/validators in Dashboard'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for forbidden @pravado/validators imports
+        run: |
+          echo "🔍 Checking for @pravado/validators imports in dashboard..."
+          if grep -r "@pravado/validators" apps/dashboard/src --include="*.ts" --include="*.tsx"; then
+            echo "❌ FAILED: Dashboard is importing @pravado/validators"
+            echo "Dashboard must NOT import validators to maintain architectural boundaries."
+            echo "Use type definitions from @pravado/types instead."
+            exit 1
+          else
+            echo "✅ PASSED: No @pravado/validators imports found in dashboard"
+          fi
+
+  # Guard 2: No legacy onboarding files should exist
+  validate-no-legacy-files:
+    name: 'Guard 2: No Legacy Onboarding Files'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for legacy onboarding files
+        run: |
+          echo "🔍 Checking for legacy onboarding files..."
+
+          # Check for TrialOnboardingWizard (deleted file)
+          if find apps/dashboard -name "*TrialOnboarding*" -type f | grep -q .; then
+            echo "❌ FAILED: Found legacy TrialOnboarding files"
+            find apps/dashboard -name "*TrialOnboarding*" -type f
+            exit 1
+          fi
+
+          # Check for commented legacy routes in API
+          if grep -r "onboarding-legacy\\|OnboardingWizardOld" apps/api/src --include="*.ts"; then
+            echo "❌ FAILED: Found legacy onboarding references"
+            exit 1
+          fi
+
+          echo "✅ PASSED: No legacy onboarding files found"
+
+  # Guard 3: Single wizard export check
+  validate-single-wizard:
+    name: 'Guard 3: Single Canonical Wizard'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Count onboarding wizard components
+        run: |
+          echo "🔍 Counting onboarding wizard components..."
+
+          # Find all wizard components (excluding test files)
+          wizard_count=$(find apps/dashboard/src/components/onboarding -name "*Wizard.tsx" ! -name "*.test.tsx" ! -name "*.spec.tsx" | wc -l)
+
+          echo "Found $wizard_count wizard component(s)"
+
+          if [ "$wizard_count" -ne 1 ]; then
+            echo "❌ FAILED: Expected exactly 1 wizard component, found $wizard_count"
+            echo "Wizard components found:"
+            find apps/dashboard/src/components/onboarding -name "*Wizard.tsx" ! -name "*.test.tsx" ! -name "*.spec.tsx"
+            exit 1
+          fi
+
+          # Verify it's the canonical OnboardingWizard
+          if [ ! -f "apps/dashboard/src/components/onboarding/OnboardingWizard.tsx" ]; then
+            echo "❌ FAILED: OnboardingWizard.tsx not found"
+            exit 1
+          fi
+
+          echo "✅ PASSED: Single canonical OnboardingWizard.tsx exists"
+
+  # Guard 4: TypeScript and circular dependency checks
+  validate-typescript-and-cycles:
+    name: 'Guard 4: TypeScript + Circular Deps'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript type check (dashboard)
+        run: |
+          echo "🔍 Running TypeScript type check on dashboard..."
+          cd apps/dashboard
+          pnpm exec tsc --noEmit || {
+            echo "❌ FAILED: TypeScript errors found in dashboard"
+            exit 1
+          }
+          echo "✅ PASSED: No TypeScript errors in dashboard"
+
+      - name: Install madge for circular dependency detection
+        run: pnpm add -g madge
+
+      - name: Check for circular dependencies (dashboard)
+        run: |
+          echo "🔍 Checking for circular dependencies in dashboard..."
+          npx madge --circular --extensions ts,tsx apps/dashboard/src packages/types packages/validators packages/utils || {
+            echo "❌ FAILED: Circular dependencies detected"
+            exit 1
+          }
+          echo "✅ PASSED: No circular dependencies detected"
+
+  # Summary job
+  summary:
+    name: 'All Guards Summary'
+    runs-on: ubuntu-latest
+    needs: [validate-no-validators-import, validate-no-legacy-files, validate-single-wizard, validate-typescript-and-cycles]
+    if: always()
+    steps:
+      - name: Check all guards passed
+        run: |
+          if [ "${{ needs.validate-no-validators-import.result }}" != "success" ] || \
+             [ "${{ needs.validate-no-legacy-files.result }}" != "success" ] || \
+             [ "${{ needs.validate-single-wizard.result }}" != "success" ] || \
+             [ "${{ needs.validate-typescript-and-cycles.result }}" != "success" ]; then
+            echo "❌ One or more architectural guards failed"
+            echo ""
+            echo "Guard 1 (No validators import): ${{ needs.validate-no-validators-import.result }}"
+            echo "Guard 2 (No legacy files): ${{ needs.validate-no-legacy-files.result }}"
+            echo "Guard 3 (Single wizard): ${{ needs.validate-single-wizard.result }}"
+            echo "Guard 4 (TypeScript + cycles): ${{ needs.validate-typescript-and-cycles.result }}"
+            exit 1
+          else
+            echo "✅ All architectural guards passed!"
+          fi

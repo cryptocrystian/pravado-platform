@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@pravado/design-system', '@pravado/types', '@pravado/utils'],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

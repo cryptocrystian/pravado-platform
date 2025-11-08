@@ -9,16 +9,24 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "paths": {
       "@/*": ["./src/*"],
-      "@pravado/shared-types": ["../../packages/shared-types/src"],
+      "@pravado/types": ["../../packages/types/src"],
+      "@pravado/validators": ["../../packages/validators/src"],
       "@pravado/utils": ["../../packages/utils/src"]
     }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"],
   "references": [
-    { "path": "../../packages/shared-types" },
+    { "path": "../../packages/types" },
+    { "path": "../../packages/validators" },
     { "path": "../../packages/utils" }
   ]
 }

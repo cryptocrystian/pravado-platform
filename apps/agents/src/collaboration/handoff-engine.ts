@@ -11,7 +11,7 @@ import type {
   HandoffStatus,
   HandoffRequest,
 } from '@pravado/types';
-import { logger } from '../../../api/src/lib/logger';
+import { logger } from '../lib/logger';
 import { collabManager } from './collab-manager';
 
 const supabaseUrl = process.env.SUPABASE_URL!;

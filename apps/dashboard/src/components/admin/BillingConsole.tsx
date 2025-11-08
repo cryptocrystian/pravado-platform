@@ -20,9 +20,9 @@ interface BillingConsoleProps {
 
 export function BillingConsole({ defaultView = 'metrics' }: BillingConsoleProps) {
   const [activeView, setActiveView] = useState(defaultView);
-  const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
+  const [_selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
 
-  const { data: customers, isLoading: customersLoading } = useBillingCustomers();
+  const { data: customers, isLoading: customersLoading} = useBillingCustomers();
   const { data: invoices, isLoading: invoicesLoading } = useBillingInvoices();
   const { data: metrics, isLoading: metricsLoading } = useRevenueMetrics();
   const { data: atRisk, isLoading: atRiskLoading } = useOrganizationsAtRisk();
@@ -213,7 +213,7 @@ function CustomersView({
   onAddCredit,
   onSelectCustomer,
 }: {
-  customers: any[];
+  customers: any[] | undefined;
   isLoading: boolean;
   onAddCredit: (orgId: string, amount: number, description: string) => void;
   onSelectCustomer: (orgId: string) => void;
@@ -371,7 +371,7 @@ function InvoicesView({
   isLoading,
   onVoidInvoice,
 }: {
-  invoices: any[];
+  invoices: any[] | undefined;
   isLoading: boolean;
   onVoidInvoice: (orgId: string, invoiceId: string) => void;
 }) {
@@ -474,7 +474,7 @@ function AtRiskView({
   organizations,
   isLoading,
 }: {
-  organizations: any[];
+  organizations: any[] | undefined;
   isLoading: boolean;
 }) {
   if (isLoading) return <div className="text-gray-500">Loading at-risk organizations...</div>;

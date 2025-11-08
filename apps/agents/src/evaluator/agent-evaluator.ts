@@ -6,6 +6,12 @@
 import { EventEmitter } from 'events';
 import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
+import {
+  EvaluationSource,
+  EvaluationStatus,
+  EvaluationCriteria,
+  EVALUATION_CRITERIA_CONFIGS,
+} from '@pravado/types';
 import type {
   AgentEvaluation,
   EvaluationEvent,
@@ -27,10 +33,6 @@ import type {
   GetEvaluationDashboardInput,
   RecommendImprovementsInput,
   GetTemplatesInput,
-  EvaluationSource,
-  EvaluationStatus,
-  EvaluationCriteria,
-  EVALUATION_CRITERIA_CONFIGS,
 } from '@pravado/types';
 
 const supabaseUrl = process.env.SUPABASE_URL!;

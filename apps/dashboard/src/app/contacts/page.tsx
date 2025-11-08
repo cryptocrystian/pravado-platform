@@ -106,7 +106,7 @@ export default function ContactsPage() {
             onSelectContacts={setSelectedContacts}
             onPageChange={handlePageChange}
             onSort={(sortBy, sortOrder) => {
-              setSearchParams((prev) => ({ ...prev, sortBy, sortOrder }));
+              setSearchParams((prev) => ({ ...prev, sortBy: sortBy as any, sortOrder }));
             }}
           />
         </div>

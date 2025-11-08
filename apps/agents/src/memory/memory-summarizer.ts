@@ -11,7 +11,7 @@ import type {
   GenerateSnapshotParams,
   CreateMemorySnapshotInput,
 } from '@pravado/types';
-import { logger } from '../../../api/src/lib/logger';
+import { logger } from '../lib/logger';
 import { memoryStore } from './memory-store';
 
 const openai = new OpenAI({

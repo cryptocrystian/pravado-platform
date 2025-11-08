@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "pnpm run -w @pravado/types build && pnpm run -w @pravado/validators build",
+    "prebuild": "pnpm --filter @pravado/types build && pnpm --filter @pravado/validators build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
     "pages:build": "pnpm run prebuild && pnpm dlx @cloudflare/next-on-pages",
     "pages:dev": "pnpm dlx @cloudflare/next-on-pages --watch",
     "pages:deploy": "pnpm pages:build && wrangler pages deploy .vercel/output/static"
@@ -37,6 +40,7 @@
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.8.4",
     "@cloudflare/workers-types": "^4.20240117.0",
+    "@playwright/test": "^1.40.1",
     "@types/node": "^20.11.5",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",

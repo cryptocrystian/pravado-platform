@@ -1,42 +1,57 @@
 'use client';
 
-import { useState } from 'react';
-import { CompetitiveInfoSchema } from '@pravado/validators';
+import { useState, FormEvent } from 'react';
+
+export interface Competitor {
+  name: string;
+  website: string;
+  strengths: string;
+}
+
+export interface CompetitorsData {
+  competitors: Competitor[];
+  marketPosition: 'LEADER' | 'CHALLENGER' | 'FOLLOWER' | 'NICHE';
+  uniqueValueProposition: string;
+}
 
 interface CompetitorsStepProps {
-  initialData?: any;
-  onNext: (data: any) => void;
+  initialData?: Partial<CompetitorsData>;
+  onNext: (data: CompetitorsData) => void;
   onBack?: () => void;
   isSubmitting: boolean;
 }
 
-export function CompetitorsStep({ initialData, onNext, onBack, isSubmitting }: CompetitorsStepProps) {
-  const [formData, setFormData] = useState({
-    competitors: initialData?.competitors || [{ name: '', website: '', strengths: '' }],
-    marketPosition: initialData?.marketPosition || '',
+export function CompetitorsStep({
+  initialData,
+  onNext,
+  onBack,
+  isSubmitting,
+}: CompetitorsStepProps) {
+  const [formData, setFormData] = useState<CompetitorsData>({
+    competitors: initialData?.competitors || [
+      { name: '', website: '', strengths: '' },
+    ],
+    marketPosition: initialData?.marketPosition || 'CHALLENGER',
     uniqueValueProposition: initialData?.uniqueValueProposition || '',
   });
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    // Filter out empty competitors
+    const validCompetitors = formData.competitors.filter(
+      (c) => c.name.trim() !== ''
+    );
+    onNext({ ...formData, competitors: validCompetitors });
+  };
 
-    const result = CompetitiveInfoSchema.safeParse(formData);
-
-    if (!result.success) {
-      const newErrors: Record<string, string> = {};
-      result.error.errors.forEach((err) => {
-        if (err.path[0]) {
-          newErrors[err.path[0] as string] = err.message;
-        }
-      });
-      setErrors(newErrors);
-      return;
-    }
-
-    setErrors({});
-    onNext(result.data);
+  const handleCompetitorChange = (
+    index: number,
+    field: keyof Competitor,
+    value: string
+  ) => {
+    const updatedCompetitors = [...formData.competitors];
+    updatedCompetitors[index] = { ...updatedCompetitors[index], [field]: value };
+    setFormData((prev) => ({ ...prev, competitors: updatedCompetitors }));
   };
 
   const addCompetitor = () => {
@@ -47,107 +62,165 @@ export function CompetitorsStep({ initialData, onNext, onBack, isSubmitting }: C
   };
 
   const removeCompetitor = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      competitors: prev.competitors.filter((_, i) => i !== index),
-    }));
-  };
-
-  const updateCompetitor = (index: number, field: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      competitors: prev.competitors.map((c, i) =>
-        i === index ? { ...c, [field]: value } : c
-      ),
-    }));
+    if (formData.competitors.length > 1) {
+      const updatedCompetitors = formData.competitors.filter((_, i) => i !== index);
+      setFormData((prev) => ({ ...prev, competitors: updatedCompetitors }));
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">
-          Competitors * (Add at least one)
-        </label>
-        {formData.competitors.map((competitor, index) => (
-          <div key={index} className="border rounded-lg p-4 mb-3">
-            <div className="grid grid-cols-2 gap-4 mb-3">
-              <input
-                type="text"
-                placeholder="Competitor Name *"
-                value={competitor.name}
-                onChange={(e) => updateCompetitor(index, 'name', e.target.value)}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              />
-              <input
-                type="url"
-                placeholder="Website (optional)"
-                value={competitor.website}
-                onChange={(e) => updateCompetitor(index, 'website', e.target.value)}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              />
-            </div>
-            <textarea
-              placeholder="Their strengths (optional)"
-              value={competitor.strengths}
-              onChange={(e) => updateCompetitor(index, 'strengths', e.target.value)}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              rows={2}
-            />
-            {formData.competitors.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeCompetitor(index)}
-                className="mt-2 text-sm text-red-600 hover:text-red-800"
-              >
-                Remove
-              </button>
-            )}
+        <h2 className="text-2xl font-semibold mb-2">Competitive Landscape</h2>
+        <p className="text-sm text-muted-foreground">
+          Help us understand your competitive positioning
+        </p>
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <label className="block text-sm font-medium">
+              Key Competitors
+            </label>
+            <button
+              type="button"
+              onClick={addCompetitor}
+              disabled={isSubmitting}
+              className="text-sm text-primary hover:underline disabled:opacity-50"
+            >
+              + Add Competitor
+            </button>
           </div>
-        ))}
-        <button
-          type="button"
-          onClick={addCompetitor}
-          className="text-sm text-blue-600 hover:text-blue-800"
-        >
-          + Add another competitor
-        </button>
-        {errors.competitors && <p className="mt-1 text-sm text-red-600">{errors.competitors}</p>}
+
+          <div className="space-y-4">
+            {formData.competitors.map((competitor, index) => (
+              <div
+                key={index}
+                className="p-4 border border-gray-200 rounded-md space-y-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">
+                    Competitor {index + 1}
+                  </span>
+                  {formData.competitors.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeCompetitor(index)}
+                      disabled={isSubmitting}
+                      className="text-sm text-red-600 hover:underline disabled:opacity-50"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+
+                <input
+                  type="text"
+                  value={competitor.name}
+                  onChange={(e) =>
+                    handleCompetitorChange(index, 'name', e.target.value)
+                  }
+                  placeholder="Competitor name"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  disabled={isSubmitting}
+                />
+
+                <input
+                  type="url"
+                  value={competitor.website}
+                  onChange={(e) =>
+                    handleCompetitorChange(index, 'website', e.target.value)
+                  }
+                  placeholder="https://competitor.com"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  disabled={isSubmitting}
+                />
+
+                <input
+                  type="text"
+                  value={competitor.strengths}
+                  onChange={(e) =>
+                    handleCompetitorChange(index, 'strengths', e.target.value)
+                  }
+                  placeholder="Their key strengths"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  disabled={isSubmitting}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="marketPosition"
+            className="block text-sm font-medium mb-1.5"
+          >
+            Market Position <span className="text-red-500">*</span>
+          </label>
+          <select
+            id="marketPosition"
+            required
+            value={formData.marketPosition}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                marketPosition: e.target.value as CompetitorsData['marketPosition'],
+              }))
+            }
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            disabled={isSubmitting}
+          >
+            <option value="LEADER">Market Leader</option>
+            <option value="CHALLENGER">Challenger</option>
+            <option value="FOLLOWER">Follower</option>
+            <option value="NICHE">Niche Player</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            htmlFor="uniqueValueProposition"
+            className="block text-sm font-medium mb-1.5"
+          >
+            Unique Value Proposition <span className="text-red-500">*</span>
+          </label>
+          <textarea
+            id="uniqueValueProposition"
+            required
+            rows={4}
+            value={formData.uniqueValueProposition}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                uniqueValueProposition: e.target.value,
+              }))
+            }
+            placeholder="What makes your business unique? What value do you provide that competitors don't?"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+            disabled={isSubmitting}
+          />
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="uniqueValueProposition" className="block text-sm font-medium text-gray-700">
-          Your Unique Value Proposition *
-        </label>
-        <textarea
-          id="uniqueValueProposition"
-          value={formData.uniqueValueProposition}
-          onChange={(e) => setFormData((prev) => ({ ...prev, uniqueValueProposition: e.target.value }))}
-          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-            errors.uniqueValueProposition ? 'border-red-300' : 'border-gray-300'
-          }`}
-          rows={4}
-          placeholder="What makes you different from competitors?"
-        />
-        {errors.uniqueValueProposition && (
-          <p className="mt-1 text-sm text-red-600">{errors.uniqueValueProposition}</p>
+      <div className="flex gap-3 pt-4">
+        {onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            disabled={isSubmitting}
+            className="px-6 py-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Back
+          </button>
         )}
-      </div>
-
-      <div className="flex justify-between pt-4">
-        <button
-          type="button"
-          onClick={onBack}
-          className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-          disabled={isSubmitting}
-        >
-          Back
-        </button>
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
           disabled={isSubmitting}
+          className="flex-1 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? 'Saving...' : 'Next'}
+          {isSubmitting ? 'Saving...' : 'Continue'}
         </button>
       </div>
     </form>

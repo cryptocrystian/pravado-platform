@@ -632,3 +632,39 @@ export function useModerationStats(timeRange: string = '7d') {
 
   return { stats, loading, error, refetch: fetchStats };
 }
+
+/**
+ * Hook for fetching agent load heatmap data
+ */
+export function useAgentLoadHeatmap(timeRange: AnalyticsTimeRange = AnalyticsTimeRange.LAST_7D) {
+  const [heatmapData, setHeatmapData] = useState<AgentLoadHeatmapData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchHeatmap = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await axios.get(`${API_BASE_URL}/admin/agent-activity/heatmap`, {
+        params: { timeRange },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+        },
+      });
+
+      setHeatmapData(response.data.heatmap);
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Failed to fetch agent load heatmap');
+      console.error('Error fetching agent load heatmap:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [timeRange]);
+
+  useEffect(() => {
+    fetchHeatmap();
+  }, [fetchHeatmap]);
+
+  return { heatmapData, loading, error, refetch: fetchHeatmap };
+}

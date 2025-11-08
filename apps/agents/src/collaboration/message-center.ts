@@ -13,7 +13,7 @@ import type {
   EscalationRequest,
   AgentMessageType,
 } from '@pravado/types';
-import { logger } from '../../../api/src/lib/logger';
+import { logger } from '../lib/logger';
 import { EventEmitter } from 'events';
 
 const supabaseUrl = process.env.SUPABASE_URL!;

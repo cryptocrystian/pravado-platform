@@ -1,60 +1,192 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 
-const TONE_OPTIONS = ['Professional', 'Friendly', 'Authoritative', 'Conversational', 'Technical', 'Creative'];
-const ATTRIBUTE_OPTIONS = ['Trustworthy', 'Innovative', 'Expert', 'Approachable', 'Bold', 'Reliable'];
+export interface BrandVoiceData {
+  brandTone: string[];
+  brandAttributes: string[];
+  brandPersonality: string;
+}
 
-export function BrandVoiceStep({ initialData, onNext, onBack, isSubmitting }: any) {
-  const [formData, setFormData] = useState({
+interface BrandVoiceStepProps {
+  initialData?: Partial<BrandVoiceData>;
+  onNext: (data: BrandVoiceData) => void;
+  onBack?: () => void;
+  isSubmitting: boolean;
+}
+
+const BRAND_TONES = [
+  'Professional',
+  'Friendly',
+  'Authoritative',
+  'Casual',
+  'Formal',
+  'Conversational',
+  'Technical',
+  'Approachable',
+  'Bold',
+  'Conservative',
+];
+
+const BRAND_ATTRIBUTES = [
+  'Innovative',
+  'Trustworthy',
+  'Transparent',
+  'Customer-focused',
+  'Industry leader',
+  'Disruptive',
+  'Reliable',
+  'Cutting-edge',
+  'Sustainable',
+  'Data-driven',
+  'Human-centered',
+  'Agile',
+];
+
+export function BrandVoiceStep({
+  initialData,
+  onNext,
+  onBack,
+  isSubmitting,
+}: BrandVoiceStepProps) {
+  const [formData, setFormData] = useState<BrandVoiceData>({
     brandTone: initialData?.brandTone || [],
     brandAttributes: initialData?.brandAttributes || [],
-    targetAudience: initialData?.targetAudience || {},
     brandPersonality: initialData?.brandPersonality || '',
   });
 
-  const toggleItem = (field: string, item: string) => {
-    setFormData((prev: any) => ({
-      ...prev,
-      [field]: prev[field].includes(item) ? prev[field].filter((i: string) => i !== item) : [...prev[field], item],
-    }));
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (formData.brandTone.length === 0) {
+      alert('Please select at least one brand tone');
+      return;
+    }
+    if (formData.brandAttributes.length === 0) {
+      alert('Please select at least one brand attribute');
+      return;
+    }
+    onNext(formData);
+  };
+
+  const toggleCheckbox = (
+    field: 'brandTone' | 'brandAttributes',
+    value: string
+  ) => {
+    setFormData((prev) => {
+      const current = prev[field];
+      const updated = current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value];
+      return { ...prev, [field]: updated };
+    });
   };
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); onNext(formData); }} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">Brand Tone *</label>
-        <div className="grid grid-cols-3 gap-3">
-          {TONE_OPTIONS.map((tone) => (
-            <button key={tone} type="button" onClick={() => toggleItem('brandTone', tone)}
-              className={`px-4 py-2 border rounded-md text-sm ${formData.brandTone.includes(tone) ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'}`}>
-              {tone}
-            </button>
-          ))}
+        <h2 className="text-2xl font-semibold mb-2">Brand Voice & Personality</h2>
+        <p className="text-sm text-muted-foreground">
+          Define how your brand communicates and presents itself
+        </p>
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium mb-3">
+            Brand Tone <span className="text-red-500">*</span>
+          </label>
+          <p className="text-xs text-muted-foreground mb-3">
+            Select all that apply to your brand's communication style
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {BRAND_TONES.map((tone) => (
+              <label key={tone} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.brandTone.includes(tone)}
+                  onChange={() => toggleCheckbox('brandTone', tone)}
+                  disabled={isSubmitting}
+                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary"
+                />
+                <span className="text-sm">{tone}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-3">
+            Brand Attributes <span className="text-red-500">*</span>
+          </label>
+          <p className="text-xs text-muted-foreground mb-3">
+            Select the attributes that best describe your brand
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {BRAND_ATTRIBUTES.map((attribute) => (
+              <label
+                key={attribute}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={formData.brandAttributes.includes(attribute)}
+                  onChange={() => toggleCheckbox('brandAttributes', attribute)}
+                  disabled={isSubmitting}
+                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary"
+                />
+                <span className="text-sm">{attribute}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="brandPersonality"
+            className="block text-sm font-medium mb-1.5"
+          >
+            Brand Personality <span className="text-red-500">*</span>
+          </label>
+          <p className="text-xs text-muted-foreground mb-2">
+            Describe your brand as if it were a person. What are its key
+            characteristics?
+          </p>
+          <textarea
+            id="brandPersonality"
+            required
+            rows={5}
+            value={formData.brandPersonality}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                brandPersonality: e.target.value,
+              }))
+            }
+            placeholder="e.g., Our brand is like a knowledgeable mentor - experienced, approachable, and genuinely invested in helping clients succeed. We communicate with confidence but never arrogance..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+            disabled={isSubmitting}
+          />
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">Brand Attributes *</label>
-        <div className="grid grid-cols-3 gap-3">
-          {ATTRIBUTE_OPTIONS.map((attr) => (
-            <button key={attr} type="button" onClick={() => toggleItem('brandAttributes', attr)}
-              className={`px-4 py-2 border rounded-md text-sm ${formData.brandAttributes.includes(attr) ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'}`}>
-              {attr}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Brand Personality</label>
-        <textarea value={formData.brandPersonality} onChange={(e) => setFormData((prev) => ({ ...prev, brandPersonality: e.target.value }))}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows={3} placeholder="Describe your brand's personality..." />
-      </div>
-
-      <div className="flex justify-between pt-4">
-        <button type="button" onClick={onBack} className="px-6 py-2 border border-gray-300 rounded-md text-gray-700" disabled={isSubmitting}>Back</button>
-        <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-md" disabled={isSubmitting}>{isSubmitting ? 'Saving...' : 'Next'}</button>
+      <div className="flex gap-3 pt-4">
+        {onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            disabled={isSubmitting}
+            className="px-6 py-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Back
+          </button>
+        )}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="flex-1 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Saving...' : 'Continue'}
+        </button>
       </div>
     </form>
   );

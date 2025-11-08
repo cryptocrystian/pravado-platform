@@ -1,225 +1,271 @@
 // =====================================================
-// ONBOARDING HOOKS
-// Sprint 73: User Onboarding + Trial-to-Paid Conversion Automation
+// CANONICAL ONBOARDING HOOK
 // =====================================================
+// Single hook for intake wizard onboarding with AI strategy generation
 
+import { useState, useCallback, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
+import type {
+  OnboardingSession,
+  OnboardingResult,
+  IntakeStep,
+  OnboardingStatus,
+} from '@pravado/types';
 
 // =====================================================
 // TYPES
 // =====================================================
 
-export interface OnboardingState {
+interface CreateSessionInput {
   organizationId: string;
-  currentStep: number;
-  step1OrgSetup: boolean;
-  step2ApiKeys: boolean;
-  step3FirstAgent: boolean;
-  step4UsageDemo: boolean;
-  wizardCompleted: boolean;
-  wizardCompletedAt: Date | null;
-  trialStartedAt: Date;
-  trialExpiresAt: Date;
-  trialExpired: boolean;
-  inGracePeriod: boolean;
-  trialBudgetUsd: number;
-  trialBudgetUsedUsd: number;
-  daysRemaining: number;
-  budgetRemaining: number;
+  userId: string;
 }
 
-export interface TrialStatus {
-  trialActive: boolean;
-  trialExpired: boolean;
-  inGracePeriod: boolean;
-  daysRemaining: number;
-  budgetRemaining: number;
-  budgetUsedPercent: number;
-  trialExpiresAt: Date;
-  gracePeriodEndsAt: Date | null;
+interface SaveIntakeInput {
+  sessionId: string;
+  step: IntakeStep;
+  data: Record<string, any>;
 }
 
-export interface SignupData {
-  email: string;
-  password: string;
-  organizationName: string;
-  fullName?: string;
-  inviteCode?: string;
+interface ProcessInput {
+  sessionId: string;
+  autoStartPlanner?: boolean;
 }
 
 // =====================================================
-// QUERY HOOKS
+// MAIN HOOK
 // =====================================================
 
 /**
- * Get onboarding state
+ * Canonical onboarding hook - manages intake wizard, AI processing, and results
+ *
+ * Usage:
+ * ```tsx
+ * const {
+ *   session,
+ *   result,
+ *   isLoading,
+ *   error,
+ *   createSession,
+ *   saveIntakeResponse,
+ *   startProcessing,
+ * } = useOnboarding();
+ * ```
  */
-export function useOnboardingState(organizationId: string) {
-  return useQuery({
-    queryKey: ['onboarding-state', organizationId],
-    queryFn: async () => {
-      const response = await api.get(`/onboarding/${organizationId}/state`);
-      return response.data.data as OnboardingState;
-    },
-    enabled: !!organizationId,
-    staleTime: 60000,
-  });
-}
-
-/**
- * Get trial status
- */
-export function useTrialStatus(organizationId: string) {
-  return useQuery({
-    queryKey: ['trial-status', organizationId],
-    queryFn: async () => {
-      const response = await api.get(`/onboarding/${organizationId}/trial-status`);
-      return response.data.data as TrialStatus;
-    },
-    enabled: !!organizationId,
-    staleTime: 30000,
-    refetchInterval: 60000,
-  });
-}
-
-/**
- * Get onboarding progress percentage
- */
-export function useOnboardingProgress(organizationId: string) {
-  return useQuery({
-    queryKey: ['onboarding-progress', organizationId],
-    queryFn: async () => {
-      const response = await api.get(`/onboarding/${organizationId}/progress`);
-      return response.data.data.progress as number;
-    },
-    enabled: !!organizationId,
-    staleTime: 60000,
-  });
-}
-
-/**
- * Check if should show upgrade prompt
- */
-export function useUpgradePrompt(organizationId: string) {
-  return useQuery({
-    queryKey: ['upgrade-prompt', organizationId],
-    queryFn: async () => {
-      const response = await api.get(`/onboarding/${organizationId}/upgrade-prompt`);
-      return response.data.data as { shouldPrompt: boolean; reason?: string };
-    },
-    enabled: !!organizationId,
-    staleTime: 30000,
-  });
-}
-
-/**
- * Check if can execute new jobs
- */
-export function useCanExecuteJobs(organizationId: string) {
-  return useQuery({
-    queryKey: ['can-execute', organizationId],
-    queryFn: async () => {
-      const response = await api.get(`/onboarding/${organizationId}/can-execute`);
-      return response.data.data as { allowed: boolean; reason?: string };
-    },
-    enabled: !!organizationId,
-    staleTime: 10000,
-  });
-}
-
-// =====================================================
-// MUTATION HOOKS
-// =====================================================
-
-/**
- * Sign up new organization
- */
-export function useSignup() {
-  return useMutation({
-    mutationFn: async (data: SignupData) => {
-      const response = await api.post('/onboarding/signup', data);
-      return response.data.data as {
-        organizationId: string;
-        userId: string;
-        trialExpiresAt: Date;
-      };
-    },
-  });
-}
-
-/**
- * Complete onboarding step
- */
-export function useCompleteStep() {
+export function useOnboarding() {
   const queryClient = useQueryClient();
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  return useMutation({
-    mutationFn: async ({
-      organizationId,
-      stepNumber,
-    }: {
-      organizationId: string;
-      stepNumber: number;
-    }) => {
-      const response = await api.post(`/onboarding/${organizationId}/step/${stepNumber}`);
+  // Session query (polls while processing)
+  const {
+    data: session,
+    isLoading: sessionLoading,
+    error: sessionError,
+  } = useQuery({
+    queryKey: ['onboarding-session', sessionId],
+    queryFn: async () => {
+      if (!sessionId) return null;
+      const response = await api.get(`/api/v1/onboarding/session/${sessionId}/result`);
+      return response.data.session as OnboardingSession;
+    },
+    enabled: !!sessionId,
+    refetchInterval: (data) => {
+      // Poll every 3 seconds while processing
+      const status = data?.status;
+      if (status === 'PROCESSING' || status === 'STRATEGY_READY' || status === 'PLANNER_READY') {
+        return 3000;
+      }
+      return false;
+    },
+    staleTime: 1000,
+  });
+
+  // Result query (includes session + intake + AI outputs)
+  const {
+    data: result,
+    isLoading: resultLoading,
+    error: resultError,
+  } = useQuery({
+    queryKey: ['onboarding-result', sessionId],
+    queryFn: async () => {
+      if (!sessionId) return null;
+      const response = await api.get(`/api/v1/onboarding/session/${sessionId}/result`);
+      return response.data as OnboardingResult;
+    },
+    enabled: !!sessionId && (session?.status === 'PLANNER_READY' || session?.status === 'COMPLETED'),
+    staleTime: 60000,
+  });
+
+  // Create session mutation
+  const createSessionMutation = useMutation({
+    mutationFn: async (input: CreateSessionInput) => {
+      const response = await api.post('/api/v1/onboarding/session', input);
+      return response.data as OnboardingSession;
+    },
+    onSuccess: (data) => {
+      setSessionId(data.id);
+      queryClient.setQueryData(['onboarding-session', data.id], data);
+    },
+  });
+
+  // Save intake response mutation
+  const saveIntakeMutation = useMutation({
+    mutationFn: async (input: SaveIntakeInput) => {
+      const response = await api.post(
+        `/api/v1/onboarding/session/${input.sessionId}/intake`,
+        {
+          step: input.step,
+          data: input.data,
+        }
+      );
       return response.data;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['onboarding-state', variables.organizationId] });
+      // Invalidate session to reflect updated steps
       queryClient.invalidateQueries({
-        queryKey: ['onboarding-progress', variables.organizationId],
+        queryKey: ['onboarding-session', variables.sessionId],
       });
     },
   });
-}
 
-/**
- * Create checkout link for upgrade
- */
-export function useCreateCheckoutLink() {
-  return useMutation({
-    mutationFn: async ({
-      organizationId,
-      tier,
-      successUrl,
-      cancelUrl,
-    }: {
-      organizationId: string;
-      tier: 'pro' | 'enterprise';
-      successUrl?: string;
-      cancelUrl?: string;
-    }) => {
-      const response = await api.post(`/onboarding/${organizationId}/checkout-link`, {
-        tier,
-        successUrl,
-        cancelUrl,
+  // Start processing mutation
+  const startProcessingMutation = useMutation({
+    mutationFn: async (input: ProcessInput) => {
+      const response = await api.post(
+        `/api/v1/onboarding/session/${input.sessionId}/process`,
+        {
+          autoStartPlanner: input.autoStartPlanner ?? true,
+        }
+      );
+      return response.data;
+    },
+    onSuccess: (_, variables) => {
+      // Start polling by invalidating session
+      queryClient.invalidateQueries({
+        queryKey: ['onboarding-session', variables.sessionId],
       });
-      return response.data.data.checkoutUrl as string;
     },
+  });
+
+  // Helper functions
+  const createSession = useCallback(
+    async (input: CreateSessionInput) => {
+      return createSessionMutation.mutateAsync(input);
+    },
+    [createSessionMutation]
+  );
+
+  const saveIntakeResponse = useCallback(
+    async (step: IntakeStep, data: Record<string, any>) => {
+      if (!sessionId) {
+        throw new Error('No active session. Create a session first.');
+      }
+      return saveIntakeMutation.mutateAsync({
+        sessionId,
+        step,
+        data,
+      });
+    },
+    [sessionId, saveIntakeMutation]
+  );
+
+  const startProcessing = useCallback(
+    async (autoStartPlanner: boolean = true) => {
+      if (!sessionId) {
+        throw new Error('No active session. Create a session first.');
+      }
+      return startProcessingMutation.mutateAsync({
+        sessionId,
+        autoStartPlanner,
+      });
+    },
+    [sessionId, startProcessingMutation]
+  );
+
+  return {
+    // State
+    session,
+    result,
+    sessionId,
+    isLoading:
+      sessionLoading ||
+      resultLoading ||
+      createSessionMutation.isPending ||
+      saveIntakeMutation.isPending ||
+      startProcessingMutation.isPending,
+    error:
+      sessionError ||
+      resultError ||
+      createSessionMutation.error ||
+      saveIntakeMutation.error ||
+      startProcessingMutation.error,
+
+    // Actions
+    createSession,
+    saveIntakeResponse,
+    startProcessing,
+
+    // Computed properties
+    isProcessing:
+      session?.status === 'PROCESSING' ||
+      session?.status === 'STRATEGY_READY' ||
+      session?.status === 'PLANNER_READY',
+    isComplete: session?.status === 'COMPLETED',
+    isFailed: session?.status === 'FAILED',
+    isAbandoned: session?.status === 'ABANDONED',
+
+    // Polling interval
+    pollInterval: 3000, // ms
+  };
+}
+
+// =====================================================
+// UTILITY HOOKS
+// =====================================================
+
+/**
+ * Hook to check if organization can start onboarding
+ */
+export function useCanStartOnboarding(organizationId: string) {
+  return useQuery({
+    queryKey: ['can-start-onboarding', organizationId],
+    queryFn: async () => {
+      try {
+        const response = await api.get(`/api/v1/onboarding/can-start?organizationId=${organizationId}`);
+        return response.data.canStart as boolean;
+      } catch (error: any) {
+        // 403 means cannot start
+        if (error.response?.status === 403) {
+          return false;
+        }
+        throw error;
+      }
+    },
+    enabled: !!organizationId,
+    staleTime: 60000,
   });
 }
 
 /**
- * Generate invite code
+ * Hook to get current session for organization (if exists)
  */
-export function useGenerateInviteCode() {
-  return useMutation({
-    mutationFn: async (organizationId: string) => {
-      const response = await api.post(`/onboarding/${organizationId}/invite-code`);
-      return response.data.data.inviteCode as string;
+export function useCurrentSession(organizationId: string) {
+  return useQuery({
+    queryKey: ['current-onboarding-session', organizationId],
+    queryFn: async () => {
+      try {
+        const response = await api.get(`/api/v1/onboarding/session/current?organizationId=${organizationId}`);
+        return response.data as OnboardingSession;
+      } catch (error: any) {
+        // 404 means no session exists
+        if (error.response?.status === 404) {
+          return null;
+        }
+        throw error;
+      }
     },
-  });
-}
-
-/**
- * Validate invite code
- */
-export function useValidateInviteCode() {
-  return useMutation({
-    mutationFn: async (inviteCode: string) => {
-      const response = await api.post('/onboarding/validate-invite', { inviteCode });
-      return response.data.data.organizationId as string;
-    },
+    enabled: !!organizationId,
+    staleTime: 30000,
   });
 }

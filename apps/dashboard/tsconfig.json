@@ -23,15 +23,17 @@
     "paths": {
       "@/*": ["./src/*"],
       "@pravado/design-system": ["../../packages/design-system/src"],
-      "@pravado/shared-types": ["../../packages/shared-types/src"],
+      "@pravado/types": ["../../packages/types/src"],
+      "@pravado/validators": ["../../packages/validators/src"],
       "@pravado/utils": ["../../packages/utils/src"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "playwright.config.ts", "**/*.test.ts", "**/*.test.tsx"],
   "references": [
     { "path": "../../packages/design-system" },
-    { "path": "../../packages/shared-types" },
+    { "path": "../../packages/types" },
+    { "path": "../../packages/validators" },
     { "path": "../../packages/utils" }
   ]
 }

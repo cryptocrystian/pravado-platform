@@ -38,7 +38,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Build packages
-        run: pnpm build --filter=@pravado/shared-types --filter=@pravado/utils --filter=@pravado/design-system
+        run: pnpm build --filter=@pravado/types --filter=@pravado/validators --filter=@pravado/utils --filter=@pravado/design-system
 
       - name: Build dashboard for Cloudflare Pages
         run: cd apps/dashboard && pnpm pages:build

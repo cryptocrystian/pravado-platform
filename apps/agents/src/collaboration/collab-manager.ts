@@ -13,7 +13,7 @@ import type {
   CollaborationStatus,
   CollaborationSummary,
 } from '@pravado/types';
-import { logger } from '../../../api/src/lib/logger';
+import { logger } from '../lib/logger';
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;

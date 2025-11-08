@@ -72,3 +72,4 @@ class ApiClient {
 }
 
 export const api = new ApiClient(API_BASE_URL);
+export const apiClient = api; // Alias for backwards compatibility

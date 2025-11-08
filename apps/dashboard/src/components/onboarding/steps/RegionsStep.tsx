@@ -1,72 +1,221 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 
-const REGIONS = ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'Middle East', 'Africa'];
-const LANGUAGES = ['English', 'Spanish', 'French', 'German', 'Chinese', 'Japanese', 'Portuguese', 'Arabic'];
+export interface RegionsData {
+  primaryRegions: string[];
+  languages: string[];
+  localConsiderations: string;
+  additionalContext: string;
+}
 
-export function RegionsStep({ initialData, onNext, onBack, isSubmitting }: any) {
-  const [formData, setFormData] = useState({
+interface RegionsStepProps {
+  initialData?: Partial<RegionsData>;
+  onNext: (data: RegionsData) => void;
+  onBack?: () => void;
+  isSubmitting: boolean;
+}
+
+const REGIONS = [
+  'North America',
+  'Latin America',
+  'Western Europe',
+  'Eastern Europe',
+  'Middle East',
+  'Africa',
+  'Asia-Pacific',
+  'Southeast Asia',
+  'East Asia',
+  'South Asia',
+  'Oceania',
+];
+
+const LANGUAGES = [
+  'English',
+  'Spanish',
+  'French',
+  'German',
+  'Italian',
+  'Portuguese',
+  'Dutch',
+  'Russian',
+  'Chinese (Simplified)',
+  'Chinese (Traditional)',
+  'Japanese',
+  'Korean',
+  'Arabic',
+  'Hindi',
+];
+
+export function RegionsStep({
+  initialData,
+  onNext,
+  onBack,
+  isSubmitting,
+}: RegionsStepProps) {
+  const [formData, setFormData] = useState<RegionsData>({
     primaryRegions: initialData?.primaryRegions || [],
     languages: initialData?.languages || [],
     localConsiderations: initialData?.localConsiderations || '',
     additionalContext: initialData?.additionalContext || '',
-    challenges: initialData?.challenges || [],
   });
 
-  const toggleItem = (field: string, item: string) => {
-    setFormData((prev: any) => ({
-      ...prev,
-      [field]: prev[field].includes(item) ? prev[field].filter((i: string) => i !== item) : [...prev[field], item],
-    }));
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (formData.primaryRegions.length === 0) {
+      alert('Please select at least one primary region');
+      return;
+    }
+    if (formData.languages.length === 0) {
+      alert('Please select at least one language');
+      return;
+    }
+    onNext(formData);
+  };
+
+  const toggleCheckbox = (
+    field: 'primaryRegions' | 'languages',
+    value: string
+  ) => {
+    setFormData((prev) => {
+      const current = prev[field];
+      const updated = current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value];
+      return { ...prev, [field]: updated };
+    });
   };
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); onNext(formData); }} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">Primary Regions *</label>
-        <div className="grid grid-cols-2 gap-3">
-          {REGIONS.map((region) => (
-            <button key={region} type="button" onClick={() => toggleItem('primaryRegions', region)}
-              className={`px-4 py-2 border rounded-md text-sm ${formData.primaryRegions.includes(region) ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'}`}>
-              {region}
-            </button>
-          ))}
+        <h2 className="text-2xl font-semibold mb-2">Geographic & Language Focus</h2>
+        <p className="text-sm text-muted-foreground">
+          Define your target markets and language requirements
+        </p>
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium mb-3">
+            Primary Regions <span className="text-red-500">*</span>
+          </label>
+          <p className="text-xs text-muted-foreground mb-3">
+            Select all regions you operate in or target
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {REGIONS.map((region) => (
+              <label key={region} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.primaryRegions.includes(region)}
+                  onChange={() => toggleCheckbox('primaryRegions', region)}
+                  disabled={isSubmitting}
+                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary"
+                />
+                <span className="text-sm">{region}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-3">
+            Languages <span className="text-red-500">*</span>
+          </label>
+          <p className="text-xs text-muted-foreground mb-3">
+            Select all languages for your content and communications
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            {LANGUAGES.map((language) => (
+              <label
+                key={language}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={formData.languages.includes(language)}
+                  onChange={() => toggleCheckbox('languages', language)}
+                  disabled={isSubmitting}
+                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary"
+                />
+                <span className="text-sm">{language}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="localConsiderations"
+            className="block text-sm font-medium mb-1.5"
+          >
+            Local Considerations
+          </label>
+          <p className="text-xs text-muted-foreground mb-2">
+            Any cultural, regulatory, or market-specific considerations we should
+            know about?
+          </p>
+          <textarea
+            id="localConsiderations"
+            rows={4}
+            value={formData.localConsiderations}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                localConsiderations: e.target.value,
+              }))
+            }
+            placeholder="e.g., GDPR compliance for EU markets, specific cultural sensitivities, local holidays, regulatory requirements..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+            disabled={isSubmitting}
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="additionalContext"
+            className="block text-sm font-medium mb-1.5"
+          >
+            Additional Context
+          </label>
+          <p className="text-xs text-muted-foreground mb-2">
+            Any other information that would help us serve you better?
+          </p>
+          <textarea
+            id="additionalContext"
+            rows={4}
+            value={formData.additionalContext}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                additionalContext: e.target.value,
+              }))
+            }
+            placeholder="Share any additional details about your business, goals, or specific needs..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+            disabled={isSubmitting}
+          />
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">Languages *</label>
-        <div className="grid grid-cols-3 gap-3">
-          {LANGUAGES.map((lang) => (
-            <button key={lang} type="button" onClick={() => toggleItem('languages', lang)}
-              className={`px-4 py-2 border rounded-md text-sm ${formData.languages.includes(lang) ? 'bg-blue-50 border-blue-500 text-blue-700' : 'border-gray-300'}`}>
-              {lang}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Local Considerations</label>
-        <textarea value={formData.localConsiderations}
-          onChange={(e) => setFormData((prev) => ({ ...prev, localConsiderations: e.target.value }))}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows={3}
-          placeholder="Any cultural nuances or local considerations?" />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Additional Context</label>
-        <textarea value={formData.additionalContext}
-          onChange={(e) => setFormData((prev) => ({ ...prev, additionalContext: e.target.value }))}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" rows={3}
-          placeholder="Anything else we should know?" />
-      </div>
-
-      <div className="flex justify-between pt-4">
-        <button type="button" onClick={onBack} className="px-6 py-2 border border-gray-300 rounded-md" disabled={isSubmitting}>Back</button>
-        <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-md font-bold" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Complete Intake'}
+      <div className="flex gap-3 pt-4">
+        {onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            disabled={isSubmitting}
+            className="px-6 py-2 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Back
+          </button>
+        )}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="flex-1 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Complete' : 'Continue'}
         </button>
       </div>
     </form>

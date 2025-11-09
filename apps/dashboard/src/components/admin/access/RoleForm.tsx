@@ -16,7 +16,7 @@ import {
   Divider,
 } from '@mui/material';
 import { Save, Cancel } from '@mui/icons-material';
-import { RoleDetails, AdminRole } from '@pravado/types';
+import { RoleDetails } from '@pravado/types';
 
 export interface RoleFormProps {
   mode: 'create' | 'edit';

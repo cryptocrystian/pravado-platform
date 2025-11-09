@@ -33,9 +33,7 @@
     "node_modules",
     "playwright.config.ts",
     "**/*.test.ts",
-    "**/*.test.tsx",
-    "src/components/admin/**/*",
-    "src/app/admin/**/*"
+    "**/*.test.tsx"
   ],
   "references": [
     { "path": "../../packages/design-system" },

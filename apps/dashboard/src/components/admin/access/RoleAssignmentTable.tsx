@@ -198,13 +198,13 @@ export const RoleAssignmentTable: React.FC<RoleAssignmentTableProps> = ({
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {user.lastUpdated ? (
+                    {user.lastActivity ? (
                       <>
                         <Typography variant="body2">
-                          {new Date(user.lastUpdated).toLocaleDateString()}
+                          {new Date(user.lastActivity).toLocaleDateString()}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          {new Date(user.lastUpdated).toLocaleTimeString()}
+                          {new Date(user.lastActivity).toLocaleTimeString()}
                         </Typography>
                       </>
                     ) : (

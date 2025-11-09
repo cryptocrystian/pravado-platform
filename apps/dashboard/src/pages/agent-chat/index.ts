@@ -7,4 +7,4 @@ export { ChatMessenger } from './ChatMessenger';
 export { ChatMessage, TypingIndicator } from './ChatMessage';
 export { AgentProfileBanner } from './AgentProfileBanner';
 
-export default ChatMessenger;
+export { default } from './ChatMessenger';

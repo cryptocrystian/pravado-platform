@@ -1,0 +1,67 @@
+name: Admin Import Guard
+
+on:
+  pull_request:
+    paths:
+      - 'apps/dashboard/src/**'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'apps/dashboard/src/**'
+
+jobs:
+  check-admin-imports:
+    name: Prevent Admin Component Imports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for forbidden admin imports
+        run: |
+          echo "Checking for imports from excluded admin folder..."
+
+          # Check for admin component imports outside admin folder
+          if grep -R "from ['\"]@/components/admin" apps/dashboard/src \
+            --include=\*.ts --include=\*.tsx \
+            --exclude-dir=admin \
+            --exclude-dir=node_modules; then
+            echo ""
+            echo "❌ FORBIDDEN: Admin component imports detected!"
+            echo ""
+            echo "The admin folder is excluded from TypeScript checking."
+            echo "Importing admin components will cause runtime errors."
+            echo ""
+            echo "Solution: Remove the import or move the code to src/app/admin/"
+            exit 1
+          fi
+
+          # Check for admin app page imports outside admin pages
+          if grep -R "from ['\"]@/app/admin" apps/dashboard/src \
+            --include=\*.ts --include=\*.tsx \
+            --exclude-dir=admin \
+            --exclude-dir=node_modules; then
+            echo ""
+            echo "❌ FORBIDDEN: Admin app imports detected!"
+            echo ""
+            echo "The admin app folder is excluded from TypeScript checking."
+            echo "Importing admin pages will cause runtime errors."
+            echo ""
+            echo "Solution: Remove the import or refactor the code"
+            exit 1
+          fi
+
+          echo "✅ No forbidden admin imports detected"
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "## ✅ Admin Import Guard Passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "No forbidden imports from excluded admin code detected." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Excluded paths:**" >> $GITHUB_STEP_SUMMARY
+          echo "- \`src/components/admin/**/*\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`src/app/admin/**/*\`" >> $GITHUB_STEP_SUMMARY

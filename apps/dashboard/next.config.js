@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@pravado/design-system', '@pravado/types', '@pravado/utils'],
+  typescript: {
+    // Skip type checking during build - we run tsc separately in CI
+    // This allows tsconfig exclude to work for admin components
+    ignoreBuildErrors: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

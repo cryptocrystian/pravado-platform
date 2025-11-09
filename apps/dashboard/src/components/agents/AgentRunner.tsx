@@ -171,7 +171,6 @@ export default function AgentRunner({ templateId, onClose }: AgentRunnerProps) {
   };
 
   const execution = executionData?.execution;
-  const results = executionData?.results || [];
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">

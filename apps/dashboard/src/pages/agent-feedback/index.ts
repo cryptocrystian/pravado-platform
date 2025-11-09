@@ -10,11 +10,4 @@ export { FeedbackHistoryTable } from './FeedbackHistoryTable';
 export { ImprovementPlanViewer } from './ImprovementPlanViewer';
 export { AgentFeedbackDashboard } from './AgentFeedbackDashboard';
 
-export default {
-  FeedbackForm,
-  FeedbackStatsCard,
-  TrendingIssuesChart,
-  FeedbackHistoryTable,
-  ImprovementPlanViewer,
-  AgentFeedbackDashboard,
-};
+export { default } from './AgentFeedbackDashboard';

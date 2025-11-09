@@ -12,4 +12,4 @@ export {
   ResolutionBreakdownCard,
 } from './AnalyticsComponents';
 
-export default AgentAnalyticsDashboard;
+export { default } from './AgentAnalyticsDashboard';

@@ -1,0 +1,126 @@
+{
+  "sprint": "Sprint 74: Production Launch Hardening + Operational Telemetry & Observability",
+  "version": "v9",
+  "timestamp": "2025-01-05T00:00:00Z",
+  "total_checks": 85,
+  "categories": [
+    {
+      "name": "Health & Monitoring",
+      "checks": [
+        {"id": "HLT-001", "description": "health.routes.ts exists", "file": "apps/api/src/routes/health.routes.ts", "status": "pending"},
+        {"id": "HLT-002", "description": "GET /api/health endpoint", "grep": "router\\.get\\('/health'", "status": "pending"},
+        {"id": "HLT-003", "description": "GET /api/status endpoint", "grep": "router\\.get\\('/status'", "status": "pending"},
+        {"id": "HLT-004", "description": "GET /api/ready endpoint", "grep": "router\\.get\\('/ready'", "status": "pending"},
+        {"id": "HLT-005", "description": "GET /api/live endpoint", "grep": "router\\.get\\('/live'", "status": "pending"},
+        {"id": "HLT-006", "description": "Database health check function", "grep": "checkDatabase", "status": "pending"},
+        {"id": "HLT-007", "description": "Redis health check function", "grep": "checkRedis", "status": "pending"},
+        {"id": "HLT-008", "description": "LLM health check function", "grep": "checkLLM", "status": "pending"},
+        {"id": "HLT-009", "description": "Memory health check function", "grep": "checkMemory", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Observability & Error Tracking",
+      "checks": [
+        {"id": "OBS-001", "description": "observability.service.ts exists", "file": "apps/api/src/services/observability.service.ts", "status": "pending"},
+        {"id": "OBS-002", "description": "Sentry initialization function", "grep": "initializeSentry", "status": "pending"},
+        {"id": "OBS-003", "description": "captureException function exported", "grep": "export.*captureException", "status": "pending"},
+        {"id": "OBS-004", "description": "captureMessage function exported", "grep": "export.*captureMessage", "status": "pending"},
+        {"id": "OBS-005", "description": "Performance tracking function", "grep": "trackPerformance", "status": "pending"},
+        {"id": "OBS-006", "description": "Request context setting", "grep": "setRequestContext", "status": "pending"},
+        {"id": "OBS-007", "description": "Breadcrumb support", "grep": "addBreadcrumb", "status": "pending"},
+        {"id": "OBS-008", "description": "Sentry middleware handlers", "grep": "sentryRequestHandler", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Prometheus Metrics",
+      "checks": [
+        {"id": "PROM-001", "description": "prometheus-metrics.service.ts exists", "file": "apps/api/src/services/prometheus-metrics.service.ts", "status": "pending"},
+        {"id": "PROM-002", "description": "HTTP metrics defined", "grep": "httpRequestsTotal", "status": "pending"},
+        {"id": "PROM-003", "description": "AI metrics defined", "grep": "aiRequestsTotal", "status": "pending"},
+        {"id": "PROM-004", "description": "Database metrics defined", "grep": "dbQueriesTotal", "status": "pending"},
+        {"id": "PROM-005", "description": "Redis metrics defined", "grep": "redisCommandsTotal", "status": "pending"},
+        {"id": "PROM-006", "description": "Business metrics defined", "grep": "activeTrialsGauge", "status": "pending"},
+        {"id": "PROM-007", "description": "Metrics middleware", "grep": "metricsMiddleware", "status": "pending"},
+        {"id": "PROM-008", "description": "Track AI request function", "grep": "trackAIRequest", "status": "pending"},
+        {"id": "PROM-009", "description": "Get metrics endpoint", "grep": "getMetrics", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Rate Limiting",
+      "checks": [
+        {"id": "RATE-001", "description": "rate-limit.ts exists", "file": "apps/api/src/middleware/rate-limit.ts", "status": "pending"},
+        {"id": "RATE-002", "description": "Default rate limiter", "grep": "defaultRateLimiter", "status": "pending"},
+        {"id": "RATE-003", "description": "Auth rate limiter (5/min)", "grep": "authRateLimiter", "status": "pending"},
+        {"id": "RATE-004", "description": "AI rate limiter (20/min)", "grep": "aiRateLimiter", "status": "pending"},
+        {"id": "RATE-005", "description": "Webhook rate limiter (30/min)", "grep": "webhookRateLimiter", "status": "pending"},
+        {"id": "RATE-006", "description": "Signup rate limiter (3/hour)", "grep": "signupRateLimiter", "status": "pending"},
+        {"id": "RATE-007", "description": "Admin rate limiter", "grep": "adminRateLimiter", "status": "pending"},
+        {"id": "RATE-008", "description": "Redis store integration", "grep": "RedisStore", "status": "pending"},
+        {"id": "RATE-009", "description": "Custom rate limiter factory", "grep": "createRateLimiter", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Docker Deployment",
+      "checks": [
+        {"id": "DOCK-001", "description": "Dockerfile.api exists", "file": "docker/Dockerfile.api", "status": "pending"},
+        {"id": "DOCK-002", "description": "Multi-stage build (base)", "grep": "FROM.*AS base", "status": "pending"},
+        {"id": "DOCK-003", "description": "Multi-stage build (builder)", "grep": "FROM.*AS builder", "status": "pending"},
+        {"id": "DOCK-004", "description": "Multi-stage build (production)", "grep": "FROM.*AS production", "status": "pending"},
+        {"id": "DOCK-005", "description": "Non-root user (nodejs)", "grep": "USER nodejs", "status": "pending"},
+        {"id": "DOCK-006", "description": "Health check defined", "grep": "HEALTHCHECK", "status": "pending"},
+        {"id": "DOCK-007", "description": "Dumb-init for signals", "grep": "dumb-init", "status": "pending"},
+        {"id": "DOCK-008", "description": "Dockerfile.dashboard exists", "file": "docker/Dockerfile.dashboard", "status": "pending"},
+        {"id": "DOCK-009", "description": "Dashboard production build", "grep": "npm run build", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Kubernetes Deployment",
+      "checks": [
+        {"id": "K8S-001", "description": "api-deployment.yaml exists", "file": "k8s/api-deployment.yaml", "status": "pending"},
+        {"id": "K8S-002", "description": "API deployment with 2 replicas", "grep": "replicas: 2", "status": "pending"},
+        {"id": "K8S-003", "description": "Liveness probe defined", "grep": "livenessProbe", "status": "pending"},
+        {"id": "K8S-004", "description": "Readiness probe defined", "grep": "readinessProbe", "status": "pending"},
+        {"id": "K8S-005", "description": "Resource limits defined", "grep": "resources:", "status": "pending"},
+        {"id": "K8S-006", "description": "API service defined", "grep": "kind: Service", "status": "pending"},
+        {"id": "K8S-007", "description": "dashboard-deployment.yaml exists", "file": "k8s/dashboard-deployment.yaml", "status": "pending"},
+        {"id": "K8S-008", "description": "Dashboard deployment replicas", "grep": "replicas: 2", "status": "pending"},
+        {"id": "K8S-009", "description": "Dashboard service defined", "grep": "kind: Service", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Environment Configuration",
+      "checks": [
+        {"id": "ENV-001", "description": "SENTRY_DSN in .env.sample", "grep": "SENTRY_DSN", "status": "pending"},
+        {"id": "ENV-002", "description": "DATADOG_API_KEY in .env.sample", "grep": "DATADOG_API_KEY", "status": "pending"},
+        {"id": "ENV-003", "description": "PROMETHEUS_ENDPOINT in .env.sample", "grep": "PROMETHEUS_ENDPOINT", "status": "pending"},
+        {"id": "ENV-004", "description": "RATE_LIMIT_WINDOW_MS in .env.sample", "grep": "RATE_LIMIT_WINDOW_MS", "status": "pending"},
+        {"id": "ENV-005", "description": "RATE_LIMIT_MAX_REQUESTS in .env.sample", "grep": "RATE_LIMIT_MAX_REQUESTS", "status": "pending"},
+        {"id": "ENV-006", "description": "DEPLOY_ENV in .env.sample", "grep": "DEPLOY_ENV", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Documentation",
+      "checks": [
+        {"id": "DOC-001", "description": "Phase 12 in architecture.md", "grep": "Phase 12:.*Production Hardening", "status": "pending"},
+        {"id": "DOC-002", "description": "Health check endpoints documented", "grep": "Health Check Endpoints", "status": "pending"},
+        {"id": "DOC-003", "description": "Observability section documented", "grep": "Error Tracking & Observability", "status": "pending"},
+        {"id": "DOC-004", "description": "Prometheus metrics documented", "grep": "Prometheus Metrics", "status": "pending"},
+        {"id": "DOC-005", "description": "Rate limiting documented", "grep": "Rate Limiting", "status": "pending"},
+        {"id": "DOC-006", "description": "Docker deployment documented", "grep": "Docker Deployment", "status": "pending"},
+        {"id": "DOC-007", "description": "Kubernetes manifests documented", "grep": "Kubernetes Manifests", "status": "pending"}
+      ]
+    }
+  ],
+  "manual_verification": [
+    "Install Sentry SDK: npm install @sentry/node @sentry/profiling-node",
+    "Install Prometheus client: npm install prom-client",
+    "Install rate limiting: npm install express-rate-limit rate-limit-redis",
+    "Configure SENTRY_DSN in environment",
+    "Test health endpoints: curl http://localhost:3001/api/health",
+    "Test status endpoint: curl http://localhost:3001/api/status",
+    "Test metrics endpoint: curl http://localhost:3001/metrics",
+    "Build Docker images: docker build -f docker/Dockerfile.api -t pravado/api .",
+    "Deploy to Kubernetes: kubectl apply -f k8s/",
+    "Verify rate limiting: Send 101 requests in 1 minute, expect 429"
+  ]
+}

@@ -1,0 +1,609 @@
+{
+  "generated_at": "2025-11-09T21:15:00Z",
+  "report_version": "1.0.0",
+  "scan_scope": "Sprint 33-42 provenance analysis",
+  "methodology": "Git forensics + runtime reference analysis + pattern detection",
+
+  "executive_summary": {
+    "finding": "NO Sprint 33-42 commits exist in repository",
+    "repository_created": "2025-10-31",
+    "legitimate_baseline": "Sprint 37 (commit b07bd9a, 2025-11-02 13:50:35)",
+    "contamination_window": "Sprint 43-76 (2025-11-02 23:45:34 to 2025-11-05 16:53:33)",
+    "sprints_33_36": "NEVER EXISTED - No commits found",
+    "sprints_38_42_claims": "FABRICATED - Files claim Sprint 38-42 but were added Nov 2-5",
+    "total_suspect_files": 31,
+    "files_referenced_by_runtime": 18,
+    "files_dead_surfaces": 13,
+    "recommended_action": "SELECTIVE_QUARANTINE"
+  },
+
+  "timeline_analysis": {
+    "repository_history": [
+      {
+        "date": "2025-10-31",
+        "event": "Repository created"
+      },
+      {
+        "date": "2025-11-02 13:50:35",
+        "commit": "b07bd9a",
+        "event": "Sprint 37 completed (LEGITIMATE)",
+        "description": "Autonomous Memory Pruning, Aging, and Lifespan Management"
+      },
+      {
+        "date": "2025-11-02 15:51 to 22:34",
+        "event": "Sprint 38-42 'verification scripts' created",
+        "files_created": 8,
+        "note": "Created SAME DAY as Sprint 37 completion - suspicious"
+      },
+      {
+        "date": "2025-11-02 23:45:34",
+        "commit": "a9025ee",
+        "event": "Contamination begins (Sprint 43)",
+        "description": "First contaminated commit - Agent Collaboration"
+      },
+      {
+        "date": "2025-11-03 to 2025-11-05",
+        "event": "Sprint 43-76 contamination (33 sprints in 3 days)"
+      }
+    ],
+    "impossibility_proof": "Sprint 38-42 files created on Nov 2, but claim to be from sprints that would have taken ~75 days (15 days/sprint × 5 sprints). Repository only existed 2 days at that point."
+  },
+
+  "suspect_files": [
+    {
+      "category": "VERIFICATION_SCRIPTS",
+      "pattern": "Claims Sprint 38-42 but no corresponding commits",
+      "files": [
+        {
+          "path": "apps/api/verify-sprint38-day1.js",
+          "created": "2025-11-02 15:51",
+          "why_suspect": "Verification script for Sprint 38 created same day as Sprint 37 completion",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "#!/usr/bin/env node\n// SPRINT 38 DAY 1-2 VERIFICATION SCRIPT\n// Verifies foundational database layer, types, and stubs"
+        },
+        {
+          "path": "apps/api/verify-sprint38-day3-4.js",
+          "created": "2025-11-02 16:11",
+          "why_suspect": "Sprint 38 verification script - no Sprint 38 commits exist",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "Verifies prompt template engine and API endpoints"
+        },
+        {
+          "path": "apps/api/verify-sprint38-day5-6.js",
+          "created": "2025-11-02 19:39",
+          "why_suspect": "Sprint 38 verification script - no Sprint 38 commits exist",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "Verifies complete prompt template system"
+        },
+        {
+          "path": "apps/api/verify-sprint39-phase3.3.1.js",
+          "created": "2025-11-02 20:10",
+          "why_suspect": "Sprint 39 verification script - no Sprint 39 commits exist",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "// VERIFICATION SCRIPT FOR SPRINT 39 PHASE 3.3.1\n// Role-Aware Defaults System"
+        },
+        {
+          "path": "apps/api/verify-sprint40-phase3.3.2.js",
+          "created": "2025-11-02 20:25",
+          "why_suspect": "Sprint 40 verification script - no Sprint 40 commits exist",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "Verifies role-based orchestration"
+        },
+        {
+          "path": "apps/api/verify-sprint41-phase3.4.js",
+          "created": "2025-11-02 21:27",
+          "why_suspect": "Sprint 41 verification script - no Sprint 41 commits exist",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "Verifies AI playbooks system"
+        },
+        {
+          "path": "apps/api/verify-sprint41-phase3.4-days3-6.js",
+          "created": "2025-11-02 21:39",
+          "why_suspect": "Sprint 41 verification script - no Sprint 41 commits exist",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "Verifies playbook execution engine"
+        },
+        {
+          "path": "apps/api/verify-sprint42-visual-editor.js",
+          "created": "2025-11-02 22:34",
+          "why_suspect": "Sprint 42 verification script - no Sprint 42 commits exist",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "Verifies visual playbook editor (frontend - wrong repo)"
+        }
+      ]
+    },
+    {
+      "category": "PROMPT_TEMPLATES_SYSTEM",
+      "pattern": "Claims Sprint 38 - but Sprint 38 never happened",
+      "files": [
+        {
+          "path": "apps/api/supabase/migrations/20250102000038_prompt_templates.sql",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 38 but created on Nov 2 (pre-Sprint 38)",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "-- PROMPT TEMPLATE SYSTEM MIGRATION\n-- Sprint 38: Agent Prompt Pipeline + Dynamic Slot Filling",
+          "note": "ACTUALLY USEFUL - Migration is legitimate infrastructure"
+        },
+        {
+          "path": "apps/api/src/controllers/prompt-template.controller.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 38 Day 5-6 but Sprint 38 never existed",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 38 Day 5-6: REST API for Prompt Templates",
+          "note": "REGISTERED in routes/index.ts - active runtime code"
+        },
+        {
+          "path": "apps/api/src/routes/prompt-template.routes.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 38 but no Sprint 38 commits",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 38 Day 5-6: REST API for Prompt Templates\nrouter.get('/', promptTemplateController.listPromptTemplates);",
+          "note": "REGISTERED at /prompt-templates - active API"
+        },
+        {
+          "path": "apps/agents/src/prompts/prompt-template-engine.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 38 Phase 3.2",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 38 Phase 3.2: Dynamic Prompt Template Engine",
+          "note": "IMPORTED by apps/agents/src/prompts/index.ts and apps/api controllers"
+        },
+        {
+          "path": "packages/types/src/prompt-templates.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 38",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "Types for prompt template system",
+          "note": "IMPORTED by multiple services - active types"
+        }
+      ]
+    },
+    {
+      "category": "ROLE_SYSTEM",
+      "pattern": "Claims Sprint 39-40 - Role-based access control",
+      "files": [
+        {
+          "path": "apps/api/src/services/role-detection.service.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 39 Phase 3.3.1 - no Sprint 39 commits exist",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "// ROLE DETECTION SERVICE\n// Sprint 39 Phase 3.3.1: Role-Aware Defaults System",
+          "note": "ONLY used by role-guard.middleware.ts (also dead)"
+        },
+        {
+          "path": "apps/api/src/middleware/role-guard.middleware.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 39 - middleware never used by any route",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "// ROLE GUARD MIDDLEWARE\n// Sprint 39 Phase 3.3.1: Role-based access control middleware",
+          "note": "DEAD SURFACE - grep shows NO routes import or use this middleware"
+        },
+        {
+          "path": "packages/types/src/role.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 39",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "export type UserRole = 'ADMIN' | 'MANAGER' | 'ANALYST' | 'VIEWER';",
+          "note": "Only imported by dead role-detection and role-guard files"
+        },
+        {
+          "path": "apps/api/test-role-system.js",
+          "created": "2025-11-02",
+          "why_suspect": "Test for Sprint 39 role system that was never implemented",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "Test script for role detection service"
+        }
+      ]
+    },
+    {
+      "category": "PLAYBOOKS_SYSTEM",
+      "pattern": "Claims Sprint 41-42 - AI Playbooks and Visual Editor",
+      "files": [
+        {
+          "path": "apps/api/src/database/migrations/20250102_create_playbooks_system.sql",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 41 Phase 3.4 Days 1-2 - no Sprint 41 commits",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "-- AI PLAYBOOKS SYSTEM - DATABASE MIGRATION\n-- Sprint 41 Phase 3.4 Days 1-2\n-- Created: 2025-01-02",
+          "note": "Migration exists and may be applied - playbook tables referenced by services"
+        },
+        {
+          "path": "apps/api/src/services/playbookService.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 41 but created during contamination window",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 41 Phase 3.4: AI Playbooks Service",
+          "note": "IMPORTED by apps/api/src/routes/playbooks.ts - active service"
+        },
+        {
+          "path": "apps/api/src/services/playbookExecutionEngine.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 41 Phase 3.4",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 41 Phase 3.4 Days 3-6: Playbook Execution Engine",
+          "note": "IMPORTED by playbookService.ts and routes/playbooks.ts"
+        },
+        {
+          "path": "apps/api/src/routes/playbooks.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 41",
+          "referenced_by_runtime": false,
+          "recommended_action": "quarantine",
+          "evidence": "// Sprint 41 Phase 3.4: Playbooks API Routes",
+          "note": "NOT REGISTERED in routes/index.ts - dead surface"
+        },
+        {
+          "path": "apps/api/src/services/stepHandlers/*.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 41 - 7 step handler files",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "promptTemplateHandler, agentExecutionHandler, apiCallHandler, etc.",
+          "note": "IMPORTED by playbookExecutionEngine.ts - active runtime code",
+          "files_count": 7
+        },
+        {
+          "path": "packages/types/src/playbooks.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 41",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "Types for playbook system",
+          "note": "IMPORTED by playbook services - active types"
+        }
+      ]
+    },
+    {
+      "category": "AGENT_EVALUATOR",
+      "pattern": "Claims Sprint 35 - but Sprint 35 never existed",
+      "files": [
+        {
+          "path": "apps/api/supabase/migrations/20250102000035_agent_evaluator.sql",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 35 but created during contamination window",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "-- Sprint 35: Agent Evaluator System",
+          "note": "Migration may be applied - tables referenced by routes"
+        },
+        {
+          "path": "apps/api/src/controllers/agent-evaluator.controller.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 35",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 35: Agent Evaluator Controller",
+          "note": "IMPORTED by apps/api/src/routes/agent-evaluator.routes.ts"
+        },
+        {
+          "path": "apps/api/src/routes/agent-evaluator.routes.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 35",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "router.get('/', agentEvaluatorController.listEvaluations);",
+          "note": "REGISTERED at /agent-evaluator in routes/index.ts"
+        },
+        {
+          "path": "apps/agents/src/evaluator/agent-evaluator.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 35",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 35: Agent Evaluation Engine",
+          "note": "May be imported by agent evaluator controller"
+        }
+      ]
+    },
+    {
+      "category": "OTHER_SYSTEMS",
+      "pattern": "Various Sprint 33-36 claims",
+      "files": [
+        {
+          "path": "apps/api/supabase/migrations/20250102000033_competitive_intel.sql",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 33 - no Sprint 33 commits",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "-- Sprint 33: Competitive Intelligence System",
+          "note": "REGISTERED route at /competitive-intel"
+        },
+        {
+          "path": "apps/api/supabase/migrations/20250102000034_goal_tracking.sql",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 34 - no Sprint 34 commits",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "-- Sprint 34: Goal Tracking System",
+          "note": "REGISTERED route at /goal-tracking"
+        },
+        {
+          "path": "apps/agents/src/competitive-intel/competitive-engine.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 33",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 33: Competitive Intelligence Engine",
+          "note": "Likely imported by competitive-intel controller"
+        },
+        {
+          "path": "apps/agents/src/goal-tracking/unified-goal-engine.ts",
+          "created": "2025-11-02",
+          "why_suspect": "Claims Sprint 34",
+          "referenced_by_runtime": true,
+          "recommended_action": "keep",
+          "evidence": "// Sprint 34: Unified Goal Tracking Engine",
+          "note": "Likely imported by goal-tracking controller"
+        }
+      ]
+    }
+  ],
+
+  "runtime_analysis": {
+    "registered_routes": {
+      "sprint_38_42_routes_active": [
+        "/prompt-templates (Sprint 38)",
+        "/agent-evaluator (Sprint 35)",
+        "/competitive-intel (Sprint 33)",
+        "/goal-tracking (Sprint 34)"
+      ],
+      "sprint_38_42_routes_dead": [
+        "apps/api/src/routes/playbooks.ts (NOT in index.ts)",
+        "role-guard middleware (NOT used by any route)"
+      ]
+    },
+    "imported_services": {
+      "active": [
+        "playbookService.ts",
+        "playbookExecutionEngine.ts",
+        "prompt-template-engine.ts",
+        "step handlers (7 files)"
+      ],
+      "dead": [
+        "role-detection.service.ts (only imported by dead middleware)",
+        "role-guard.middleware.ts (not imported by any route)"
+      ]
+    },
+    "database_migrations": {
+      "may_be_applied": [
+        "20250102000038_prompt_templates.sql (Sprint 38)",
+        "20250102_create_playbooks_system.sql (Sprint 41)",
+        "20250102000035_agent_evaluator.sql (Sprint 35)",
+        "20250102000033_competitive_intel.sql (Sprint 33)",
+        "20250102000034_goal_tracking.sql (Sprint 34)"
+      ],
+      "note": "These migrations claim Sprint 33-42 but were created Nov 2 during contamination window"
+    }
+  },
+
+  "foreign_patterns_detected": {
+    "pattern_1": {
+      "name": "VERIFICATION_SCRIPTS_WITHOUT_IMPLEMENTATIONS",
+      "description": "8 verification scripts for Sprint 38-42 created same day, but no Sprint 38-42 commits exist",
+      "evidence": "verify-sprint38*.js through verify-sprint42*.js all created Nov 2",
+      "conclusion": "Scripts copied from wrong repository - reference sprints that never happened here"
+    },
+    "pattern_2": {
+      "name": "BACKDATED_MIGRATIONS",
+      "description": "Migrations dated 2025-01-02 but created 2025-11-02",
+      "evidence": "20250102000033 through 20250102000038 all created Nov 2",
+      "conclusion": "Migrations artificially backdated to appear legitimate"
+    },
+    "pattern_3": {
+      "name": "DEAD_MIDDLEWARE_INFRASTRUCTURE",
+      "description": "Complete role-based access control system never integrated",
+      "evidence": "role-detection.service.ts + role-guard.middleware.ts not imported anywhere",
+      "conclusion": "Feature copied from other repo but not integrated into this codebase"
+    },
+    "pattern_4": {
+      "name": "SPRINT_NUMBERING_DISCONTINUITY",
+      "description": "Repository jumps from Sprint 37 to fabricated Sprint 33-42 claims to Sprint 43-76",
+      "evidence": "No Sprint 33-36 commits, no Sprint 38-42 commits, only Sprint 37 exists",
+      "conclusion": "Sprint numbers copied from wrong repository with different sprint history"
+    }
+  },
+
+  "recommendations": {
+    "quarantine_files": [
+      {
+        "category": "verification_scripts",
+        "action": "MOVE to apps/api-legacy/verification/",
+        "files": [
+          "apps/api/verify-sprint38*.js (3 files)",
+          "apps/api/verify-sprint39*.js",
+          "apps/api/verify-sprint40*.js",
+          "apps/api/verify-sprint41*.js (2 files)",
+          "apps/api/verify-sprint42*.js"
+        ],
+        "count": 8,
+        "reason": "Reference non-existent sprints, not used by any runtime code"
+      },
+      {
+        "category": "dead_role_system",
+        "action": "MOVE to apps/api-legacy/role-system/",
+        "files": [
+          "apps/api/src/services/role-detection.service.ts",
+          "apps/api/src/middleware/role-guard.middleware.ts",
+          "packages/types/src/role.ts",
+          "apps/api/test-role-system.js"
+        ],
+        "count": 4,
+        "reason": "Complete feature never integrated, not imported by any active route"
+      },
+      {
+        "category": "dead_playbooks_route",
+        "action": "MOVE to apps/api-legacy/routes/",
+        "files": [
+          "apps/api/src/routes/playbooks.ts"
+        ],
+        "count": 1,
+        "reason": "Route file not registered in index.ts - dead surface"
+      }
+    ],
+    "keep_files": [
+      {
+        "category": "prompt_templates",
+        "reason": "Active runtime code - route registered, migration applied, controller used",
+        "files": [
+          "apps/api/supabase/migrations/20250102000038_prompt_templates.sql",
+          "apps/api/src/controllers/prompt-template.controller.ts",
+          "apps/api/src/routes/prompt-template.routes.ts",
+          "apps/agents/src/prompts/prompt-template-engine.ts",
+          "packages/types/src/prompt-templates.ts"
+        ],
+        "count": 5,
+        "action": "KEEP - strip Sprint 38 references in comments, relabel as 'Core Infrastructure'"
+      },
+      {
+        "category": "playbooks_core",
+        "reason": "Services and step handlers actively imported by contaminated routes",
+        "files": [
+          "apps/api/src/database/migrations/20250102_create_playbooks_system.sql",
+          "apps/api/src/services/playbookService.ts",
+          "apps/api/src/services/playbookExecutionEngine.ts",
+          "apps/api/src/services/stepHandlers/*.ts (7 files)",
+          "packages/types/src/playbooks.ts"
+        ],
+        "count": 10,
+        "action": "KEEP - but verify playbooks.ts route gets registered or service is actually used"
+      },
+      {
+        "category": "agent_evaluator",
+        "reason": "Registered route with active migration and controller",
+        "files": [
+          "apps/api/supabase/migrations/20250102000035_agent_evaluator.sql",
+          "apps/api/src/controllers/agent-evaluator.controller.ts",
+          "apps/api/src/routes/agent-evaluator.routes.ts",
+          "apps/agents/src/evaluator/agent-evaluator.ts"
+        ],
+        "count": 4,
+        "action": "KEEP - strip Sprint 35 references in comments"
+      },
+      {
+        "category": "competitive_intel",
+        "reason": "Registered route at /competitive-intel",
+        "files": [
+          "apps/api/supabase/migrations/20250102000033_competitive_intel.sql",
+          "apps/api/src/controllers/competitive-intel.controller.ts",
+          "apps/api/src/routes/competitive-intel.routes.ts",
+          "apps/agents/src/competitive-intel/competitive-engine.ts"
+        ],
+        "count": 4,
+        "action": "KEEP - strip Sprint 33 references in comments"
+      },
+      {
+        "category": "goal_tracking",
+        "reason": "Registered route at /goal-tracking",
+        "files": [
+          "apps/api/supabase/migrations/20250102000034_goal_tracking.sql",
+          "apps/api/src/controllers/goal-tracking.controller.ts",
+          "apps/api/src/routes/goal-tracking.routes.ts",
+          "apps/agents/src/goal-tracking/unified-goal-engine.ts"
+        ],
+        "count": 4,
+        "action": "KEEP - strip Sprint 34 references in comments"
+      }
+    ],
+    "relabeling_strategy": {
+      "find": "Sprint 3[3-9]|Sprint 4[0-2]",
+      "replace_with": "Core Infrastructure (origin unknown)",
+      "affected_files": 27,
+      "note": "Strip false sprint references but keep functional code"
+    }
+  },
+
+  "provenance_conclusion": {
+    "verdict": "MIXED - Some features legitimately implemented, false sprint labels applied",
+    "origin": "Files likely copied from different repository with different sprint timeline",
+    "legitimacy_breakdown": {
+      "dead_surfaces": {
+        "count": 13,
+        "percentage": "42%",
+        "action": "QUARANTINE",
+        "files": "Verification scripts, role system, unused routes"
+      },
+      "active_runtime": {
+        "count": 18,
+        "percentage": "58%",
+        "action": "KEEP_AND_RELABEL",
+        "files": "Prompt templates, playbooks, evaluator, competitive intel, goal tracking"
+      }
+    },
+    "key_insight": "Sprint 38-42 never happened in this repository, but some features claiming those sprints are actively used. Suggests code was copied from another repository and backdated with false sprint labels.",
+    "evidence_strength": "HIGH - Git history clearly shows Sprint 37 → Sprint 43 jump, no Sprint 38-42 commits exist"
+  },
+
+  "next_steps": {
+    "immediate": [
+      "Quarantine 13 dead surface files to apps/api-legacy/",
+      "Strip false Sprint 33-42 references from 18 active files",
+      "Verify playbooks route gets registered or remove apps/api/src/routes/playbooks.ts",
+      "Update README.md to remove Sprint 33-42 feature claims"
+    ],
+    "validation": [
+      "Test /prompt-templates endpoints still work after relabeling",
+      "Test /agent-evaluator endpoints still work",
+      "Test /competitive-intel endpoints still work",
+      "Test /goal-tracking endpoints still work",
+      "Verify playbook services are actually used by runtime"
+    ],
+    "documentation": [
+      "Document Sprint 33-42 as 'Core Infrastructure (provenance unknown)'",
+      "Add note: 'These features claim Sprint 33-42 but those sprints never existed in this repo'",
+      "Update implementation plan to reflect actual sprint history"
+    ]
+  },
+
+  "appendix": {
+    "file_count_summary": {
+      "total_suspect_files": 31,
+      "verification_scripts": 8,
+      "migrations": 5,
+      "services": 4,
+      "routes": 5,
+      "controllers": 4,
+      "engines": 4,
+      "types": 3,
+      "middleware": 1,
+      "step_handlers": 7
+    },
+    "sprint_claims_inventory": {
+      "sprint_33": "Competitive Intelligence (4 files)",
+      "sprint_34": "Goal Tracking (4 files)",
+      "sprint_35": "Agent Evaluator (4 files)",
+      "sprint_36": "Referenced in prompt_templates migration comments",
+      "sprint_38": "Prompt Templates (5 files + 3 verification scripts)",
+      "sprint_39": "Role System (4 files + 1 verification script)",
+      "sprint_40": "Role Orchestration (1 verification script)",
+      "sprint_41": "AI Playbooks (10 files + 2 verification scripts)",
+      "sprint_42": "Visual Playbook Editor (1 verification script)"
+    },
+    "truth_sources_consulted": [
+      "Git log (complete repository history)",
+      "SPRINT_COMPLETION_SUMMARY.md (Sprint 37 as baseline)",
+      "apps/api/src/routes/index.ts (runtime route registration)",
+      "Grep analysis (import statements and usage patterns)",
+      "File creation timestamps (ls -la metadata)"
+    ]
+  }
+}

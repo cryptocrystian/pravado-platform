@@ -1,0 +1,376 @@
+{
+  "model_version": "1.0",
+  "date": "2025-01-05",
+  "assumptions": {
+    "ai_pricing": {
+      "gpt4_turbo": {
+        "input_per_1m_tokens": 10.00,
+        "output_per_1m_tokens": 30.00
+      },
+      "gpt4o_mini": {
+        "input_per_1m_tokens": 0.15,
+        "output_per_1m_tokens": 0.60
+      },
+      "claude_3_5_sonnet": {
+        "input_per_1m_tokens": 3.00,
+        "output_per_1m_tokens": 15.00
+      }
+    },
+    "enrichment_apis": {
+      "whois_xml": 0.005,
+      "people_data_labs": 0.03,
+      "clearbit_per_call": 0.02
+    },
+    "infrastructure": {
+      "supabase_pro_monthly": 25,
+      "redis_upstash_monthly": 20,
+      "cloudflare_pages_monthly": 20,
+      "storage_per_gb_monthly": 0.023
+    },
+    "email_costs": {
+      "mailgun_per_1000": 0.80
+    },
+    "monitoring": {
+      "sentry_monthly": 26,
+      "prometheus_hosting": 15
+    }
+  },
+  "tier_usage_scenarios": {
+    "starter": {
+      "monthly_ai_requests": 500,
+      "avg_tokens_in_per_request": 1500,
+      "avg_tokens_out_per_request": 800,
+      "model_distribution": {
+        "gpt4o_mini": 0.70,
+        "claude_3_5_sonnet": 0.30
+      },
+      "journalist_database_searches": 100,
+      "media_monitoring_searches": 50,
+      "podcast_syndications": 0,
+      "enrichment_api_calls": 50,
+      "storage_gb": 5,
+      "email_sends": 200,
+      "active_users": 1
+    },
+    "pro": {
+      "monthly_ai_requests": 2000,
+      "avg_tokens_in_per_request": 2000,
+      "avg_tokens_out_per_request": 1200,
+      "model_distribution": {
+        "gpt4o_mini": 0.50,
+        "claude_3_5_sonnet": 0.40,
+        "gpt4_turbo": 0.10
+      },
+      "journalist_database_searches": 500,
+      "media_monitoring_searches": 200,
+      "podcast_syndications": 10,
+      "enrichment_api_calls": 200,
+      "storage_gb": 20,
+      "email_sends": 1000,
+      "active_users": 3
+    },
+    "premium": {
+      "monthly_ai_requests": 5000,
+      "avg_tokens_in_per_request": 2500,
+      "avg_tokens_out_per_request": 1500,
+      "model_distribution": {
+        "gpt4o_mini": 0.30,
+        "claude_3_5_sonnet": 0.50,
+        "gpt4_turbo": 0.20
+      },
+      "journalist_database_searches": 2000,
+      "media_monitoring_searches": 1000,
+      "podcast_syndications": 50,
+      "enrichment_api_calls": 500,
+      "storage_gb": 50,
+      "email_sends": 5000,
+      "active_users": 10
+    },
+    "enterprise": {
+      "monthly_ai_requests": 15000,
+      "avg_tokens_in_per_request": 3000,
+      "avg_tokens_out_per_request": 2000,
+      "model_distribution": {
+        "gpt4o_mini": 0.20,
+        "claude_3_5_sonnet": 0.40,
+        "gpt4_turbo": 0.40
+      },
+      "journalist_database_searches": 10000,
+      "media_monitoring_searches": 5000,
+      "podcast_syndications": 200,
+      "enrichment_api_calls": 2000,
+      "storage_gb": 200,
+      "email_sends": 20000,
+      "active_users": 50
+    }
+  },
+  "cost_calculations": {
+    "starter": {
+      "ai_costs": {
+        "gpt4o_mini": 0.53,
+        "claude_3_5_sonnet": 0.40,
+        "total_ai": 0.93
+      },
+      "enrichment": 0.25,
+      "infrastructure": {
+        "supabase": 2.50,
+        "redis": 1.00,
+        "cloudflare": 1.00,
+        "storage": 0.12,
+        "total": 4.62
+      },
+      "email": 0.16,
+      "monitoring": {
+        "per_customer": 0.50,
+        "total": 0.50
+      },
+      "total_monthly_cost": 6.46,
+      "cost_per_user": 6.46
+    },
+    "pro": {
+      "ai_costs": {
+        "gpt4o_mini": 1.80,
+        "claude_3_5_sonnet": 3.24,
+        "gpt4_turbo": 2.40,
+        "total_ai": 7.44
+      },
+      "enrichment": 1.00,
+      "infrastructure": {
+        "supabase": 3.00,
+        "redis": 2.00,
+        "cloudflare": 1.50,
+        "storage": 0.46,
+        "total": 6.96
+      },
+      "email": 0.80,
+      "monitoring": {
+        "per_customer": 0.75,
+        "total": 0.75
+      },
+      "total_monthly_cost": 16.95,
+      "cost_per_user": 5.65
+    },
+    "premium": {
+      "ai_costs": {
+        "gpt4o_mini": 3.19,
+        "claude_3_5_sonnet": 13.13,
+        "gpt4_turbo": 15.00,
+        "total_ai": 31.32
+      },
+      "enrichment": 2.50,
+      "infrastructure": {
+        "supabase": 5.00,
+        "redis": 3.00,
+        "cloudflare": 2.00,
+        "storage": 1.15,
+        "total": 11.15
+      },
+      "email": 4.00,
+      "monitoring": {
+        "per_customer": 1.00,
+        "total": 1.00
+      },
+      "total_monthly_cost": 49.97,
+      "cost_per_user": 5.00
+    },
+    "enterprise": {
+      "ai_costs": {
+        "gpt4o_mini": 8.10,
+        "claude_3_5_sonnet": 40.50,
+        "gpt4_turbo": 108.00,
+        "total_ai": 156.60
+      },
+      "enrichment": 10.00,
+      "infrastructure": {
+        "supabase": 10.00,
+        "redis": 5.00,
+        "cloudflare": 5.00,
+        "storage": 4.60,
+        "total": 24.60
+      },
+      "email": 16.00,
+      "monitoring": {
+        "per_customer": 2.00,
+        "total": 2.00
+      },
+      "total_monthly_cost": 209.20,
+      "cost_per_user": 4.18
+    }
+  },
+  "margin_scenarios": {
+    "accessible_model": {
+      "prices": {
+        "starter": 99,
+        "pro": 499,
+        "premium": 1299,
+        "enterprise": 3000
+      },
+      "margins": {
+        "starter": {
+          "revenue": 99,
+          "cost": 6.46,
+          "gross_profit": 92.54,
+          "margin_percent": 93.5
+        },
+        "pro": {
+          "revenue": 499,
+          "cost": 16.95,
+          "gross_profit": 482.05,
+          "margin_percent": 96.6
+        },
+        "premium": {
+          "revenue": 1299,
+          "cost": 49.97,
+          "gross_profit": 1249.03,
+          "margin_percent": 96.2
+        },
+        "enterprise": {
+          "revenue": 3000,
+          "cost": 209.20,
+          "gross_profit": 2790.80,
+          "margin_percent": 93.0
+        }
+      },
+      "weighted_avg_margin": 95.2,
+      "ltv_cac_target": "3:1",
+      "payback_period_months": 6
+    },
+    "balanced_model": {
+      "prices": {
+        "starter": 149,
+        "pro": 599,
+        "premium": 1499,
+        "enterprise": 5000
+      },
+      "margins": {
+        "starter": {
+          "revenue": 149,
+          "cost": 6.46,
+          "gross_profit": 142.54,
+          "margin_percent": 95.7
+        },
+        "pro": {
+          "revenue": 599,
+          "cost": 16.95,
+          "gross_profit": 582.05,
+          "margin_percent": 97.2
+        },
+        "premium": {
+          "revenue": 1499,
+          "cost": 49.97,
+          "gross_profit": 1449.03,
+          "margin_percent": 96.7
+        },
+        "enterprise": {
+          "revenue": 5000,
+          "cost": 209.20,
+          "gross_profit": 4790.80,
+          "margin_percent": 95.8
+        }
+      },
+      "weighted_avg_margin": 96.4,
+      "ltv_cac_target": "4:1",
+      "payback_period_months": 4
+    },
+    "premium_model": {
+      "prices": {
+        "starter": 199,
+        "pro": 799,
+        "premium": 1999,
+        "enterprise": 7500
+      },
+      "margins": {
+        "starter": {
+          "revenue": 199,
+          "cost": 6.46,
+          "gross_profit": 192.54,
+          "margin_percent": 96.8
+        },
+        "pro": {
+          "revenue": 799,
+          "cost": 16.95,
+          "gross_profit": 782.05,
+          "margin_percent": 97.9
+        },
+        "premium": {
+          "revenue": 1999,
+          "cost": 49.97,
+          "gross_profit": 1949.03,
+          "margin_percent": 97.5
+        },
+        "enterprise": {
+          "revenue": 7500,
+          "cost": 209.20,
+          "gross_profit": 7290.80,
+          "margin_percent": 97.2
+        }
+      },
+      "weighted_avg_margin": 97.4,
+      "ltv_cac_target": "5:1",
+      "payback_period_months": 3
+    }
+  },
+  "sensitivity_analysis": {
+    "ai_cost_increase_10_percent": {
+      "impact_on_starter_margin": -0.9,
+      "impact_on_pro_margin": -1.2,
+      "impact_on_premium_margin": -2.1,
+      "impact_on_enterprise_margin": -3.1,
+      "mitigation": "Shift to more efficient models, implement caching"
+    },
+    "ai_cost_increase_25_percent": {
+      "impact_on_starter_margin": -2.3,
+      "impact_on_pro_margin": -3.1,
+      "impact_on_premium_margin": -5.2,
+      "impact_on_enterprise_margin": -7.8,
+      "mitigation": "Price increase or feature usage caps"
+    },
+    "usage_spike_50_percent": {
+      "impact_on_margins": "Minimal (< 2% margin reduction)",
+      "reason": "Variable costs scale linearly, high base margins absorb increases"
+    }
+  },
+  "break_even_analysis": {
+    "monthly_customers_needed": {
+      "fixed_costs_monthly": 2500,
+      "starter_at_99": {
+        "customers_needed": 27,
+        "reasoning": "Fixed costs / (99 - 6.46)"
+      },
+      "pro_at_599": {
+        "customers_needed": 5,
+        "reasoning": "Fixed costs / (599 - 16.95)"
+      },
+      "premium_at_1499": {
+        "customers_needed": 2,
+        "reasoning": "Fixed costs / (1499 - 49.97)"
+      }
+    }
+  },
+  "key_findings": [
+    "Gross margins are exceptionally high (93-97%) across all tiers due to software economics",
+    "AI costs are the primary variable cost, ranging from $0.93 (Starter) to $156.60 (Enterprise)",
+    "Cost per user decreases as tier increases ($6.46 → $4.18) due to economies of scale",
+    "Infrastructure costs are minimal relative to revenue (<2% even at Starter tier)",
+    "Premium model ($199-$7500) maintains 97%+ margins while commanding market-leading prices",
+    "AI cost sensitivity: 25% increase only impacts margins by 2-8 percentage points",
+    "Break-even is achievable with very low customer counts (2-27 depending on tier)",
+    "Unit economics support aggressive customer acquisition (CAC up to $1000+ sustainable)"
+  ],
+  "recommendations": {
+    "optimal_strategy": "Balanced Model ($149-$5000)",
+    "reasoning": [
+      "Provides sufficient margin (96.4%) while remaining competitive",
+      "Starter tier at $149 is above 'too cheap' threshold from Van Westendorp",
+      "Pro tier at $599 hits sweet spot for mid-market buyers",
+      "Enterprise tier at $5000 is below Cision/MuckRack but premium to alternatives",
+      "Allows for 20-30% annual discounts while maintaining 70%+ margins"
+    ],
+    "tier_targeting": {
+      "starter": "Solo PR pros, freelancers (capture 30% of market)",
+      "pro": "Small agencies, in-house teams 2-10 (capture 45% of market)",
+      "premium": "Mid-size agencies, enterprise teams (capture 20% of market)",
+      "enterprise": "Large agencies, multi-national PR teams (capture 5% of market)"
+    }
+  }
+}

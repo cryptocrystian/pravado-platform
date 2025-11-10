@@ -1,6 +1,7 @@
 // =====================================================
 // UNIFIED GOAL TRACKING ENGINE
-// Sprint 34: Multi-level goals, OKR snapshots, AI insights
+// Core Infrastructure: Multi-level goals, OKR snapshots, AI insights
+// Provenance: Core infra (origin uncertain). Reviewed 2025-11-09.
 // =====================================================
 
 import { EventEmitter } from 'events';

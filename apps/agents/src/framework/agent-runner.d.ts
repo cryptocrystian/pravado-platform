@@ -1,0 +1,62 @@
+import { AgentRunnerConfig, AgentRunnerInput, AgentResult, AgentContext } from '@pravado/types';
+import type { ReviewableEntityType, ReviewType, ReviewPriority, AgentReview } from '@pravado/types';
+export declare class AgentRunner {
+    private config;
+    private context;
+    private input;
+    private steps;
+    private currentStepId;
+    private tokensUsed;
+    private startTime;
+    constructor(runnerInput: AgentRunnerInput);
+    execute(): Promise<AgentResult>;
+    private gatherContext;
+    private gatherStrategy;
+    private gatherContacts;
+    private gatherKeywordClusters;
+    private gatherCampaigns;
+    private gatherCRM;
+    private gatherMemory;
+    private gatherCollaboration;
+    private persistMemory;
+    private handleFollowupCancellation;
+    private logTimelineEvent;
+    private trackOutcomeEvents;
+    private executeAgent;
+    private buildUserPrompt;
+    private interpolateTemplate;
+    private validateInput;
+    private validateOutput;
+    private addStep;
+    private completeCurrentStep;
+    private failCurrentStep;
+    executeTool(toolName: string, input: any): Promise<any>;
+    checkTaskPermission(taskId: string): Promise<boolean>;
+    requestHandoff(taskId: string, targetAgent: string, reason: string, message?: string): Promise<void>;
+    sendMessage(recipients: string[], content: string, messageType?: 'INFO' | 'REQUEST' | 'RESPONSE'): Promise<void>;
+    escalate(reason: string, severity?: 'low' | 'medium' | 'high' | 'critical', requestedAction?: string): Promise<void>;
+    private gatherReview;
+    private gatherGoals;
+    checkReviewRequired(entityType: ReviewableEntityType, entityId: string, metadata?: Record<string, any>): Promise<{
+        requiresReview: boolean;
+        reviewType?: ReviewType;
+        priority?: ReviewPriority;
+        reason?: string;
+    }>;
+    submitForReview(params: {
+        reviewType: ReviewType;
+        reviewableEntityType: ReviewableEntityType;
+        reviewableEntityId: string;
+        title: string;
+        description?: string;
+        contentToReview: Record<string, any>;
+        priority?: ReviewPriority;
+        agentReasoning: string;
+        assignedTo?: string;
+    }): Promise<AgentReview>;
+    waitForReview(reviewId: string, pollIntervalMs?: number, timeoutMs?: number): Promise<AgentReview>;
+    applyReviewModifications(originalOutput: Record<string, any>, review: AgentReview): Record<string, any>;
+    private calculateConfidence;
+}
+export declare function runAgent(config: AgentRunnerConfig, input: Record<string, any>, context: AgentContext): Promise<AgentResult>;
+//# sourceMappingURL=agent-runner.d.ts.map

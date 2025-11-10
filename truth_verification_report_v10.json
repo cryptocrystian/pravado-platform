@@ -1,0 +1,349 @@
+{
+  "sprint": "Sprint 75: Executive Admin Console + Validated Pricing Rollout + Mobile App Kickoff",
+  "version": "v10",
+  "timestamp": "2025-01-05T00:00:00Z",
+  "total_checks": 112,
+  "tracks": [
+    {
+      "name": "Track A: Executive Admin Console (Founder View)",
+      "status": "PARTIALLY_IMPLEMENTED",
+      "completion_percent": 40,
+      "implemented": ["Backend services", "API routes"],
+      "pending": ["Frontend components", "Dashboard UI"]
+    },
+    {
+      "name": "Track B: Validated Pricing Rollout (Balanced Model)",
+      "status": "CORE_COMPLETE",
+      "completion_percent": 70,
+      "implemented": ["Database migration", "Seed data", "Environment config"],
+      "pending": ["Stripe configuration", "Frontend pricing page", "Tier service updates"]
+    },
+    {
+      "name": "Track C: Mobile App Foundation",
+      "status": "PLANNED",
+      "completion_percent": 10,
+      "implemented": ["Environment config"],
+      "pending": ["Mobile API routes", "React Native app", "Mobile screens"]
+    }
+  ],
+  "categories": [
+    {
+      "name": "Track A - Backend: Admin Metrics Service",
+      "checks": [
+        {"id": "A-SVC-001", "description": "admin-metrics.service.ts exists", "file": "apps/api/src/services/admin-metrics.service.ts", "status": "pass"},
+        {"id": "A-SVC-002", "description": "getAdminOverview function exported", "grep": "export async function getAdminOverview", "status": "pass"},
+        {"id": "A-SVC-003", "description": "getRevenueMetrics function exported", "grep": "export async function getRevenueMetrics", "status": "pass"},
+        {"id": "A-SVC-004", "description": "getCustomerMetrics function exported", "grep": "export async function getCustomerMetrics", "status": "pass"},
+        {"id": "A-SVC-005", "description": "getTrialMetrics function exported", "grep": "export async function getTrialMetrics", "status": "pass"},
+        {"id": "A-SVC-006", "description": "getOpsMetrics function exported", "grep": "export async function getOpsMetrics", "status": "pass"},
+        {"id": "A-SVC-007", "description": "getRevenueTrends function exported", "grep": "export async function getRevenueTrends", "status": "pass"},
+        {"id": "A-SVC-008", "description": "getTrialFunnelMetrics function exported", "grep": "export async function getTrialFunnelMetrics", "status": "pass"},
+        {"id": "A-SVC-009", "description": "calculateNRR function exported", "grep": "export async function calculateNRR", "status": "pass"},
+        {"id": "A-SVC-010", "description": "calculatePaybackPeriod function exported", "grep": "export function calculatePaybackPeriod", "status": "pass"},
+        {"id": "A-SVC-011", "description": "RevenueMetrics type defined", "grep": "export interface RevenueMetrics", "status": "pass"},
+        {"id": "A-SVC-012", "description": "CustomerMetrics type defined", "grep": "export interface CustomerMetrics", "status": "pass"},
+        {"id": "A-SVC-013", "description": "TrialMetrics type defined", "grep": "export interface TrialMetrics", "status": "pass"},
+        {"id": "A-SVC-014", "description": "OpsMetrics type defined", "grep": "export interface OpsMetrics", "status": "pass"},
+        {"id": "A-SVC-015", "description": "MRR calculation implemented", "grep": "const currentMrr", "status": "pass"},
+        {"id": "A-SVC-016", "description": "ARR calculation implemented", "grep": "const arr = currentMrr \\* 12", "status": "pass"},
+        {"id": "A-SVC-017", "description": "ARPU calculation implemented", "grep": "const arpu = currentMrr / activeCustomerCount", "status": "pass"},
+        {"id": "A-SVC-018", "description": "Churn rate calculation", "grep": "const churnRate = activeCustomers > 0", "status": "pass"},
+        {"id": "A-SVC-019", "description": "LTV calculation", "grep": "const ltv =", "status": "pass"},
+        {"id": "A-SVC-020", "description": "LTV:CAC ratio calculation", "grep": "const ltvCacRatio", "status": "pass"}
+      ]
+    },
+    {
+      "name": "Track A - Backend: Admin Metrics Routes",
+      "checks": [
+        {"id": "A-API-001", "description": "admin-metrics.routes.ts exists", "file": "apps/api/src/routes/admin-metrics.routes.ts", "status": "pass"},
+        {"id": "A-API-002", "description": "GET /overview endpoint", "grep": "router\\.get\\('/overview'", "status": "pass"},
+        {"id": "A-API-003", "description": "GET /revenue endpoint", "grep": "router\\.get\\('/revenue'", "status": "pass"},
+        {"id": "A-API-004", "description": "GET /funnels endpoint", "grep": "router\\.get\\('/funnels'", "status": "pass"},
+        {"id": "A-API-005", "description": "GET /ops endpoint", "grep": "router\\.get\\('/ops'", "status": "pass"},
+        {"id": "A-API-006", "description": "GET /calculations endpoint", "grep": "router\\.get\\('/calculations'", "status": "pass"},
+        {"id": "A-API-007", "description": "requirePlatformAdmin middleware", "grep": "async function requirePlatformAdmin", "status": "pass"},
+        {"id": "A-API-008", "description": "authenticateToken middleware used", "grep": "authenticateToken", "status": "pass"},
+        {"id": "A-API-009", "description": "Platform admin RBAC check", "grep": "is_platform_admin", "status": "pass"},
+        {"id": "A-API-010", "description": "Error handling with observability", "grep": "captureException", "status": "pass"}
+      ]
+    },
+    {
+      "name": "Track A - Frontend: Executive Dashboard (PENDING)",
+      "checks": [
+        {"id": "A-FE-001", "description": "ExecutiveDashboard.tsx exists", "file": "apps/dashboard/src/pages/admin/ExecutiveDashboard.tsx", "status": "pending"},
+        {"id": "A-FE-002", "description": "KpiTiles.tsx component", "file": "apps/dashboard/src/components/admin/tiles/KpiTiles.tsx", "status": "pending"},
+        {"id": "A-FE-003", "description": "RevenueTrends.tsx chart", "file": "apps/dashboard/src/components/admin/charts/RevenueTrends.tsx", "status": "pending"},
+        {"id": "A-FE-004", "description": "OpsHealth.tsx chart", "file": "apps/dashboard/src/components/admin/charts/OpsHealth.tsx", "status": "pending"},
+        {"id": "A-FE-005", "description": "TrialToPaid.tsx funnel", "file": "apps/dashboard/src/components/admin/funnels/TrialToPaid.tsx", "status": "pending"},
+        {"id": "A-FE-006", "description": "MRR display tile", "grep": "MRR", "status": "pending"},
+        {"id": "A-FE-007", "description": "ARR display tile", "grep": "ARR", "status": "pending"},
+        {"id": "A-FE-008", "description": "ARPU display tile", "grep": "ARPU", "status": "pending"},
+        {"id": "A-FE-009", "description": "Trial conversion display", "grep": "conversion", "status": "pending"},
+        {"id": "A-FE-010", "description": "Churn rate display", "grep": "churn", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Track B - Database: Pricing Migration",
+      "checks": [
+        {"id": "B-DB-001", "description": "plan_policies_expansion.sql exists", "file": "apps/api/supabase/migrations/20251115000001_plan_policies_expansion.sql", "status": "pass"},
+        {"id": "B-DB-002", "description": "journalist_contacts_limit column added", "grep": "journalist_contacts_limit INTEGER", "status": "pass"},
+        {"id": "B-DB-003", "description": "ai_generations_monthly column added", "grep": "ai_generations_monthly INTEGER", "status": "pass"},
+        {"id": "B-DB-004", "description": "media_searches_monthly column added", "grep": "media_searches_monthly INTEGER", "status": "pass"},
+        {"id": "B-DB-005", "description": "storage_gb_limit column added", "grep": "storage_gb_limit INTEGER", "status": "pass"},
+        {"id": "B-DB-006", "description": "max_users column added", "grep": "max_users INTEGER", "status": "pass"},
+        {"id": "B-DB-007", "description": "podcast_syndications_monthly column added", "grep": "podcast_syndications_monthly INTEGER", "status": "pass"},
+        {"id": "B-DB-008", "description": "citemind_queries_monthly column added", "grep": "citemind_queries_monthly INTEGER", "status": "pass"},
+        {"id": "B-DB-009", "description": "api_access column added", "grep": "api_access BOOLEAN", "status": "pass"},
+        {"id": "B-DB-010", "description": "white_label_reports column added", "grep": "white_label_reports BOOLEAN", "status": "pass"},
+        {"id": "B-DB-011", "description": "monthly_price_usd column added", "grep": "monthly_price_usd DECIMAL", "status": "pass"},
+        {"id": "B-DB-012", "description": "annual_price_usd column added", "grep": "annual_price_usd DECIMAL", "status": "pass"},
+        {"id": "B-DB-013", "description": "stripe_price_id_monthly column", "grep": "stripe_price_id_monthly VARCHAR", "status": "pass"},
+        {"id": "B-DB-014", "description": "stripe_price_id_annual column", "grep": "stripe_price_id_annual VARCHAR", "status": "pass"},
+        {"id": "B-DB-015", "description": "feature_usage_snapshots table created", "grep": "CREATE TABLE IF NOT EXISTS feature_usage_snapshots", "status": "pass"},
+        {"id": "B-DB-016", "description": "tier_pricing_history table created", "grep": "CREATE TABLE IF NOT EXISTS tier_pricing_history", "status": "pass"},
+        {"id": "B-DB-017", "description": "trial_configurations table created", "grep": "CREATE TABLE IF NOT EXISTS trial_configurations", "status": "pass"},
+        {"id": "B-DB-018", "description": "tier_change_log table created", "grep": "CREATE TABLE IF NOT EXISTS tier_change_log", "status": "pass"},
+        {"id": "B-DB-019", "description": "check_upgrade_triggers function", "grep": "CREATE OR REPLACE FUNCTION check_upgrade_triggers", "status": "pass"},
+        {"id": "B-DB-020", "description": "get_next_tier function", "grep": "CREATE OR REPLACE FUNCTION get_next_tier", "status": "pass"},
+        {"id": "B-DB-021", "description": "calculate_usage_utilization function", "grep": "CREATE OR REPLACE FUNCTION calculate_usage_utilization", "status": "pass"},
+        {"id": "B-DB-022", "description": "Utilization trigger created", "grep": "CREATE TRIGGER trigger_calculate_utilization", "status": "pass"},
+        {"id": "B-DB-023", "description": "RLS policies on feature_usage_snapshots", "grep": "ALTER TABLE feature_usage_snapshots ENABLE ROW LEVEL SECURITY", "status": "pass"},
+        {"id": "B-DB-024", "description": "RLS policies on tier_change_log", "grep": "ALTER TABLE tier_change_log ENABLE ROW LEVEL SECURITY", "status": "pass"}
+      ]
+    },
+    {
+      "name": "Track B - Database: Pricing Seed Data",
+      "checks": [
+        {"id": "B-SEED-001", "description": "plan_policies_balanced.sql exists", "file": "apps/api/supabase/seed/20251115000001_plan_policies_balanced.sql", "status": "pass"},
+        {"id": "B-SEED-002", "description": "Starter tier seeded ($149/mo)", "grep": "'starter'", "status": "pass"},
+        {"id": "B-SEED-003", "description": "Starter monthly price $149", "grep": "149\\.00", "status": "pass"},
+        {"id": "B-SEED-004", "description": "Starter annual price $1,341", "grep": "1341\\.00", "status": "pass"},
+        {"id": "B-SEED-005", "description": "Starter 5K contacts limit", "grep": "5000,.*-- journalist_contacts_limit", "status": "pass"},
+        {"id": "B-SEED-006", "description": "Starter 500 AI generations", "grep": "500,.*-- ai_generations_monthly", "status": "pass"},
+        {"id": "B-SEED-007", "description": "Pro tier seeded ($599/mo)", "grep": "'pro'", "status": "pass"},
+        {"id": "B-SEED-008", "description": "Pro monthly price $599", "grep": "599\\.00", "status": "pass"},
+        {"id": "B-SEED-009", "description": "Pro annual price $5,391", "grep": "5391\\.00", "status": "pass"},
+        {"id": "B-SEED-010", "description": "Pro 50K contacts limit", "grep": "50000,.*-- journalist_contacts_limit", "status": "pass"},
+        {"id": "B-SEED-011", "description": "Pro 2K AI generations", "grep": "2000,.*-- ai_generations_monthly", "status": "pass"},
+        {"id": "B-SEED-012", "description": "Pro is_recommended flag", "grep": "true,.*-- is_recommended", "status": "pass"},
+        {"id": "B-SEED-013", "description": "Premium tier seeded ($1,499/mo)", "grep": "'premium'", "status": "pass"},
+        {"id": "B-SEED-014", "description": "Premium monthly price $1,499", "grep": "1499\\.00", "status": "pass"},
+        {"id": "B-SEED-015", "description": "Premium annual price $13,491", "grep": "13491\\.00", "status": "pass"},
+        {"id": "B-SEED-016", "description": "Premium 100K contacts limit", "grep": "100000,.*-- journalist_contacts_limit", "status": "pass"},
+        {"id": "B-SEED-017", "description": "Premium white_label enabled", "grep": "true,.*-- white_label_reports", "status": "pass"},
+        {"id": "B-SEED-018", "description": "Enterprise tier seeded ($5,000/mo)", "grep": "'enterprise'", "status": "pass"},
+        {"id": "B-SEED-019", "description": "Enterprise monthly price $5,000", "grep": "5000\\.00", "status": "pass"},
+        {"id": "B-SEED-020", "description": "Enterprise annual price $45,000", "grep": "45000\\.00", "status": "pass"},
+        {"id": "B-SEED-021", "description": "Enterprise API access enabled", "grep": "true,.*-- api_access", "status": "pass"},
+        {"id": "B-SEED-022", "description": "Enterprise dedicated CSM", "grep": "true,.*-- dedicated_csm", "status": "pass"},
+        {"id": "B-SEED-023", "description": "Trial configurations seeded", "grep": "INSERT INTO trial_configurations", "status": "pass"},
+        {"id": "B-SEED-024", "description": "Pricing history seeded", "grep": "INSERT INTO tier_pricing_history", "status": "pass"},
+        {"id": "B-SEED-025", "description": "Balanced Model metadata", "grep": "'Balanced Model'", "status": "pass"}
+      ]
+    },
+    {
+      "name": "Track B - Services: Tier Mapping (PENDING)",
+      "checks": [
+        {"id": "B-SVC-001", "description": "account-tier.service.ts updated", "file": "apps/api/src/services/account-tier.service.ts", "status": "pending"},
+        {"id": "B-SVC-002", "description": "mapStripePriceToTier function", "grep": "function mapStripePriceToTier", "status": "pending"},
+        {"id": "B-SVC-003", "description": "Starter price mapping", "grep": "STRIPE_PRICE_STARTER", "status": "pending"},
+        {"id": "B-SVC-004", "description": "Pro price mapping", "grep": "STRIPE_PRICE_PRO", "status": "pending"},
+        {"id": "B-SVC-005", "description": "Premium price mapping", "grep": "STRIPE_PRICE_PREMIUM", "status": "pending"},
+        {"id": "B-SVC-006", "description": "Enterprise price mapping", "grep": "STRIPE_PRICE_ENTERPRISE", "status": "pending"},
+        {"id": "B-SVC-007", "description": "Annual price mappings", "grep": "STRIPE_PRICE.*ANNUAL", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Track B - Frontend: Pricing UI (PENDING)",
+      "checks": [
+        {"id": "B-FE-001", "description": "PlanControls.tsx exists", "file": "apps/dashboard/src/components/billing/PlanControls.tsx", "status": "pending"},
+        {"id": "B-FE-002", "description": "4-tier comparison display", "grep": "starter.*pro.*premium.*enterprise", "status": "pending"},
+        {"id": "B-FE-003", "description": "Upgrade CTA buttons", "grep": "upgrade", "status": "pending"},
+        {"id": "B-FE-004", "description": "PricingPage.tsx exists", "file": "apps/dashboard/src/pages/pricing/PricingPage.tsx", "status": "pending"},
+        {"id": "B-FE-005", "description": "Starter tier display ($149)", "grep": "149", "status": "pending"},
+        {"id": "B-FE-006", "description": "Pro tier display ($599)", "grep": "599", "status": "pending"},
+        {"id": "B-FE-007", "description": "Premium tier display ($1,499)", "grep": "1499", "status": "pending"},
+        {"id": "B-FE-008", "description": "Enterprise tier display ($5,000+)", "grep": "5000", "status": "pending"},
+        {"id": "B-FE-009", "description": "Annual discount display (25%)", "grep": "25%", "status": "pending"},
+        {"id": "B-FE-010", "description": "Feature comparison table", "grep": "feature.*comparison", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Track C - Mobile API (PENDING)",
+      "checks": [
+        {"id": "C-API-001", "description": "mobile/summary.routes.ts exists", "file": "apps/api/src/routes/mobile/summary.routes.ts", "status": "pending"},
+        {"id": "C-API-002", "description": "GET /api/mobile/summary endpoint", "grep": "router\\.get\\('/summary'", "status": "pending"},
+        {"id": "C-API-003", "description": "Compact JSON response", "grep": "compact", "status": "pending"},
+        {"id": "C-API-004", "description": "Mobile API version header", "grep": "x-mobile-api-version", "status": "pending"},
+        {"id": "C-API-005", "description": "mobile/alerts.routes.ts exists", "file": "apps/api/src/routes/mobile/alerts.routes.ts", "status": "pending"},
+        {"id": "C-API-006", "description": "GET /api/mobile/alerts endpoint", "grep": "router\\.get\\('/alerts'", "status": "pending"},
+        {"id": "C-API-007", "description": "Ops alerts in response", "grep": "ops.*alerts", "status": "pending"},
+        {"id": "C-API-008", "description": "Billing alerts in response", "grep": "billing.*alerts", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Track C - Mobile App (PENDING)",
+      "checks": [
+        {"id": "C-APP-001", "description": "apps/mobile/ directory exists", "file": "apps/mobile/", "status": "pending"},
+        {"id": "C-APP-002", "description": "package.json with Expo", "grep": "expo", "status": "pending"},
+        {"id": "C-APP-003", "description": "app.json configuration", "file": "apps/mobile/app.json", "status": "pending"},
+        {"id": "C-APP-004", "description": "Dashboard.tsx screen", "file": "apps/mobile/screens/Dashboard.tsx", "status": "pending"},
+        {"id": "C-APP-005", "description": "OpHealth.tsx screen", "file": "apps/mobile/screens/OpHealth.tsx", "status": "pending"},
+        {"id": "C-APP-006", "description": "KPI tiles rendering", "grep": "KPI", "status": "pending"},
+        {"id": "C-APP-007", "description": "Alerts feed rendering", "grep": "alerts", "status": "pending"},
+        {"id": "C-APP-008", "description": "Supabase auth integration", "grep": "supabase.*auth", "status": "pending"},
+        {"id": "C-APP-009", "description": "PKCE flow implemented", "grep": "PKCE", "status": "pending"},
+        {"id": "C-APP-010", "description": "Push notification stub", "grep": "push.*notification", "status": "pending"}
+      ]
+    },
+    {
+      "name": "Environment Configuration",
+      "checks": [
+        {"id": "ENV-001", "description": ".env.sample updated", "file": ".env.sample", "status": "pass"},
+        {"id": "ENV-002", "description": "STRIPE_PRICE_STARTER defined", "grep": "STRIPE_PRICE_STARTER", "status": "pass"},
+        {"id": "ENV-003", "description": "STRIPE_PRICE_PRO defined", "grep": "STRIPE_PRICE_PRO", "status": "pass"},
+        {"id": "ENV-004", "description": "STRIPE_PRICE_PREMIUM defined", "grep": "STRIPE_PRICE_PREMIUM", "status": "pass"},
+        {"id": "ENV-005", "description": "STRIPE_PRICE_ENTERPRISE defined", "grep": "STRIPE_PRICE_ENTERPRISE", "status": "pass"},
+        {"id": "ENV-006", "description": "Annual Stripe price IDs defined", "grep": "STRIPE_PRICE.*ANNUAL", "status": "pass"},
+        {"id": "ENV-007", "description": "MOBILE_API_VERSION defined", "grep": "MOBILE_API_VERSION", "status": "pass"},
+        {"id": "ENV-008", "description": "MOBILE_ENABLE_ALERTS defined", "grep": "MOBILE_ENABLE_ALERTS", "status": "pass"},
+        {"id": "ENV-009", "description": "EXPO_PROJECT_ID defined", "grep": "EXPO_PROJECT_ID", "status": "pass"},
+        {"id": "ENV-010", "description": "EXPO_PUBLIC_API_URL defined", "grep": "EXPO_PUBLIC_API_URL", "status": "pass"}
+      ]
+    },
+    {
+      "name": "Documentation (PENDING)",
+      "checks": [
+        {"id": "DOC-001", "description": "Phase 13 in architecture.md", "grep": "Phase 13:.*Admin Console.*Mobile", "status": "pending"},
+        {"id": "DOC-002", "description": "Admin metrics documented", "grep": "Admin Metrics", "status": "pending"},
+        {"id": "DOC-003", "description": "Pricing tiers documented", "grep": "Balanced Model", "status": "pending"},
+        {"id": "DOC-004", "description": "Mobile API documented", "grep": "Mobile API", "status": "pending"},
+        {"id": "DOC-005", "description": "Feature limits documented", "grep": "feature.*limits", "status": "pending"}
+      ]
+    }
+  ],
+  "manual_verification": [
+    "== STRIPE SETUP ==",
+    "1. Create Stripe products for 4 tiers",
+    "2. Create monthly prices: $149, $599, $1,499, $5,000",
+    "3. Create annual prices: $1,341, $5,391, $13,491, $45,000",
+    "4. Copy price IDs to .env: STRIPE_PRICE_STARTER, STRIPE_PRICE_PRO, etc.",
+    "5. Update plan_policies table with stripe_price_id_monthly and stripe_price_id_annual",
+    "",
+    "== DATABASE MIGRATIONS ==",
+    "1. Run migration: supabase migration up 20251115000001_plan_policies_expansion.sql",
+    "2. Run seed: psql < apps/api/supabase/seed/20251115000001_plan_policies_balanced.sql",
+    "3. Verify: SELECT * FROM plan_policies WHERE is_active = true;",
+    "4. Should see 4 tiers: starter, pro, premium, enterprise",
+    "",
+    "== API TESTING ==",
+    "1. Test admin metrics overview: GET /api/admin-metrics/overview?period=30d (requires platform admin auth)",
+    "2. Test revenue metrics: GET /api/admin-metrics/revenue",
+    "3. Test funnel metrics: GET /api/admin-metrics/funnels",
+    "4. Test ops metrics: GET /api/admin-metrics/ops",
+    "5. Verify RBAC: Non-admin users should get 403 Forbidden",
+    "",
+    "== FRONTEND IMPLEMENTATION (PENDING) ==",
+    "1. Implement ExecutiveDashboard.tsx with KPI tiles",
+    "2. Implement RevenueTrends.tsx chart (use Chart.js or Recharts)",
+    "3. Implement OpsHealth.tsx chart with provider status indicators",
+    "4. Implement TrialToPaid.tsx funnel visualization",
+    "5. Implement PricingPage.tsx with 4-tier comparison table",
+    "6. Implement PlanControls.tsx with upgrade/downgrade flows",
+    "",
+    "== MOBILE APP SETUP (PENDING) ==",
+    "1. Initialize Expo project: npx create-expo-app apps/mobile",
+    "2. Install dependencies: expo-router, @supabase/supabase-js, expo-auth-session",
+    "3. Create Dashboard.tsx screen with KPI tiles",
+    "4. Create OpHealth.tsx screen with provider health status",
+    "5. Implement Supabase PKCE auth flow",
+    "6. Test on iOS/Android simulators",
+    "7. Configure EAS Build for CI/CD",
+    "",
+    "== TIER MIGRATION TESTING ==",
+    "1. Create test organization on Starter tier",
+    "2. Exceed 80% of AI generation limit",
+    "3. Verify feature_usage_snapshots.should_prompt_upgrade = true",
+    "4. Test upgrade flow Starter → Pro",
+    "5. Verify tier_change_log entry created",
+    "6. Test downgrade flow Premium → Pro",
+    "7. Verify feature access restricted appropriately",
+    "",
+    "== PRICING VALIDATION ==",
+    "1. Verify prices match PVS-01 Balanced Model",
+    "2. Starter: $149/mo, $1,341/year (25% discount)",
+    "3. Pro: $599/mo, $5,391/year (25% discount)",
+    "4. Premium: $1,499/mo, $13,491/year (25% discount)",
+    "5. Enterprise: $5,000/mo, $45,000/year (custom pricing)",
+    "6. Verify feature limits match pricing_validation_report_v1.json",
+    "",
+    "== ANALYTICS VERIFICATION ==",
+    "1. Seed test data: 10 customers across 4 tiers",
+    "2. Calculate MRR manually and compare to getRevenueMetrics()",
+    "3. Verify ARR = MRR × 12",
+    "4. Verify ARPU = MRR / active customers",
+    "5. Test churn rate calculation with canceled subscriptions",
+    "6. Verify LTV:CAC ratio calculation",
+    ""
+  ],
+  "implementation_summary": {
+    "completed": [
+      "Backend admin metrics service with MRR/ARR/ARPU/LTV/CAC calculations",
+      "Admin metrics API routes with RBAC (platform admin only)",
+      "Database migration for 4-tier pricing with feature limits",
+      "Seed data for Balanced Model pricing from PVS-01",
+      "Usage tracking tables for upgrade triggers",
+      "Tier change logging and pricing history",
+      "Environment configuration for Stripe pricing and mobile",
+      "Validation functions for upgrade triggers (80% utilization)"
+    ],
+    "pending": [
+      "Executive dashboard frontend components",
+      "KPI tiles (MRR, ARR, ARPU, churn, trials)",
+      "Revenue trends chart component",
+      "Ops health chart with provider status",
+      "Trial-to-paid funnel visualization",
+      "Pricing page with 4-tier comparison",
+      "Plan controls component for upgrades/downgrades",
+      "Tier mapping service (Stripe price ID → tier)",
+      "Mobile API summary and alerts routes",
+      "React Native mobile app initialization",
+      "Mobile Dashboard and OpHealth screens",
+      "Supabase PKCE authentication flow",
+      "Push notification integration",
+      "Stripe product and price creation",
+      "Documentation updates (Phase 13 in architecture.md)"
+    ]
+  },
+  "key_decisions": [
+    "Implemented Balanced Model pricing ($149/$599/$1,499/$5,000) from PVS-01 validation",
+    "Pro tier set as recommended tier for 14-day trials (sweet spot at $599)",
+    "25% annual discount across all tiers (matches PR industry standards)",
+    "Usage-based upgrade triggers at 80% of limits (journalist contacts, AI generations, etc.)",
+    "Feature gates: Podcast syndication Premium+, API access Enterprise only, White-label Premium+",
+    "Platform admin-only access to executive metrics (RBAC enforced)",
+    "Mobile API versioning (x-mobile-api-version: 1) for future compatibility",
+    "Expo used for React Native to simplify cross-platform builds",
+    "Upgrade triggers calculated daily via feature_usage_snapshots",
+    "Pricing history tracked for future analysis and A/B testing"
+  ],
+  "next_sprint_recommendations": [
+    "Sprint 76: Complete frontend components for executive dashboard",
+    "Sprint 76: Implement mobile app screens and PKCE auth",
+    "Sprint 76: Add push notifications for mobile alerts",
+    "Sprint 76: Build pricing page with tier comparison and upgrade CTAs",
+    "Sprint 76: Implement Stripe webhook handlers for tier changes",
+    "Sprint 76: Add A/B testing framework for pricing experiments",
+    "Sprint 76: Implement usage cap enforcement at tier limits",
+    "Sprint 76: Build admin tools for manual tier adjustments",
+    "Sprint 77: Launch Phase 2 pricing optimization (A/B test Starter tier $129 vs $149)",
+    "Sprint 77: Implement NRR tracking and expansion revenue metrics"
+  ],
+  "references": {
+    "pricing_validation": "pricing_research/pricing_validation_report_v1.json",
+    "pricing_hypothesis": "pricing_research/pricing_hypothesis_comparison.json",
+    "margin_model": "pricing_research/margin_model.json",
+    "feature_value_matrix": "pricing_research/feature_value_matrix.json",
+    "competitor_pricing": "pricing_research/competitor_pricing.json"
+  }
+}

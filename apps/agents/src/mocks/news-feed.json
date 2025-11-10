@@ -1,0 +1,204 @@
+{
+  "items": [
+    {
+      "id": "news-001",
+      "title": "AI Startups See Record Funding in Q4 2024",
+      "description": "Venture capital investment in AI companies reached $15B this quarter, with particular focus on enterprise automation and developer tools",
+      "url": "https://techcrunch.com/2024/12/ai-funding-q4",
+      "source": "TechCrunch",
+      "publishedAt": "2024-12-15T09:00:00Z",
+      "category": "Technology",
+      "keywords": ["AI", "startups", "funding", "venture capital", "automation"]
+    },
+    {
+      "id": "news-002",
+      "title": "Remote Work Tools Market Expected to Hit $50B",
+      "description": "Analysis shows sustained demand for collaboration software as hybrid work becomes permanent fixture in enterprise",
+      "url": "https://bloomberg.com/2024/12/remote-work-tools",
+      "source": "Bloomberg",
+      "publishedAt": "2024-12-14T14:30:00Z",
+      "category": "Business",
+      "keywords": ["remote work", "SaaS", "collaboration", "enterprise software"]
+    },
+    {
+      "id": "news-003",
+      "title": "New Data Privacy Regulations Impact Tech Companies",
+      "description": "European lawmakers introduce stricter AI transparency requirements, affecting how companies deploy machine learning models",
+      "url": "https://reuters.com/2024/12/eu-ai-regulation",
+      "source": "Reuters",
+      "publishedAt": "2024-12-13T11:15:00Z",
+      "category": "Regulation",
+      "keywords": ["privacy", "regulation", "AI", "compliance", "EU"]
+    },
+    {
+      "id": "news-004",
+      "title": "Cybersecurity Spending to Reach $300B by 2025",
+      "description": "Organizations prioritize security investments amid rising threats, with cloud security and zero-trust architectures leading growth",
+      "url": "https://wsj.com/2024/12/cybersecurity-spending",
+      "source": "Wall Street Journal",
+      "publishedAt": "2024-12-12T08:45:00Z",
+      "category": "Security",
+      "keywords": ["cybersecurity", "cloud security", "enterprise", "investment"]
+    },
+    {
+      "id": "news-005",
+      "title": "Developer Productivity Tools See Surge in Adoption",
+      "description": "AI-powered coding assistants and low-code platforms reduce development time by 40% according to new study",
+      "url": "https://techcrunch.com/2024/12/dev-productivity",
+      "source": "TechCrunch",
+      "publishedAt": "2024-12-11T16:20:00Z",
+      "category": "Technology",
+      "keywords": ["developer tools", "AI", "productivity", "low-code", "automation"]
+    },
+    {
+      "id": "news-006",
+      "title": "Customer Data Platform Market Consolidation Begins",
+      "description": "Major acquisitions signal maturing CDP market as enterprises seek unified customer views",
+      "url": "https://venturebeat.com/2024/12/cdp-consolidation",
+      "source": "VentureBeat",
+      "publishedAt": "2024-12-10T13:00:00Z",
+      "category": "MarTech",
+      "keywords": ["CDP", "customer data", "marketing technology", "M&A"]
+    },
+    {
+      "id": "news-007",
+      "title": "Cloud Cost Optimization Becomes Top Priority for CFOs",
+      "description": "Survey reveals 78% of enterprises plan to invest in FinOps tools to manage ballooning cloud expenses",
+      "url": "https://forbes.com/2024/12/cloud-cost-optimization",
+      "source": "Forbes",
+      "publishedAt": "2024-12-09T10:30:00Z",
+      "category": "Cloud",
+      "keywords": ["cloud computing", "FinOps", "cost optimization", "CFO", "enterprise"]
+    },
+    {
+      "id": "news-008",
+      "title": "Open Source AI Models Challenge Proprietary Giants",
+      "description": "New wave of openly-licensed large language models offer competitive performance at fraction of cost",
+      "url": "https://techcrunch.com/2024/12/open-source-ai",
+      "source": "TechCrunch",
+      "publishedAt": "2024-12-08T15:45:00Z",
+      "category": "Technology",
+      "keywords": ["open source", "AI", "LLM", "machine learning"]
+    },
+    {
+      "id": "news-009",
+      "title": "API Economy Reaches $3 Trillion Valuation",
+      "description": "Developer platforms and API-first companies drive unprecedented growth in software connectivity",
+      "url": "https://bloomberg.com/2024/12/api-economy",
+      "source": "Bloomberg",
+      "publishedAt": "2024-12-07T12:00:00Z",
+      "category": "Technology",
+      "keywords": ["API", "developer platform", "integration", "software"]
+    },
+    {
+      "id": "news-010",
+      "title": "Enterprise Adopts Edge Computing for Real-Time Analytics",
+      "description": "Companies deploy edge infrastructure to process data closer to source, reducing latency for critical applications",
+      "url": "https://wired.com/2024/12/edge-computing-adoption",
+      "source": "Wired",
+      "publishedAt": "2024-12-06T09:15:00Z",
+      "category": "Infrastructure",
+      "keywords": ["edge computing", "analytics", "real-time", "enterprise"]
+    },
+    {
+      "id": "news-011",
+      "title": "No-Code Platforms Empower Citizen Developers",
+      "description": "Business users build applications without coding skills, democratizing software development",
+      "url": "https://techcrunch.com/2024/12/no-code-platforms",
+      "source": "TechCrunch",
+      "publishedAt": "2024-12-05T14:20:00Z",
+      "category": "Technology",
+      "keywords": ["no-code", "citizen developer", "low-code", "democratization"]
+    },
+    {
+      "id": "news-012",
+      "title": "Blockchain Technology Finds Use in Supply Chain",
+      "description": "Major retailers implement distributed ledger solutions for product traceability and authenticity verification",
+      "url": "https://reuters.com/2024/12/blockchain-supply-chain",
+      "source": "Reuters",
+      "publishedAt": "2024-12-04T11:30:00Z",
+      "category": "Enterprise",
+      "keywords": ["blockchain", "supply chain", "retail", "traceability"]
+    },
+    {
+      "id": "news-013",
+      "title": "Quantum Computing Reaches Commercial Viability",
+      "description": "First practical applications in drug discovery and financial modeling demonstrated by major tech firms",
+      "url": "https://wsj.com/2024/12/quantum-computing",
+      "source": "Wall Street Journal",
+      "publishedAt": "2024-12-03T08:00:00Z",
+      "category": "Technology",
+      "keywords": ["quantum computing", "drug discovery", "finance", "innovation"]
+    },
+    {
+      "id": "news-014",
+      "title": "Sustainability Tech Attracts Investor Interest",
+      "description": "ESG-focused startups raise $8B as climate technology becomes mainstream investment category",
+      "url": "https://bloomberg.com/2024/12/sustainability-tech",
+      "source": "Bloomberg",
+      "publishedAt": "2024-12-02T13:45:00Z",
+      "category": "Climate",
+      "keywords": ["sustainability", "ESG", "climate tech", "investment"]
+    },
+    {
+      "id": "news-015",
+      "title": "5G Network Expansion Accelerates IoT Adoption",
+      "description": "Improved connectivity enables new use cases in manufacturing, healthcare, and smart cities",
+      "url": "https://techcrunch.com/2024/12/5g-iot-adoption",
+      "source": "TechCrunch",
+      "publishedAt": "2024-12-01T10:00:00Z",
+      "category": "Infrastructure",
+      "keywords": ["5G", "IoT", "connectivity", "smart cities", "manufacturing"]
+    },
+    {
+      "id": "news-016",
+      "title": "Personalization AI Transforms E-Commerce Experiences",
+      "description": "Machine learning algorithms drive 35% increase in conversion rates for online retailers",
+      "url": "https://venturebeat.com/2024/11/personalization-ai",
+      "source": "VentureBeat",
+      "publishedAt": "2024-11-30T15:30:00Z",
+      "category": "E-Commerce",
+      "keywords": ["personalization", "AI", "e-commerce", "conversion", "retail"]
+    },
+    {
+      "id": "news-017",
+      "title": "Digital Transformation Budgets Increase 45% YoY",
+      "description": "CIOs prioritize cloud migration and process automation as key initiatives for 2025",
+      "url": "https://forbes.com/2024/11/digital-transformation",
+      "source": "Forbes",
+      "publishedAt": "2024-11-29T09:20:00Z",
+      "category": "Enterprise",
+      "keywords": ["digital transformation", "cloud", "automation", "CIO"]
+    },
+    {
+      "id": "news-018",
+      "title": "Voice AI Assistants Enter Enterprise Workflows",
+      "description": "Natural language interfaces reduce training time and improve employee productivity across organizations",
+      "url": "https://techcrunch.com/2024/11/voice-ai-enterprise",
+      "source": "TechCrunch",
+      "publishedAt": "2024-11-28T12:15:00Z",
+      "category": "Technology",
+      "keywords": ["voice AI", "enterprise", "productivity", "NLP"]
+    },
+    {
+      "id": "news-019",
+      "title": "Healthcare Technology Sees Record Investment",
+      "description": "Telemedicine and health data analytics platforms attract $12B in funding amid ongoing transformation",
+      "url": "https://reuters.com/2024/11/healthtech-investment",
+      "source": "Reuters",
+      "publishedAt": "2024-11-27T14:00:00Z",
+      "category": "Healthcare",
+      "keywords": ["healthcare", "telemedicine", "health tech", "investment"]
+    },
+    {
+      "id": "news-020",
+      "title": "Composable Commerce Architecture Gains Traction",
+      "description": "Retailers adopt modular approach to e-commerce platforms for greater flexibility and faster innovation",
+      "url": "https://wired.com/2024/11/composable-commerce",
+      "source": "Wired",
+      "publishedAt": "2024-11-26T11:40:00Z",
+      "category": "E-Commerce",
+      "keywords": ["composable commerce", "e-commerce", "architecture", "retail"]
+    }
+  ]
+}

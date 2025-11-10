@@ -1,6 +1,7 @@
 -- =====================================================
 -- AUTONOMOUS AGENT EVALUATOR + GPT-POWERED SCORECARDS
--- Sprint 35: Agent performance evaluation framework
+-- Core Infrastructure: Agent performance evaluation framework
+-- Provenance: Core infra (origin uncertain). Reviewed 2025-11-09.
 -- =====================================================
 
 -- =====================================================

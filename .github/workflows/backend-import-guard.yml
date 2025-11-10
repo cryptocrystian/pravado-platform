@@ -1,0 +1,152 @@
+name: Backend Import Guard
+
+on:
+  pull_request:
+    paths:
+      - 'apps/api/**'
+      - 'apps/agents/**'
+      - 'packages/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/api/**'
+      - 'apps/agents/**'
+      - 'packages/**'
+
+jobs:
+  check-legacy-imports:
+    name: Prevent Legacy Backend Imports
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for forbidden apps/api-legacy imports
+        run: |
+          echo "🔍 Scanning for forbidden legacy imports..."
+
+          # Check for any imports from apps/api-legacy
+          if grep -r "from ['\"].*apps/api-legacy" apps/api/src apps/agents/src packages/ 2>/dev/null; then
+            echo "❌ FORBIDDEN: Import from apps/api-legacy detected!"
+            echo ""
+            echo "Legacy backend code is quarantined and must not be imported."
+            echo "See docs/PROVENANCE_LEDGER.md for details."
+            exit 1
+          fi
+
+          # Check for relative imports that might escape to legacy
+          if grep -r "from ['\"].*\\.\\./\\.\\./\\.\\./api-legacy" apps/api/src apps/agents/src 2>/dev/null; then
+            echo "❌ FORBIDDEN: Relative import to api-legacy detected!"
+            exit 1
+          fi
+
+          echo "✅ No legacy imports detected"
+
+      - name: Check for Sprint number references (prevent future drift)
+        run: |
+          echo "🔍 Scanning for Sprint number references..."
+
+          # Get changed files in this PR/commit
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'apps/api/**' 'apps/agents/**' 'packages/**' || echo "")
+          else
+            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- 'apps/api/**' 'apps/agents/**' 'packages/**' || echo "")
+          fi
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "✅ No changed files to check"
+          else
+            # Check for Sprint references in changed files
+            SPRINT_REFS=""
+            for file in $CHANGED_FILES; do
+              if [ -f "$file" ] && grep -E "Sprint\s+[0-9]{1,3}" "$file" 2>/dev/null | grep -v "Sprint 37" | grep -v "Sprint 36" | grep -v "Provenance:" | head -1; then
+                SPRINT_REFS="$SPRINT_REFS\n  - $file"
+              fi
+            done
+
+            if [ -n "$SPRINT_REFS" ]; then
+              echo "❌ FORBIDDEN: Sprint number references detected in changed files!"
+              echo -e "$SPRINT_REFS"
+              echo ""
+              echo "Sprint numbers should not be used in new code."
+              echo "Use 'Core Infrastructure' or feature-based descriptions instead."
+              echo ""
+              echo "Allowed references: Sprint 36, Sprint 37 (legitimate baseline)"
+              exit 1
+            else
+              echo "✅ No new Sprint number references detected"
+            fi
+          fi
+
+      - name: Check for direct LLM SDK usage (enforce LLM router)
+        run: |
+          echo "🔍 Scanning for LLM router bypasses..."
+
+          # Check for direct OpenAI/Anthropic instantiation
+          if grep -rE "new OpenAI\(|openai\.chat\.completions\.create|new Anthropic\(" apps/api/src/services apps/api/src/controllers 2>/dev/null | grep -v "// ALLOWED:" | grep -v "api-legacy"; then
+            echo "❌ FORBIDDEN: Direct LLM SDK usage detected!"
+            echo ""
+            echo "All LLM calls MUST go through packages/utils/src/llm/router.ts"
+            echo "This ensures budget guard, policy enforcement, and usage tracking."
+            echo ""
+            echo "To fix: Import llmRouter instead of instantiating OpenAI/Anthropic directly."
+            echo "Add '// ALLOWED: <reason>' comment if this is intentional."
+            exit 1
+          else
+            echo "✅ No LLM router bypasses detected"
+          fi
+
+      - name: Verify all routes are registered
+        run: |
+          echo "🔍 Checking for unregistered routes..."
+
+          # Find all route files
+          ROUTE_FILES=$(find apps/api/src/routes -name "*.routes.ts" -o -name "*.ts" | grep -v index.ts | grep -v "\.d\.ts")
+
+          # Check if each route is imported in index.ts
+          UNREGISTERED=""
+          for route in $ROUTE_FILES; do
+            route_name=$(basename "$route" .ts | sed 's/\.routes//')
+            if ! grep -q "$route_name" apps/api/src/routes/index.ts 2>/dev/null; then
+              UNREGISTERED="$UNREGISTERED\n  - $route"
+            fi
+          done
+
+          if [ -n "$UNREGISTERED" ]; then
+            echo "⚠️  WARNING: Unregistered routes detected:"
+            echo -e "$UNREGISTERED"
+            echo ""
+            echo "All route files should be imported and registered in apps/api/src/routes/index.ts"
+            echo "Or move to apps/api-legacy/routes/ if no longer needed."
+            # Warning only, not blocking
+          else
+            echo "✅ All routes are registered"
+          fi
+
+      - name: Check for @pravado/validators usage
+        run: |
+          echo "🔍 Checking route validation patterns..."
+
+          # Check if routes use validators
+          ROUTES_WITHOUT_VALIDATORS=$(grep -L "@pravado/validators" apps/api/src/routes/*.routes.ts 2>/dev/null || true)
+
+          if [ -n "$ROUTES_WITHOUT_VALIDATORS" ]; then
+            echo "⚠️  INFO: Some routes don't use @pravado/validators:"
+            echo "$ROUTES_WITHOUT_VALIDATORS"
+            echo ""
+            echo "Consider using Zod validators from @pravado/validators for type safety."
+            # Info only, not blocking
+          else
+            echo "✅ Routes use validators"
+          fi
+
+      - name: Summary
+        if: success()
+        run: |
+          echo ""
+          echo "✅ Backend import guard checks passed!"
+          echo "   - No legacy imports detected"
+          echo "   - LLM router compliance verified"
+          echo "   - Route registration checked"

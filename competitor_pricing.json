@@ -1,0 +1,471 @@
+{
+  "research_date": "2025-01-05",
+  "categories": {
+    "pr_media": [
+      {
+        "name": "Cision",
+        "category": "PR/Media Relations",
+        "pricing_transparency": "Contact sales (opaque)",
+        "tiers": [
+          {
+            "name": "Standard",
+            "price_monthly": 700,
+            "price_annual": 8400,
+            "features": ["Basic media database", "Limited monitoring", "Basic reporting"],
+            "limitations": ["Limited seats", "Basic features only"]
+          },
+          {
+            "name": "Advanced",
+            "price_monthly": 1750,
+            "price_annual": 21000,
+            "features": ["Full media database", "Social listening", "Advanced reporting", "Broadcast monitoring"],
+            "user_reports": ["$13k/year for 4 seats", "$21k/year for 1 user"]
+          },
+          {
+            "name": "Premium",
+            "price_monthly": 4166,
+            "price_annual": 50000,
+            "features": ["Enterprise features", "Unlimited searches", "Full support", "Custom integrations"],
+            "user_reports": ["$23k/year for 5 seats", "Up to $45k+ for enterprise"]
+          }
+        ],
+        "notable_caps": {
+          "min_annual_only": true,
+          "high_touch_sales": true,
+          "custom_pricing": true
+        }
+      },
+      {
+        "name": "Muck Rack",
+        "category": "PR/Media Relations",
+        "pricing_transparency": "Contact sales (opaque)",
+        "tiers": [
+          {
+            "name": "Starter",
+            "price_annual": 6500,
+            "price_monthly_equivalent": 542,
+            "features": ["250K+ journalist database", "Basic media monitoring", "Pitching tools", "Basic reporting"],
+            "limitations": ["Annual contract only", "Limited users"]
+          },
+          {
+            "name": "Mid-Tier",
+            "price_annual": 10000,
+            "price_monthly_equivalent": 833,
+            "features": ["Enhanced monitoring", "Advanced analytics", "More users", "PR analytics"],
+            "user_reports": ["$8k-$12k typical for mid-size"]
+          },
+          {
+            "name": "Premier",
+            "price_annual": 15000,
+            "price_monthly_equivalent": 1250,
+            "features": ["AI-powered insights", "Custom integrations", "Priority support", "Advanced workflows"],
+            "user_reports": ["$25k/year for 5 users", "$53k/year for 7-9 users"]
+          }
+        ],
+        "notable_caps": {
+          "annual_only": true,
+          "journalist_database": "250K+",
+          "price_increase_2024": "10% upon renewal",
+          "multi_year_discount": "Flat first year, 10% increases after"
+        }
+      },
+      {
+        "name": "Prowly",
+        "category": "PR/Media Relations",
+        "pricing_transparency": "Transparent",
+        "tiers": [
+          {
+            "name": "Basic",
+            "price_monthly": 369,
+            "price_annual": 258,
+            "annual_savings": "30%",
+            "features": ["1M+ contact database", "AI-powered search", "Basic monitoring", "1,000 email pitches/month"],
+            "limitations": ["2 user limit", "10K online mentions", "No reporting"]
+          },
+          {
+            "name": "Pro",
+            "price_monthly": 589,
+            "price_annual": 416,
+            "annual_savings": "29%",
+            "features": ["All Basic features", "Advanced features", "Multi-user access", "50K mentions (including social)"],
+            "limitations": ["2 user limit"]
+          }
+        ],
+        "notable_caps": {
+          "free_trial": "7 days",
+          "user_limit": 2,
+          "email_pitches": 1000
+        }
+      }
+    ],
+    "seo_tools": [
+      {
+        "name": "Semrush",
+        "category": "SEO/Marketing Intelligence",
+        "pricing_transparency": "Transparent",
+        "tiers": [
+          {
+            "name": "Pro",
+            "price_monthly": 139.95,
+            "price_annual": 1679.40,
+            "annual_savings": "~17%",
+            "features": ["5 projects", "500 keywords to track", "10K results/report", "SEO/PPC/research tools"],
+            "target_audience": "Newbie SEOs, small teams"
+          },
+          {
+            "name": "Guru",
+            "price_monthly": 249.95,
+            "price_annual": 2999.40,
+            "annual_savings": "~17%",
+            "features": ["15 projects", "1,500 keywords", "30K results/report", "Content marketing toolkit", "Looker Studio integration"],
+            "target_audience": "SMBs, content marketers, growing agencies"
+          },
+          {
+            "name": "Business",
+            "price_monthly": 499.95,
+            "price_annual": 5999.40,
+            "annual_savings": "~17%",
+            "features": ["40 projects", "5,000 keywords", "50K results/report", "Share of Voice", "API access"],
+            "target_audience": "Enterprises, large agencies"
+          },
+          {
+            "name": "Enterprise",
+            "price_custom": true,
+            "features": ["Custom solutions", "Tailored requirements", "Large-scale projects"],
+            "target_audience": "Large organizations"
+          }
+        ],
+        "add_ons": {
+          "ai_seo_toolkit": {
+            "price_monthly": 99,
+            "per": "domain"
+          },
+          "content_toolkit": {
+            "price_monthly": 60
+          },
+          "local": {
+            "light": 30,
+            "essentials": 50,
+            "advanced": 60
+          }
+        }
+      },
+      {
+        "name": "Ahrefs",
+        "category": "SEO/Backlink Analysis",
+        "pricing_transparency": "Transparent",
+        "tiers": [
+          {
+            "name": "Starter",
+            "price_monthly": 29,
+            "features": ["Site Explorer", "Keywords Explorer", "Site Audit", "Rank Tracker", "100 monthly credits"],
+            "limitations": ["Essential tools only", "Limited credits"]
+          },
+          {
+            "name": "Lite",
+            "price_monthly": 129,
+            "price_annual": 108,
+            "annual_savings": "16%",
+            "features": ["5 projects", "6 months history", "500 credits/month", "750 keyword tracking"],
+            "target_audience": "Freelancers, small businesses"
+          },
+          {
+            "name": "Standard",
+            "price_monthly": 249,
+            "price_annual": 208,
+            "annual_savings": "16%",
+            "features": ["20 projects", "2 years history", "Unlimited credits", "2,000 keyword tracking"],
+            "target_audience": "SEO consultants, marketing teams"
+          },
+          {
+            "name": "Advanced",
+            "price_monthly": 449,
+            "price_annual": 374,
+            "annual_savings": "17%",
+            "features": ["Unlimited credits", "5,000 keywords", "11 users"],
+            "target_audience": "Marketing teams, agencies"
+          },
+          {
+            "name": "Enterprise",
+            "price_annual": 14990,
+            "price_monthly_equivalent": 1249,
+            "features": ["100 projects", "Enterprise support", "Custom integrations"],
+            "target_audience": "Large enterprises"
+          }
+        ],
+        "notable_caps": {
+          "database_size": "15 billion web pages",
+          "keyword_database": "12 billion keywords, 216 locations",
+          "credit_system": "Usage-based credits",
+          "last_price_update": "April 2024"
+        }
+      },
+      {
+        "name": "Moz",
+        "category": "SEO/Domain Authority",
+        "pricing_transparency": "Transparent",
+        "tiers": [
+          {
+            "name": "Starter",
+            "price_monthly": 49,
+            "features": ["50 keywords", "50K pages crawled/month", "1 user", "Basic tools"],
+            "target_audience": "Individuals, very small businesses"
+          },
+          {
+            "name": "Standard",
+            "price_monthly": 99,
+            "features": ["300 keywords", "3 sites", "400K pages crawled", "Backlink analysis", "Unlimited reports"],
+            "target_audience": "Small businesses"
+          },
+          {
+            "name": "Medium",
+            "price_monthly": 179,
+            "features": ["2M pages crawled/month", "Expanded tracking", "2 user seats", "Priority support"],
+            "target_audience": "Growing teams"
+          },
+          {
+            "name": "Large",
+            "price_monthly": 299,
+            "features": ["5M pages crawled/month", "Advanced tracking", "3 user seats", "Priority support"],
+            "target_audience": "Mid-sized businesses"
+          },
+          {
+            "name": "Premium",
+            "price_monthly": 599,
+            "features": ["Enterprise features", "Advanced capabilities", "Multiple seats"],
+            "target_audience": "Large teams, agencies"
+          }
+        ],
+        "add_ons": {
+          "moz_local": {
+            "lite": 16,
+            "preferred": 24,
+            "elite": 33,
+            "per": "location/month"
+          }
+        },
+        "notable_caps": {
+          "free_trial": "30 days",
+          "annual_savings": "10-25%"
+        }
+      }
+    ],
+    "ai_content": [
+      {
+        "name": "Jasper",
+        "category": "AI Content Generation",
+        "pricing_transparency": "Transparent",
+        "tiers": [
+          {
+            "name": "Creator",
+            "price_monthly": 49,
+            "price_annual": 39,
+            "annual_savings": "20%",
+            "features": ["Unlimited content generation", "1 user seat", "Basic AI features", "All templates"],
+            "target_audience": "Individuals, freelancers"
+          },
+          {
+            "name": "Pro",
+            "price_monthly": 69,
+            "price_annual": 59,
+            "annual_savings": "15%",
+            "features": ["Unlimited content", "Multiple brands", "Campaign collaboration", "Advanced AI features"],
+            "target_audience": "Small marketing teams"
+          },
+          {
+            "name": "Business",
+            "price_custom": true,
+            "features": ["Custom seats", "Unlimited custom apps", "Marketing Agents", "SSO", "API access", "Custom style guide"],
+            "target_audience": "Enterprises"
+          }
+        ],
+        "notable_caps": {
+          "unlimited_generation": true,
+          "free_trial": "7 days",
+          "recent_changes": "Removed word count limits"
+        }
+      },
+      {
+        "name": "Copy.ai",
+        "category": "AI Writing/GTM Platform",
+        "pricing_transparency": "Transparent",
+        "tiers": [
+          {
+            "name": "Free",
+            "price_monthly": 0,
+            "features": ["2,000 words/month", "1 user", "Few LLM models", "Brand Voice"],
+            "limitations": ["Limited features", "Low word count"]
+          },
+          {
+            "name": "Pro",
+            "price_monthly": 49,
+            "price_annual": 420,
+            "annual_savings": "29%",
+            "features": ["Unlimited words", "90+ tools", "25+ languages", "Unlimited projects"],
+            "target_audience": "Individuals, small teams"
+          },
+          {
+            "name": "Team",
+            "price_monthly": 249,
+            "price_annual": 2232,
+            "annual_savings": "25%",
+            "features": ["All Pro features", "Team collaboration", "Advanced features"],
+            "target_audience": "Medium teams, agencies"
+          },
+          {
+            "name": "Growth",
+            "price_monthly": 1333,
+            "price_annual": 12000,
+            "annual_savings": "25%",
+            "features": ["Large department features", "Enterprise tools"],
+            "target_audience": "Large marketing departments"
+          },
+          {
+            "name": "Scale",
+            "price_monthly": 4000,
+            "price_annual": 36000,
+            "annual_savings": "25%",
+            "features": ["Enterprise-scale GTM platform"],
+            "target_audience": "Enterprises"
+          }
+        ],
+        "notable_caps": {
+          "positioning": "GTM AI Platform (not just writing)",
+          "evolution": "From AI writer to full GTM platform"
+        }
+      },
+      {
+        "name": "Writesonic",
+        "category": "AI Content + SEO",
+        "pricing_transparency": "Transparent",
+        "tiers": [
+          {
+            "name": "Free",
+            "price_monthly": 0,
+            "features": ["50 generations/day", "Basic AI models"],
+            "limitations": ["Limited generations"]
+          },
+          {
+            "name": "Lite",
+            "price_monthly": 49,
+            "price_annual": 39,
+            "annual_savings": "20%",
+            "features": ["Increased generations", "GPT4o, Claude 3.7 Sonnet", "Basic features"],
+            "target_audience": "Individuals"
+          },
+          {
+            "name": "Standard",
+            "price_monthly": 99,
+            "price_annual": 79,
+            "annual_savings": "20%",
+            "features": ["Double articles", "Site audits", "Google Analytics integration", "Google Search Console"],
+            "target_audience": "Small businesses"
+          },
+          {
+            "name": "Professional",
+            "price_monthly": 249,
+            "price_annual": 199,
+            "annual_savings": "20%",
+            "features": ["GEO features", "Brand Presence Tracking", "AI platform monitoring"],
+            "target_audience": "Marketing teams"
+          },
+          {
+            "name": "Advanced",
+            "price_monthly": 499,
+            "price_annual": null,
+            "features": ["Advanced GEO", "Premium features"],
+            "target_audience": "Agencies, large teams"
+          }
+        ],
+        "notable_caps": {
+          "geo_feature": "Professional+ only",
+          "annual_discount": "~20%"
+        }
+      }
+    ],
+    "marketing_platforms": [
+      {
+        "name": "HubSpot Marketing Hub",
+        "category": "Integrated Marketing Platform",
+        "pricing_transparency": "Transparent",
+        "tiers": [
+          {
+            "name": "Free",
+            "price_monthly": 0,
+            "features": ["2,000 emails/month", "Basic CRM", "Forms", "Live chat"],
+            "limitations": ["Very limited features"]
+          },
+          {
+            "name": "Starter",
+            "price_monthly": 20,
+            "features": ["1K contacts", "Remove HubSpot branding", "Simple automation", "Email marketing"],
+            "target_audience": "Very small businesses",
+            "limitations": ["Limited contact capacity"]
+          },
+          {
+            "name": "Professional",
+            "price_monthly": 890,
+            "includes": "3 core seats",
+            "features": ["2,000 marketing contacts", "10X contacts email limit", "Advanced automation", "A/B testing", "Marketing analytics"],
+            "target_audience": "Growing businesses",
+            "onboarding_fee": 3000,
+            "additional_costs": {
+              "contacts_per_1000": 50,
+              "additional_seat": 20
+            }
+          },
+          {
+            "name": "Enterprise",
+            "price_monthly": 3600,
+            "includes": "5 core seats",
+            "features": ["Enterprise automation", "Advanced analytics", "Custom reporting", "Predictive lead scoring"],
+            "target_audience": "Large enterprises",
+            "onboarding_fee": 7000,
+            "additional_costs": {
+              "contacts_per_1000": 50,
+              "additional_seat": 20
+            }
+          }
+        ],
+        "notable_caps": {
+          "mandatory_onboarding": true,
+          "contact_based_pricing": true,
+          "steep_scaling_costs": true
+        }
+      }
+    ]
+  },
+  "market_analysis": {
+    "pr_media_avg": {
+      "entry": 258,
+      "mid": 833,
+      "enterprise": 1250
+    },
+    "seo_avg": {
+      "starter": 72,
+      "standard": 159,
+      "advanced": 316,
+      "premium": 450
+    },
+    "ai_content_avg": {
+      "entry": 44,
+      "pro": 72,
+      "business": 199
+    },
+    "integrated_platform_avg": {
+      "starter": 20,
+      "professional": 890,
+      "enterprise": 3600
+    }
+  },
+  "key_insights": [
+    "PR/Media tools command premium pricing ($250-$1,250/mo) due to journalist database value",
+    "SEO tools cluster at $99-$499/mo for mid-market, with clear feature differentiation",
+    "AI content tools are commoditizing ($39-$99/mo) except for enterprise GTM platforms",
+    "Annual discounts typically 15-30% across categories",
+    "Contact/seat-based pricing common for collaboration tools",
+    "Opaque pricing correlates with high-touch sales ($10k+ annual contracts)",
+    "Transparent pricing typical for self-serve tools under $500/mo",
+    "Enterprise tiers often custom-priced with mandatory onboarding fees"
+  ]
+}

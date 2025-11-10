@@ -1,6 +1,7 @@
 // =====================================================
 // COMPETITIVE INTELLIGENCE ROUTES
-// Sprint 33: Competitor tracking, market trends, AI insights
+// Core Infrastructure: Competitor tracking, market trends, AI insights
+// Provenance: Core infra (origin uncertain). Reviewed 2025-11-09.
 // =====================================================
 
 import { Router } from 'express';

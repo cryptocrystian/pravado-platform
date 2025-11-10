@@ -1,0 +1,177 @@
+{
+  "items": [
+    {
+      "feature": "Multi-LLM Router / Provider Registry",
+      "status": "missing",
+      "files": [
+        "apps/agents/src/framework/agent-runner.ts"
+      ],
+      "snippets": [
+        {
+          "path": "apps/agents/src/framework/agent-runner.ts",
+          "lines": [5, 34],
+          "excerpt": "import OpenAI from 'openai';\n...\nconst openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });\n\n// Direct OpenAI usage in executeAgent method:"
+        },
+        {
+          "path": "apps/agents/src/framework/agent-runner.ts",
+          "lines": [726, 741],
+          "excerpt": "private async executeAgent(): Promise<any> {\n  const systemPrompt = this.interpolateTemplate(this.config.systemPrompt);\n  const userPrompt = this.buildUserPrompt();\n\n  logger.info(`[AgentRunner] Calling OpenAI with model: ${this.config.model || 'gpt-4-turbo-preview'}`);\n\n  const completion = await openai.chat.completions.create({\n    model: this.config.model || 'gpt-4-turbo-preview',\n    messages: [\n      { role: 'system', content: systemPrompt },\n      { role: 'user', content: userPrompt },\n    ],\n    response_format: { type: 'json_object' },\n    temperature: this.config.temperature || 0.7,\n    max_tokens: this.config.maxTokens || 2000,\n  });"
+        }
+      ],
+      "endpoints": [],
+      "ui": [],
+      "tests": [],
+      "notes": [
+        "No multi-LLM router or provider registry found.",
+        "Only OpenAI SDK is used directly throughout the codebase.",
+        "No Anthropic/Claude SDK integration found.",
+        "No fallback logic, latency/cost routing, or provider abstraction layer exists.",
+        "Model selection is hardcoded to 'gpt-4-turbo-preview' with no dynamic routing."
+      ]
+    },
+    {
+      "feature": "Media Opportunity Agent",
+      "status": "partial",
+      "files": [
+        "apps/agents/src/flows/media-monitoring.agent.ts",
+        "apps/agents/src/queues/media-monitoring.queue.ts"
+      ],
+      "snippets": [
+        {
+          "path": "apps/agents/src/flows/media-monitoring.agent.ts",
+          "lines": [30, 63],
+          "excerpt": "async analyzeMention(mention: CreateMentionInput, fullContent?: string): Promise<NLPAnalysisResult> {\n  const startTime = Date.now();\n  const contentForAnalysis = fullContent || mention.excerpt || mention.title;\n\n  logger.info('[MediaMonitoringAgent] Starting NLP analysis', {\n    title: mention.title,\n    contentLength: contentForAnalysis.length,\n  });\n\n  try {\n    // Perform NLP analysis using GPT-4\n    const analysis = await this.performNLPAnalysis(contentForAnalysis, mention);\n\n    // Generate embeddings\n    const embedding = await this.generateEmbedding(contentForAnalysis);\n\n    const result: NLPAnalysisResult = {\n      ...analysis,\n      confidenceScore: this.calculateConfidence(analysis),\n      tokensUsed: analysis.tokensUsed,\n    };\n\n    logger.info('[MediaMonitoringAgent] NLP analysis completed', {\n      executionTimeMs: Date.now() - startTime,\n      sentiment: result.sentiment,\n      relevanceScore: result.relevanceScore,\n    });\n\n    return result;\n  } catch (error) {\n    logger.error('[MediaMonitoringAgent] NLP analysis failed', error);\n    throw error;\n  }\n}"
+        },
+        {
+          "path": "apps/agents/src/flows/media-monitoring.agent.ts",
+          "lines": [116, 130],
+          "excerpt": "return {\n  sentiment: this.normalizeSentiment(analysis.sentiment),\n  sentimentScore: this.normalizeSentimentScore(analysis.sentimentScore),\n  tone: this.normalizeTone(analysis.tone),\n  stance: this.normalizeStance(analysis.stance),\n  emotion: this.normalizeEmotion(analysis.emotion),\n  relevanceScore: Math.min(100, Math.max(0, analysis.relevanceScore || 50)),\n  visibilityScore: Math.min(100, Math.max(0, analysis.visibilityScore || 50)),\n  viralityScore: Math.min(100, Math.max(0, analysis.viralityScore || 0)),\n  detectedEntities: this.normalizeEntities(analysis.detectedEntities || {}),\n  entityTags: analysis.entityTags || [],\n  tokensUsed: completion.usage?.total_tokens || 0,\n};"
+        }
+      ],
+      "endpoints": [],
+      "ui": [],
+      "tests": [],
+      "notes": [
+        "Media monitoring agent exists but analyzes existing mentions (not trend scanning).",
+        "Calculates relevanceScore, visibilityScore, and viralityScore for mentions.",
+        "Uses GPT-4 for NLP analysis of media content.",
+        "Missing: Proactive trend/news feed scanning, opportunity score emission, scheduler/cron for monitoring.",
+        "No UI surface for displaying media opportunities in PR dashboard."
+      ]
+    },
+    {
+      "feature": "Journalist Matching Agent",
+      "status": "verified",
+      "files": [
+        "apps/api/src/services/pr-campaign.service.ts",
+        "apps/api/src/controllers/pr-campaign.controller.ts",
+        "apps/api/src/routes/pr-campaign.routes.ts"
+      ],
+      "snippets": [
+        {
+          "path": "apps/api/src/services/pr-campaign.service.ts",
+          "lines": [478, 508],
+          "excerpt": "export async function getRecommendedTargets(\n  pressReleaseId: string,\n  organizationId: string,\n  maxResults: number = 50,\n  minScore: number = 0.5\n): Promise<RecommendedTarget[]> {\n  // Verify ownership\n  const release = await getPressReleaseById(pressReleaseId, organizationId);\n  if (!release) throw new Error('Press release not found');\n\n  const { data, error } = await supabase.rpc('get_recommended_targets', {\n    release_uuid: pressReleaseId,\n    max_results: maxResults,\n  });\n\n  if (error) throw new Error(`Failed to get recommended targets: ${error.message}`);\n\n  // Filter by min score and get contact details\n  const targets = (data || [])\n    .filter((t: any) => t.match_score >= minScore)\n    .map((t: any) => ({\n      contactId: t.contact_id,\n      contactName: t.contact_name,\n      contactOutlet: t.contact_outlet,\n      contactTier: t.contact_tier,\n      matchScore: parseFloat(t.match_score),\n      matchReasons: t.match_reasons || [],\n    }));\n\n  return targets;\n}"
+        },
+        {
+          "path": "apps/api/src/routes/pr-campaign.routes.ts",
+          "lines": [38, 39],
+          "excerpt": "// AI & Targeting\nrouter.post('/releases/:releaseId/pitch/:contactId', requireRole('CONTRIBUTOR'), controller.generatePitch);\nrouter.get('/releases/:releaseId/targets', controller.getRecommendedTargets);"
+        }
+      ],
+      "endpoints": [
+        "/api/pr-campaigns/releases/:releaseId/targets"
+      ],
+      "ui": [],
+      "tests": [],
+      "notes": [
+        "Journalist matching agent verified via get_recommended_targets RPC.",
+        "Returns matchScore and matchReasons for each contact.",
+        "Supports filtering by minScore threshold and maxResults limit.",
+        "Endpoint requires authentication and accepts query params.",
+        "Missing: UI component to display journalist matches in dashboard/composer."
+      ]
+    },
+    {
+      "feature": "Enrichment Pipeline",
+      "status": "partial",
+      "files": [
+        "apps/agents/src/queues/contact-enrichment.queue.ts",
+        "apps/api/src/services/agentContextEnhancer.ts",
+        "apps/api/supabase/migrations/20250102000009_contact_intelligence.sql"
+      ],
+      "snippets": [
+        {
+          "path": "apps/agents/src/queues/contact-enrichment.queue.ts",
+          "lines": [41, 60],
+          "excerpt": "export const contactEnrichmentQueue = new Queue<ContactEnrichmentJobData>(\n  'contact-enrichment',\n  {\n    connection,\n    defaultJobOptions: {\n      attempts: 2,\n      backoff: {\n        type: 'exponential',\n        delay: 10000,\n      },\n      removeOnComplete: {\n        count: 50,\n        age: 24 * 3600,\n      },\n      removeOnFail: {\n        count: 200,\n      },\n    },\n  }\n);"
+        },
+        {
+          "path": "apps/agents/src/queues/contact-enrichment.queue.ts",
+          "lines": [270, 284],
+          "excerpt": "export function startContactEnrichmentWorker() {\n  const worker = new Worker<ContactEnrichmentJobData>(\n    'contact-enrichment',\n    async (job) => {\n      await processContactEnrichment(job);\n    },\n    {\n      connection,\n      concurrency: 3, // Process 3 enrichment jobs concurrently\n      limiter: {\n        max: 5, // Max 5 jobs per minute (to respect API rate limits)\n        duration: 60000,\n      },\n    }\n  );"
+        },
+        {
+          "path": "apps/agents/src/queues/contact-enrichment.queue.ts",
+          "lines": [127, 143],
+          "excerpt": "// Mock social follower count (in production, would use Twitter/LinkedIn APIs)\nif (contact.twitter_url && !contact.follower_count) {\n  // Mock enrichment - in production, call Twitter API\n  updates.followerCount = Math.floor(Math.random() * 50000) + 1000;\n}\n\n// Mock recent articles (in production, would scrape or use news APIs)\nif (contact.outlet && (!contact.recent_articles || contact.recent_articles.length === 0)) {\n  // Mock enrichment - in production, would fetch real articles\n  updates.recentArticles = [\n    {\n      title: `Recent article by ${contact.full_name}`,\n      url: `https://example.com/article-${Date.now()}`,\n      publishedAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),\n    },\n  ];\n}"
+        }
+      ],
+      "endpoints": [],
+      "ui": [],
+      "tests": [],
+      "notes": [
+        "Contact enrichment queue with BullMQ, retry/backoff, and rate limiting.",
+        "Worker limits to 5 jobs per minute to respect API rate limits.",
+        "External API integrations are mocked (Twitter, LinkedIn, news scraping).",
+        "Real integrations with LinkedIn, Clearbit, Hunter.io, or domain WHOIS not implemented.",
+        "RLS-safe persistence via Supabase with organization_id tenant scoping.",
+        "AI bio generation using GPT-4 is functional."
+      ]
+    },
+    {
+      "feature": "Agent-Oriented Analytics / EVI",
+      "status": "verified",
+      "files": [
+        "apps/api/src/routes/agent-analytics.ts",
+        "apps/api/src/routes/agent-debug.ts",
+        "apps/dashboard/src/pages/agent-analytics/AgentAnalyticsDashboard.tsx",
+        "apps/dashboard/src/pages/agent-analytics/AnalyticsComponents.tsx",
+        "apps/dashboard/src/pages/admin-console/PerformanceTab.tsx"
+      ],
+      "snippets": [
+        {
+          "path": "apps/api/src/routes/agent-analytics.ts",
+          "lines": [55, 82],
+          "excerpt": "/**\n * GET /api/agent-analytics/summary/:agentId\n * Get conversation summary statistics\n */\nrouter.get('/summary/:agentId', async (req: Request, res: Response) => {\n  try {\n    const { agentId } = req.params;\n    const organizationId = getOrganizationId(req);\n    const dateRange = parseDateRange(req);\n\n    const summary: ConversationSummary = await agentConversationAnalytics.getConversationSummary(\n      agentId,\n      dateRange,\n      organizationId\n    );\n\n    res.status(200).json({\n      success: true,\n      summary,\n    });\n  } catch (error: any) {\n    console.error('Error fetching conversation summary:', error);\n    res.status(500).json({\n      error: 'Failed to fetch conversation summary',\n      message: error.message,\n    });\n  }\n});"
+        },
+        {
+          "path": "apps/dashboard/src/pages/agent-analytics/AgentAnalyticsDashboard.tsx",
+          "lines": [58, 73],
+          "excerpt": "// Fetch analytics data\nconst { data: summary, isLoading: summaryLoading } = useConversationSummary(agentId, dateRange);\nconst { data: sentimentTrends, isLoading: sentimentLoading } = useSentimentTrends(\n  agentId,\n  sentimentInterval,\n  dateRange\n);\nconst { data: topics, isLoading: topicsLoading } = useTopicDistribution(agentId, dateRange, 10);\nconst { data: engagement, isLoading: engagementLoading } = useEngagementMetrics(\n  agentId,\n  dateRange\n);\nconst { data: resolution, isLoading: resolutionLoading } = useResolutionOutcomes(\n  agentId,\n  dateRange\n);"
+        }
+      ],
+      "endpoints": [
+        "/api/agent-analytics/summary/:agentId",
+        "/api/agent-analytics/sentiment/:agentId",
+        "/api/agent-analytics/topics/:agentId",
+        "/api/agent-analytics/engagement/:agentId",
+        "/api/agent-analytics/resolution/:agentId"
+      ],
+      "ui": [
+        "apps/dashboard/src/pages/agent-analytics/AgentAnalyticsDashboard.tsx",
+        "apps/dashboard/src/pages/agent-analytics/AnalyticsComponents.tsx",
+        "apps/dashboard/src/pages/admin-console/PerformanceTab.tsx"
+      ],
+      "tests": [],
+      "notes": [
+        "Per-agent analytics with date range filtering and tenant scoping.",
+        "Metrics: conversation summary, sentiment trends, topic distribution, engagement, resolution.",
+        "UI components for displaying analytics in dashboard and admin console.",
+        "Supports daily/weekly/monthly interval for sentiment trends.",
+        "Missing: EVI (Enterprise Value Index) composite metric not wired in UI.",
+        "Per-pillar rollups could be enhanced."
+      ]
+    }
+  ]
+}

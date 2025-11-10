@@ -1,0 +1,232 @@
+{
+  "survey_date": "2025-01-05",
+  "target_respondents": "10-15 PR/Marketing professionals",
+  "van_westendorp_analysis": {
+    "methodology": "Price sensitivity meter using 4 price points",
+    "expected_price_ranges": {
+      "too_cheap": {
+        "range": "$50-$149",
+        "interpretation": "Below this, quality concerns arise"
+      },
+      "bargain": {
+        "range": "$200-$599",
+        "interpretation": "Sweet spot for perceived value"
+      },
+      "getting_expensive": {
+        "range": "$600-$1499",
+        "interpretation": "Upper limit of consideration"
+      },
+      "too_expensive": {
+        "range": "$1500+",
+        "interpretation": "Beyond willingness to pay"
+      }
+    },
+    "optimal_price_point": {
+      "calculation": "Intersection of 'bargain' and 'getting expensive'",
+      "expected_range": "$399-$699",
+      "confidence": "Based on competitive analysis of similar tools"
+    },
+    "acceptable_price_range": {
+      "lower_bound": 299,
+      "upper_bound": 999,
+      "sweet_spot": 599
+    }
+  },
+  "feature_importance_rankings": {
+    "methodology": "1-8 ranking, lower number = higher importance",
+    "features": [
+      {
+        "name": "CiteMind™ Context Engine",
+        "description": "AI analyzes news trends to suggest timely story angles",
+        "expected_rank": 2,
+        "value_driver": "Differentiated AI capability",
+        "competitive_uniqueness": "High - proprietary feature",
+        "implementation_cost": "High (AI model training)",
+        "pricing_impact": "Premium tier justification"
+      },
+      {
+        "name": "Journalist Database & Outreach",
+        "description": "100K+ verified journalist contacts with AI pitching",
+        "expected_rank": 1,
+        "value_driver": "Core PR functionality",
+        "competitive_uniqueness": "Medium - table stakes for PR tools",
+        "implementation_cost": "High (data acquisition + maintenance)",
+        "pricing_impact": "Base tier requirement"
+      },
+      {
+        "name": "Podcast Syndication Network",
+        "description": "Auto-distribute to 500+ podcasts and audio platforms",
+        "expected_rank": 3,
+        "value_driver": "Unique distribution channel",
+        "competitive_uniqueness": "Very High - no competitors offer this",
+        "implementation_cost": "Medium (API integrations)",
+        "pricing_impact": "Premium tier differentiator or add-on"
+      },
+      {
+        "name": "AI Content Generation",
+        "description": "Create press releases, blogs, social with brand voice",
+        "expected_rank": 4,
+        "value_driver": "Time savings + efficiency",
+        "competitive_uniqueness": "Low - commoditized feature",
+        "implementation_cost": "Low (OpenAI API)",
+        "pricing_impact": "Base tier inclusion"
+      },
+      {
+        "name": "Visibility Score™",
+        "description": "Real-time SEO + brand mention tracking",
+        "expected_rank": 5,
+        "value_driver": "Performance measurement",
+        "competitive_uniqueness": "Medium - unique metric",
+        "implementation_cost": "Medium (indexing + monitoring)",
+        "pricing_impact": "Mid-tier inclusion"
+      },
+      {
+        "name": "Agent Workflow Automation",
+        "description": "Set-and-forget campaigns",
+        "expected_rank": 6,
+        "value_driver": "Automation efficiency",
+        "competitive_uniqueness": "Medium - growing expectation",
+        "implementation_cost": "Medium (workflow engine)",
+        "pricing_impact": "Mid-tier inclusion"
+      },
+      {
+        "name": "Media Monitoring & Alerts",
+        "description": "Track brand mentions, competitors, industry news",
+        "expected_rank": 7,
+        "value_driver": "Awareness + response speed",
+        "competitive_uniqueness": "Low - common feature",
+        "implementation_cost": "Medium (indexing + APIs)",
+        "pricing_impact": "Base tier inclusion"
+      },
+      {
+        "name": "Analytics & Reporting",
+        "description": "ROI dashboards, attribution, executive reports",
+        "expected_rank": 8,
+        "value_driver": "Justification + optimization",
+        "competitive_uniqueness": "Low - expected feature",
+        "implementation_cost": "Low (dashboard frameworks)",
+        "pricing_impact": "Base tier inclusion"
+      }
+    ]
+  },
+  "feature_monetization_strategy": {
+    "base_tier_must_haves": [
+      "Journalist Database & Outreach",
+      "AI Content Generation",
+      "Media Monitoring & Alerts",
+      "Analytics & Reporting"
+    ],
+    "mid_tier_additions": [
+      "Visibility Score™",
+      "Agent Workflow Automation",
+      "CiteMind™ Context Engine (limited)"
+    ],
+    "premium_tier_exclusive": [
+      "Podcast Syndication Network",
+      "CiteMind™ Context Engine (unlimited)",
+      "Advanced Analytics",
+      "API Access"
+    ],
+    "potential_add_ons": [
+      {
+        "feature": "Podcast Syndication Network",
+        "price_monthly": 150,
+        "alternative": "Include in Premium tier"
+      },
+      {
+        "feature": "White-label Reporting",
+        "price_monthly": 100,
+        "alternative": "Enterprise tier exclusive"
+      },
+      {
+        "feature": "Priority Support (< 2hr)",
+        "price_monthly": 75,
+        "alternative": "Premium+ tier inclusion"
+      },
+      {
+        "feature": "API Access",
+        "price_monthly": 200,
+        "alternative": "Enterprise tier exclusive"
+      }
+    ]
+  },
+  "competitive_positioning": {
+    "vs_pr_tools": {
+      "competitors": ["Cision", "Muck Rack", "Prowly"],
+      "pravado_advantage": "AI-first + podcast syndication + lower cost",
+      "price_positioning": "30-50% below Cision/MuckRack, comparable to Prowly",
+      "target_price_range": "$299-$799/mo"
+    },
+    "vs_seo_tools": {
+      "competitors": ["Semrush", "Ahrefs"],
+      "pravado_advantage": "PR-focused + journalist database + content creation",
+      "price_positioning": "Premium to SEO tools for added PR features",
+      "target_price_range": "$399-$999/mo"
+    },
+    "vs_ai_content": {
+      "competitors": ["Jasper", "Copy.ai"],
+      "pravado_advantage": "Integrated PR workflows + distribution + monitoring",
+      "price_positioning": "Significant premium for complete PR platform",
+      "target_price_range": "$299-$1499/mo"
+    }
+  },
+  "willingness_to_pay_indicators": {
+    "features_users_pay_extra_for": {
+      "high_likelihood": [
+        "Podcast Syndication Network",
+        "API Access",
+        "White-label Reporting"
+      ],
+      "medium_likelihood": [
+        "Advanced Media Monitoring",
+        "Priority Support"
+      ],
+      "low_likelihood": [
+        "Unlimited AI Content Generation (expected in base)",
+        "Basic Analytics (table stakes)"
+      ]
+    },
+    "switch_drivers": {
+      "primary": [
+        "All-in-one consolidation (reduce tool sprawl)",
+        "Better AI/automation features",
+        "Podcast/audio capabilities (unique)"
+      ],
+      "secondary": [
+        "Better journalist/media contacts",
+        "Better reporting/analytics"
+      ],
+      "tertiary": [
+        "Lower price (rarely primary driver)"
+      ]
+    }
+  },
+  "tier_preference_analysis": {
+    "option_a_simple_3_tier": {
+      "expected_preference": "40%",
+      "pros": ["Clear differentiation", "Easy to understand", "No decision fatigue"],
+      "cons": ["May miss mid-market segment", "Large price gap"]
+    },
+    "option_b_feature_gated_4_tier": {
+      "expected_preference": "45%",
+      "pros": ["Better coverage of buyer segments", "Clear upgrade path", "Maximize TAM"],
+      "cons": ["More complex", "Potential cannibalization"]
+    },
+    "option_c_usage_based": {
+      "expected_preference": "15%",
+      "pros": ["Pay-for-what-you-use appeal", "Flexible"],
+      "cons": ["Complex billing", "Unpredictable costs", "Higher CAC"]
+    },
+    "recommendation": "Option B (4-Tier) with clear feature gates and upgrade incentives"
+  },
+  "expected_survey_insights": [
+    "Journalist Database will rank #1 in importance (core need)",
+    "CiteMind and Podcast Syndication will be top differentiators",
+    "Optimal price point will cluster around $399-$699 for mid-tier",
+    "Users willing to pay premium ($999+) for all-in-one consolidation",
+    "Tool consolidation (reduce # of subscriptions) is primary switch driver",
+    "Enterprise tier ($1500+) acceptable for agencies with white-label + API",
+    "Annual discount expectations: 20-30%",
+    "Free trial expectations: 7-14 days with full feature access"
+  ]
+}

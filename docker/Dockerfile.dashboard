@@ -1,0 +1,24 @@
+# Pravado Dashboard Dockerfile
+# Multi-stage build for Next.js dashboard
+
+FROM node:20-alpine AS base
+WORKDIR /app
+COPY package*.json turbo.json ./
+COPY apps/dashboard/package.json ./apps/dashboard/
+COPY packages/*/package.json ./packages/*/
+RUN npm ci
+
+FROM base AS builder
+COPY . .
+RUN npm run build --workspace=apps/dashboard
+
+FROM node:20-alpine AS production
+ENV NODE_ENV=production
+RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
+WORKDIR /app
+COPY --from=builder --chown=nodejs:nodejs /app/apps/dashboard/.next/standalone ./
+COPY --from=builder --chown=nodejs:nodejs /app/apps/dashboard/.next/static ./apps/dashboard/.next/static
+COPY --from=builder --chown=nodejs:nodejs /app/apps/dashboard/public ./apps/dashboard/public
+USER nodejs
+EXPOSE 3000
+CMD ["node", "apps/dashboard/server.js"]

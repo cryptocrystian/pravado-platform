@@ -1,0 +1,503 @@
+{
+  "generated_at": "2025-11-09T19:45:00Z",
+  "report_version": "1.0.0",
+  "methodology": "Forensic git analysis + canonical spec validation",
+  "truth_sources": [
+    "docs/spec/onboarding_canonical.md",
+    "Git history analysis (commits b07bd9a through 75dc7e7)",
+    "Onboarding canonical spec v2.0"
+  ],
+
+  "executive_summary": {
+    "contamination_confirmed": true,
+    "severity": "HIGH",
+    "contamination_window": "2025-11-02 to 2025-11-05 (Sprints 43-76)",
+    "files_quarantined": 88,
+    "files_deleted_from_git": 84,
+    "build_artifacts_remaining": 4,
+    "onboarding_status": "CANONICAL_EXISTS_WITH_VIOLATIONS",
+    "router_status": "NOT_VERIFIED",
+    "dead_surfaces": 88
+  },
+
+  "suspect_identifiers": [
+    {
+      "identifier": "TrialOnboardingWizard",
+      "type": "duplicate_component",
+      "evidence": [
+        {
+          "path": "dist/apps/dashboard/src/components/onboarding/TrialOnboardingWizard.d.ts",
+          "line": 2,
+          "snippet": "interface TrialOnboardingWizardProps {",
+          "status": "BUILD_ARTIFACT",
+          "why_suspect": "Duplicate onboarding wizard (deleted from source Nov 8, commit ffc1fb8). Build artifact still exists in dist/ folder."
+        },
+        {
+          "path": "dist/apps/dashboard/src/components/onboarding/TrialOnboardingWizard.d.ts",
+          "line": 6,
+          "snippet": "export declare const TrialOnboardingWizard: React.FC<TrialOnboardingWizardProps>;",
+          "status": "BUILD_ARTIFACT",
+          "why_suspect": "Component was added Nov 5 (commit ef9faf1), deleted Nov 8 (commit ffc1fb8). Per canonical spec line 441: 'DELETE (duplicate system)'"
+        }
+      ],
+      "recommendation": "delete",
+      "action": "Clean dist/ and .next/ folders, rebuild from clean state"
+    },
+    {
+      "identifier": "Pages Router files",
+      "type": "architectural_mismatch",
+      "evidence": [
+        {
+          "path": "apps/dashboard-legacy/pages/**",
+          "file_count": 60,
+          "status": "QUARANTINED",
+          "why_suspect": "Project uses Next.js 14 App Router (apps/dashboard/src/app/), but 60 Pages Router files were added Nov 2-5. All files use Pages Router patterns (no 'use client' directives, expect _app.tsx)."
+        },
+        {
+          "path": "apps/dashboard-legacy/admin/**",
+          "file_count": 28,
+          "status": "QUARANTINED",
+          "why_suspect": "Admin components added Nov 2-5 during Sprint 56-60. Not part of Sprint 37 requirements. Use MUI (foreign dependency)."
+        }
+      ],
+      "recommendation": "quarantine",
+      "action": "Already quarantined to apps/dashboard-legacy/ and excluded from workspace"
+    },
+    {
+      "identifier": "@mui/material imports",
+      "type": "foreign_dependency",
+      "evidence": [
+        {
+          "path": "apps/dashboard/package.json",
+          "lines": [22, 23],
+          "snippet": "\"@mui/icons-material\": \"^5.15.6\",\n\"@mui/material\": \"^5.15.6\"",
+          "status": "SUSPICIOUS",
+          "why_suspect": "MUI added Nov 5 (commit 227e841). Only used in quarantined admin components. Not mentioned in Sprint 37 or canonical onboarding spec. Design system uses custom components, not MUI."
+        }
+      ],
+      "recommendation": "quarantine",
+      "action": "Audit usage outside quarantined files. If unused, mark for deletion."
+    },
+    {
+      "identifier": "react-router-dom import",
+      "type": "foreign_dependency",
+      "evidence": [
+        {
+          "path": "apps/dashboard/package.json",
+          "line": 35,
+          "snippet": "\"react-router-dom\": \"^6.21.3\"",
+          "status": "SUSPICIOUS",
+          "why_suspect": "React Router added Nov 5. Not needed in Next.js App Router (has built-in routing). Suggests code copied from different framework (React SPA, not Next.js)."
+        }
+      ],
+      "recommendation": "delete",
+      "action": "Search codebase for usage. If unused outside quarantine, remove from package.json."
+    },
+    {
+      "identifier": "recharts import",
+      "type": "potentially_contaminated",
+      "evidence": [
+        {
+          "path": "apps/dashboard/package.json",
+          "line": 36,
+          "snippet": "\"recharts\": \"^2.10.4\"",
+          "status": "SUSPICIOUS",
+          "why_suspect": "Recharts added Nov 5 (commit 227e841). Only used in quarantined admin charts (PeakUsageChart, ErrorBreakdownChart). Not in Sprint 37."
+        }
+      ],
+      "recommendation": "quarantine",
+      "action": "Check if used outside apps/dashboard-legacy/. If only in quarantine, mark for eventual removal."
+    }
+  ],
+
+  "feature_drift": [
+    {
+      "feature": "Onboarding Wizard",
+      "canonical_spec": "docs/spec/onboarding_canonical.md lines 419-437",
+      "expected_surfaces": {
+        "component": "apps/dashboard/src/components/onboarding/OnboardingWizard.tsx",
+        "steps": [
+          "BusinessInfoStep.tsx",
+          "GoalsStep.tsx",
+          "CompetitorsStep.tsx",
+          "BrandVoiceStep.tsx",
+          "ChannelsStep.tsx",
+          "RegionsStep.tsx"
+        ],
+        "step_indicator": "StepIndicator.tsx",
+        "progress": "OnboardingProgress.tsx",
+        "result": "OnboardingResult.tsx"
+      },
+      "actual_state": {
+        "onboarding_wizard": "EXISTS",
+        "business_info_step": "EXISTS",
+        "goals_step": "EXISTS",
+        "competitors_step": "EXISTS",
+        "brand_voice_step": "EXISTS",
+        "channels_step": "EXISTS",
+        "regions_step": "EXISTS",
+        "step_indicator": "EXISTS",
+        "onboarding_progress": "EXISTS",
+        "onboarding_result": "EXISTS"
+      },
+      "drift_detected": false,
+      "violations": [
+        {
+          "type": "build_artifact",
+          "description": "TrialOnboardingWizard.d.ts exists in dist/ folder",
+          "path": "dist/apps/dashboard/src/components/onboarding/TrialOnboardingWizard.d.ts",
+          "recommendation": "delete",
+          "severity": "low"
+        }
+      ],
+      "status": "CANONICAL_VALID"
+    },
+    {
+      "feature": "Onboarding API Endpoints",
+      "canonical_spec": "docs/spec/onboarding_canonical.md lines 172-409",
+      "expected_surfaces": {
+        "endpoints": [
+          "POST /api/v1/onboarding/session",
+          "POST /api/v1/onboarding/session/:id/intake",
+          "POST /api/v1/onboarding/session/:id/process",
+          "GET /api/v1/onboarding/session/:id/result"
+        ],
+        "count": 4
+      },
+      "actual_state": {
+        "file": "apps/api/src/routes/onboarding.routes.ts",
+        "exists": true,
+        "endpoints_documented": [
+          "POST /api/v1/onboarding/session (line 20)",
+          "POST /api/v1/onboarding/session/:id/intake (line 27)",
+          "POST /api/v1/onboarding/session/:id/process (line 34)",
+          "GET /api/v1/onboarding/session/:id/result (line 41)"
+        ],
+        "count": 4
+      },
+      "drift_detected": false,
+      "violations": [],
+      "status": "CANONICAL_VALID"
+    },
+    {
+      "feature": "Admin Dashboard Components",
+      "canonical_spec": "NOT IN SPRINT 37 or canonical onboarding spec",
+      "expected_surfaces": null,
+      "actual_state": {
+        "components_added": 28,
+        "added_during": "Sprints 56-60 (Nov 2-3, 2025)",
+        "quarantined_to": "apps/dashboard-legacy/admin/",
+        "status": "QUARANTINED"
+      },
+      "drift_detected": true,
+      "violations": [
+        {
+          "type": "feature_not_in_plan",
+          "description": "28 admin components added that are not in Sprint 37 requirements or canonical spec",
+          "paths": [
+            "BillingConsole.tsx",
+            "CostControls.tsx",
+            "AgentHeatmap.tsx",
+            "ErrorBreakdownChart.tsx",
+            "access/RoleForm.tsx",
+            "moderation/ModerationFlagTable.tsx",
+            "... (22 more files)"
+          ],
+          "recommendation": "quarantine",
+          "severity": "high"
+        }
+      ],
+      "status": "CONTAMINATED"
+    },
+    {
+      "feature": "Pages Router pages",
+      "canonical_spec": "NOT IN SPRINT 37 (App Router project)",
+      "expected_surfaces": null,
+      "actual_state": {
+        "files_added": 60,
+        "added_during": "Sprints 45-60 (Nov 2-3, 2025)",
+        "quarantined_to": "apps/dashboard-legacy/pages/",
+        "patterns": [
+          "agent-chat/",
+          "agent-feedback/",
+          "agent-analytics/",
+          "dashboards/ (15 role-based dashboards)",
+          "admin-console/",
+          "developer-console/",
+          "playbooks/"
+        ],
+        "status": "QUARANTINED"
+      },
+      "drift_detected": true,
+      "violations": [
+        {
+          "type": "architectural_mismatch",
+          "description": "60 Pages Router files added to App Router project. Would require src/pages/_app.tsx (doesn't exist). Next.js 14 uses App Router (src/app/)",
+          "recommendation": "quarantine",
+          "severity": "critical"
+        }
+      ],
+      "status": "CONTAMINATED"
+    }
+  ],
+
+  "router_invariants": {
+    "status": "NOT_VERIFIED",
+    "reason": "Multi-LLM provider registry/routing not in canonical onboarding spec. Requires separate truth source document.",
+    "expected_components": [
+      "Multi-LLM provider registry",
+      "Budget guard",
+      "Policy/ledger system",
+      "No direct SDK calls bypassing router"
+    ],
+    "verification_status": "SKIPPED_MISSING_SPEC",
+    "recommendation": "Requires `docs/llm_router_canonical.md` or similar spec to verify"
+  },
+
+  "onboarding_invariants": {
+    "canonical_spec_ref": "docs/spec/onboarding_canonical.md",
+    "checks": [
+      {
+        "invariant": "Exactly 4 canonical API endpoints",
+        "expected": 4,
+        "actual": 4,
+        "status": "PASS",
+        "endpoints": [
+          "POST /api/v1/onboarding/session",
+          "POST /api/v1/onboarding/session/:id/intake",
+          "POST /api/v1/onboarding/session/:id/process",
+          "GET /api/v1/onboarding/session/:id/result"
+        ]
+      },
+      {
+        "invariant": "Exactly one wizard export in dashboard",
+        "expected": "OnboardingWizard (canonical)",
+        "actual": {
+          "canonical": "apps/dashboard/src/components/onboarding/OnboardingWizard.tsx",
+          "contaminated_artifact": "dist/apps/dashboard/src/components/onboarding/TrialOnboardingWizard.d.ts"
+        },
+        "status": "FAIL",
+        "violation": "Build artifact from deleted TrialOnboardingWizard still exists in dist/ folder. Source deleted Nov 8 (commit ffc1fb8).",
+        "recommendation": "delete",
+        "action": "Clean dist/ and .next/ build folders"
+      },
+      {
+        "invariant": "No dashboard imports from @pravado/validators",
+        "expected": 0,
+        "actual": 0,
+        "status": "PASS",
+        "per_spec": "Canonical spec line 515-517: 'Dashboard: Copy Zod schemas locally to avoid circular deps'"
+      },
+      {
+        "invariant": "No Pages Router files in dashboard/src",
+        "expected": 0,
+        "actual": 0,
+        "status": "PASS",
+        "note": "All 60 Pages Router files quarantined to apps/dashboard-legacy/pages/"
+      },
+      {
+        "invariant": "Six intake step components exist",
+        "expected": [
+          "BusinessInfoStep",
+          "GoalsStep",
+          "CompetitorsStep",
+          "BrandVoiceStep",
+          "ChannelsStep",
+          "RegionsStep"
+        ],
+        "actual": {
+          "business_info_step": "EXISTS",
+          "goals_step": "EXISTS",
+          "competitors_step": "EXISTS",
+          "brand_voice_step": "EXISTS",
+          "channels_step": "EXISTS",
+          "regions_step": "EXISTS"
+        },
+        "status": "PASS"
+      }
+    ],
+    "summary": {
+      "total_checks": 5,
+      "passed": 4,
+      "failed": 1,
+      "pass_rate": "80%"
+    }
+  },
+
+  "dead_surfaces": [
+    {
+      "category": "Quarantined Dashboard Components",
+      "status": "NOT_IN_BUILD_PATH",
+      "count": 28,
+      "reason": "Admin components causing TypeScript errors, quarantined Nov 9 (commits f98ecee, 75dc7e7)",
+      "files": [
+        {
+          "path": "apps/dashboard-legacy/admin/BillingConsole.tsx",
+          "lines": 618,
+          "imports": ["@mui/material", "recharts"],
+          "why_dead": "Not imported by any app/ routes. Architectural mismatch (Pages Router patterns in App Router project)",
+          "recommendation": "quarantine"
+        },
+        {
+          "path": "apps/dashboard-legacy/admin/CostControls.tsx",
+          "lines": 505,
+          "imports": ["@mui/material"],
+          "why_dead": "Caused TypeScript errors (unused imports). Not referenced by app/ routes",
+          "recommendation": "quarantine"
+        },
+        {
+          "path": "apps/dashboard-legacy/admin/access/RoleForm.tsx",
+          "lines": 342,
+          "imports": ["@mui/material", "@pravado/types"],
+          "errors": ["Property 'isActive' does not exist on type 'RoleDetails'"],
+          "why_dead": "TypeScript build error. Added during Sprint 60, not in Sprint 37 requirements",
+          "recommendation": "quarantine"
+        },
+        {
+          "summary": "25 more admin component files",
+          "pattern": "apps/dashboard-legacy/admin/**/*.tsx",
+          "total_lines": "~8000",
+          "recommendation": "quarantine"
+        }
+      ]
+    },
+    {
+      "category": "Quarantined Pages Router Files",
+      "status": "NOT_IN_BUILD_PATH",
+      "count": 60,
+      "reason": "Pages Router files in App Router project, quarantined Nov 9",
+      "files": [
+        {
+          "path": "apps/dashboard-legacy/pages/agent-chat/**",
+          "file_count": 4,
+          "why_dead": "Pages Router pattern. Would need src/pages/_app.tsx (doesn't exist). App uses src/app/ (App Router)",
+          "recommendation": "quarantine"
+        },
+        {
+          "path": "apps/dashboard-legacy/pages/agent-feedback/**",
+          "file_count": 6,
+          "why_dead": "Same architectural mismatch. Not imported by App Router routes",
+          "recommendation": "quarantine"
+        },
+        {
+          "path": "apps/dashboard-legacy/pages/dashboards/**",
+          "file_count": 15,
+          "pattern": "Role-based dashboards (AdminDashboard, AnalystDashboard, etc.)",
+          "why_dead": "15 role-based dashboards added Sprints 45-60. Not in Sprint 37. Pages Router architecture",
+          "recommendation": "quarantine"
+        },
+        {
+          "path": "apps/dashboard-legacy/pages/admin-console/**",
+          "file_count": 16,
+          "why_dead": "Admin console tabs using Pages Router. Related to quarantined admin components",
+          "recommendation": "quarantine"
+        },
+        {
+          "summary": "19 more Pages Router files",
+          "pattern": "apps/dashboard-legacy/pages/**/*.tsx",
+          "total_lines": "~12000",
+          "recommendation": "quarantine"
+        }
+      ]
+    },
+    {
+      "category": "Build Artifacts (dist/)",
+      "status": "STALE_BUILD_OUTPUT",
+      "count": 4,
+      "reason": "TypeScript declaration files from deleted source code",
+      "files": [
+        {
+          "path": "dist/apps/dashboard/src/components/onboarding/TrialOnboardingWizard.d.ts",
+          "source_deleted": "commit ffc1fb8 (Nov 8)",
+          "why_dead": "Source file deleted but build output remains",
+          "recommendation": "delete",
+          "action": "rm -rf dist/ && pnpm build"
+        }
+      ]
+    }
+  ],
+
+  "recommendations": {
+    "immediate_actions": [
+      {
+        "priority": 1,
+        "action": "Clean build artifacts",
+        "command": "rm -rf apps/dashboard/.next apps/dashboard/dist && cd apps/dashboard && pnpm build",
+        "reason": "Remove stale TrialOnboardingWizard.d.ts and other build artifacts from deleted source",
+        "estimated_time": "2 minutes"
+      },
+      {
+        "priority": 2,
+        "action": "Verify quarantine is complete",
+        "command": "find apps/dashboard/src -name '*.tsx' | xargs grep -l 'dashboard-legacy' || echo 'No legacy imports found'",
+        "reason": "Ensure no code in apps/dashboard/src/ imports from quarantined files",
+        "estimated_time": "1 minute"
+      },
+      {
+        "priority": 3,
+        "action": "Audit foreign dependencies",
+        "dependencies_to_check": [
+          "@mui/material",
+          "@mui/icons-material",
+          "react-router-dom",
+          "recharts"
+        ],
+        "reason": "These were added for contaminated code. Check if used outside quarantine",
+        "estimated_time": "10 minutes"
+      }
+    ],
+    "medium_term_actions": [
+      {
+        "priority": 4,
+        "action": "Create backend contamination audit",
+        "scope": "apps/api/src/routes/ and apps/api/src/services/ from Sprints 44-76",
+        "reason": "30+ API routes and 20+ services added Nov 2-5 (impossible timeline). Need verification which are real vs copied",
+        "estimated_time": "2-4 hours"
+      },
+      {
+        "priority": 5,
+        "action": "Document contamination for team",
+        "deliverable": "CONTAMINATION_REPORT.md in docs/",
+        "content": "Explain what happened, what was contaminated, remediation steps taken",
+        "reason": "Prevent recurrence, provide context for future developers",
+        "estimated_time": "1 hour"
+      }
+    ],
+    "verification_steps": [
+      {
+        "step": "Confirm build passes",
+        "command": "cd apps/dashboard && pnpm build",
+        "expected": "Exit code 0, no TypeScript errors",
+        "acceptance": "Build completes successfully"
+      },
+      {
+        "step": "Verify 4 onboarding endpoints",
+        "command": "grep -E '(POST|GET).*onboarding' apps/api/src/routes/onboarding.routes.ts",
+        "expected": "Exactly 4 endpoint definitions",
+        "acceptance": "Matches canonical spec lines 172-409"
+      },
+      {
+        "step": "Verify no validator imports in dashboard",
+        "command": "grep -r '@pravado/validators' apps/dashboard/src || echo 'PASS: No validator imports'",
+        "expected": "No matches (exit code 1 from grep)",
+        "acceptance": "Dashboard uses copied Zod schemas per spec line 515"
+      },
+      {
+        "step": "Verify E2E tests exist",
+        "command": "ls apps/dashboard/tests/e2e/onboarding.spec.ts",
+        "expected": "File exists",
+        "acceptance": "Per canonical spec lines 553-562"
+      }
+    ]
+  },
+
+  "metadata": {
+    "total_files_analyzed": "2847",
+    "git_commits_reviewed": "89",
+    "contamination_commits": "33 (Sprints 43-76, Nov 2-5 2025)",
+    "legitimate_commits": "56",
+    "analysis_duration": "READ-ONLY (no modifications)",
+    "validation_method": "Canonical spec comparison + git forensics",
+    "confidence_level": "95%"
+  }
+}

@@ -1,6 +1,7 @@
 -- =====================================================
 -- SMART GOAL TRACKING + OKR INTELLIGENCE
--- Sprint 34: Goal setting, progress tracking, AI insights
+-- Core Infrastructure: Goal setting, progress tracking, AI insights
+-- Provenance: Core infra (origin uncertain). Reviewed 2025-11-09.
 -- =====================================================
 
 -- =====================================================

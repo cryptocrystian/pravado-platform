@@ -1,0 +1,847 @@
+{
+  "sprint": "Sprint 73: User Onboarding + Trial-to-Paid Conversion Automation",
+  "version": "v8",
+  "timestamp": "2025-01-05T00:00:00Z",
+  "verification_date": "2025-01-05",
+  "total_checks": 115,
+  "passed": 0,
+  "failed": 0,
+  "categories": [
+    {
+      "name": "Database Schema",
+      "checks": [
+        {
+          "id": "DB-001",
+          "description": "onboarding_state table exists with all required columns",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'onboarding_state')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-002",
+          "description": "onboarding_state.organization_id column exists and is UNIQUE",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'organization_id')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-003",
+          "description": "onboarding_state.current_step column exists (INTEGER)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'current_step')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-004",
+          "description": "onboarding_state.step_1_org_setup column exists (BOOLEAN)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'step_1_org_setup')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-005",
+          "description": "onboarding_state.step_2_api_keys column exists (BOOLEAN)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'step_2_api_keys')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-006",
+          "description": "onboarding_state.step_3_first_agent column exists (BOOLEAN)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'step_3_first_agent')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-007",
+          "description": "onboarding_state.step_4_usage_demo column exists (BOOLEAN)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'step_4_usage_demo')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-008",
+          "description": "onboarding_state.wizard_completed column exists (BOOLEAN)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'wizard_completed')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-009",
+          "description": "onboarding_state.trial_started_at column exists (TIMESTAMP)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'trial_started_at')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-010",
+          "description": "onboarding_state.trial_expires_at column exists (TIMESTAMP)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'trial_expires_at')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-011",
+          "description": "onboarding_state.trial_budget_usd column exists (NUMERIC)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'trial_budget_usd')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-012",
+          "description": "onboarding_state.trial_budget_used_usd column exists (NUMERIC)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'trial_budget_used_usd')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-013",
+          "description": "onboarding_state.trial_expired column exists (BOOLEAN)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'trial_expired')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-014",
+          "description": "onboarding_state.in_grace_period column exists (BOOLEAN)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'in_grace_period')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-015",
+          "description": "onboarding_state.trial_budget_exhausted column exists (BOOLEAN)",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'onboarding_state' AND column_name = 'trial_budget_exhausted')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-016",
+          "description": "trial_activity_log table exists",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'trial_activity_log')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-017",
+          "description": "trial_activity_log has organization_id foreign key",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'trial_activity_log' AND column_name = 'organization_id')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-018",
+          "description": "trial_activity_log.activity_type column exists",
+          "query": "SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = 'trial_activity_log' AND column_name = 'activity_type')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-019",
+          "description": "RLS policy 'onboarding_state_select' exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_policies WHERE tablename = 'onboarding_state' AND policyname LIKE '%select%')",
+          "status": "pending"
+        },
+        {
+          "id": "DB-020",
+          "description": "Index on onboarding_state.organization_id exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_indexes WHERE tablename = 'onboarding_state' AND indexname LIKE '%organization_id%')",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Database Functions",
+      "checks": [
+        {
+          "id": "FUNC-001",
+          "description": "initialize_onboarding_state() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'initialize_onboarding_state')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-002",
+          "description": "complete_onboarding_step() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'complete_onboarding_step')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-003",
+          "description": "get_trial_status() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'get_trial_status')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-004",
+          "description": "update_trial_budget_usage() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'update_trial_budget_usage')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-005",
+          "description": "expire_trial() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'expire_trial')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-006",
+          "description": "end_grace_period() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'end_grace_period')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-007",
+          "description": "convert_trial_to_paid() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'convert_trial_to_paid')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-008",
+          "description": "get_expiring_trials() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'get_expiring_trials')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-009",
+          "description": "get_grace_period_organizations() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'get_grace_period_organizations')",
+          "status": "pending"
+        },
+        {
+          "id": "FUNC-010",
+          "description": "get_onboarding_progress() function exists",
+          "query": "SELECT EXISTS (SELECT FROM pg_proc WHERE proname = 'get_onboarding_progress')",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Backend Services",
+      "checks": [
+        {
+          "id": "SVC-001",
+          "description": "onboarding.service.ts file exists",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-002",
+          "description": "provisionOrganization() function exported",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "export.*function provisionOrganization",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-003",
+          "description": "getOnboardingState() function exported",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "export.*function getOnboardingState",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-004",
+          "description": "completeOnboardingStep() function exported",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "export.*function completeOnboardingStep",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-005",
+          "description": "getTrialStatus() function exported",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "export.*function getTrialStatus",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-006",
+          "description": "shouldPromptUpgrade() function exported",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "export.*function shouldPromptUpgrade",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-007",
+          "description": "createUpgradeCheckoutLink() function exported",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "export.*function createUpgradeCheckoutLink",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-008",
+          "description": "generateInviteCode() function exported",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "export.*function generateInviteCode",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-009",
+          "description": "validateInviteCode() function exported",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "export.*function validateInviteCode",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-010",
+          "description": "trial-lifecycle.service.ts file exists",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-011",
+          "description": "getExpiringTrials() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function getExpiringTrials",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-012",
+          "description": "expireTrial() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function expireTrial",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-013",
+          "description": "updateTrialBudgetUsage() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function updateTrialBudgetUsage",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-014",
+          "description": "sendTrialDay1Email() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function sendTrialDay1Email",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-015",
+          "description": "sendTrialDay3Email() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function sendTrialDay3Email",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-016",
+          "description": "sendTrialDay7Email() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function sendTrialDay7Email",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-017",
+          "description": "sendTrialExpiredEmail() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function sendTrialExpiredEmail",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-018",
+          "description": "canExecuteTrialJob() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function canExecuteTrialJob",
+          "status": "pending"
+        },
+        {
+          "id": "SVC-019",
+          "description": "sendMarketingWebhook() function exported",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "export.*function sendMarketingWebhook",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Cron Jobs",
+      "checks": [
+        {
+          "id": "CRON-001",
+          "description": "trial-expiry.cron.ts file exists",
+          "file_path": "apps/api/src/jobs/trial-expiry.cron.ts",
+          "status": "pending"
+        },
+        {
+          "id": "CRON-002",
+          "description": "startTrialExpiryCron() function exported",
+          "file_path": "apps/api/src/jobs/trial-expiry.cron.ts",
+          "grep_pattern": "export.*function startTrialExpiryCron",
+          "status": "pending"
+        },
+        {
+          "id": "CRON-003",
+          "description": "triggerTrialExpiryCronManually() function exported",
+          "file_path": "apps/api/src/jobs/trial-expiry.cron.ts",
+          "grep_pattern": "export.*function triggerTrialExpiryCronManually",
+          "status": "pending"
+        },
+        {
+          "id": "CRON-004",
+          "description": "Cron schedule is every 6 hours",
+          "file_path": "apps/api/src/jobs/trial-expiry.cron.ts",
+          "grep_pattern": "0 \\*/6 \\* \\* \\*",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "API Routes",
+      "checks": [
+        {
+          "id": "API-001",
+          "description": "onboarding.routes.ts file exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "status": "pending"
+        },
+        {
+          "id": "API-002",
+          "description": "POST /onboarding/signup endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.post\\('/signup'",
+          "status": "pending"
+        },
+        {
+          "id": "API-003",
+          "description": "GET /onboarding/:organizationId/state endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.get\\('/:organizationId/state'",
+          "status": "pending"
+        },
+        {
+          "id": "API-004",
+          "description": "POST /onboarding/:organizationId/step/:stepNumber endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.post.*/:organizationId/step/:stepNumber",
+          "status": "pending"
+        },
+        {
+          "id": "API-005",
+          "description": "GET /onboarding/:organizationId/progress endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.get\\('/:organizationId/progress'",
+          "status": "pending"
+        },
+        {
+          "id": "API-006",
+          "description": "GET /onboarding/:organizationId/trial-status endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.get.*/:organizationId/trial-status",
+          "status": "pending"
+        },
+        {
+          "id": "API-007",
+          "description": "GET /onboarding/:organizationId/upgrade-prompt endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.get.*/:organizationId/upgrade-prompt",
+          "status": "pending"
+        },
+        {
+          "id": "API-008",
+          "description": "GET /onboarding/:organizationId/can-execute endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.get.*/:organizationId/can-execute",
+          "status": "pending"
+        },
+        {
+          "id": "API-009",
+          "description": "POST /onboarding/:organizationId/checkout-link endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.post.*/:organizationId/checkout-link",
+          "status": "pending"
+        },
+        {
+          "id": "API-010",
+          "description": "POST /onboarding/:organizationId/invite-code endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.post.*/:organizationId/invite-code",
+          "status": "pending"
+        },
+        {
+          "id": "API-011",
+          "description": "POST /onboarding/validate-invite endpoint exists",
+          "file_path": "apps/api/src/routes/onboarding.routes.ts",
+          "grep_pattern": "router\\.post\\('/validate-invite'",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Frontend Hooks",
+      "checks": [
+        {
+          "id": "HOOK-001",
+          "description": "useOnboarding.ts file exists",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-002",
+          "description": "useOnboardingState hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useOnboardingState",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-003",
+          "description": "useTrialStatus hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useTrialStatus",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-004",
+          "description": "useOnboardingProgress hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useOnboardingProgress",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-005",
+          "description": "useUpgradePrompt hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useUpgradePrompt",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-006",
+          "description": "useCanExecuteJobs hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useCanExecuteJobs",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-007",
+          "description": "useSignup hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useSignup",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-008",
+          "description": "useCompleteStep hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useCompleteStep",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-009",
+          "description": "useCreateCheckoutLink hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useCreateCheckoutLink",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-010",
+          "description": "useGenerateInviteCode hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useGenerateInviteCode",
+          "status": "pending"
+        },
+        {
+          "id": "HOOK-011",
+          "description": "useValidateInviteCode hook exported",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "export.*function useValidateInviteCode",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Frontend Components",
+      "checks": [
+        {
+          "id": "COMP-001",
+          "description": "TrialOnboardingWizard.tsx file exists",
+          "file_path": "apps/dashboard/src/components/onboarding/TrialOnboardingWizard.tsx",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-002",
+          "description": "TrialOnboardingWizard component exported",
+          "file_path": "apps/dashboard/src/components/onboarding/TrialOnboardingWizard.tsx",
+          "grep_pattern": "export.*TrialOnboardingWizard",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-003",
+          "description": "Step1OrgSetup component defined",
+          "file_path": "apps/dashboard/src/components/onboarding/TrialOnboardingWizard.tsx",
+          "grep_pattern": "Step1OrgSetup",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-004",
+          "description": "Step2ApiKeys component defined",
+          "file_path": "apps/dashboard/src/components/onboarding/TrialOnboardingWizard.tsx",
+          "grep_pattern": "Step2ApiKeys",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-005",
+          "description": "Step3FirstAgent component defined",
+          "file_path": "apps/dashboard/src/components/onboarding/TrialOnboardingWizard.tsx",
+          "grep_pattern": "Step3FirstAgent",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-006",
+          "description": "Step4UsageDemo component defined",
+          "file_path": "apps/dashboard/src/components/onboarding/TrialOnboardingWizard.tsx",
+          "grep_pattern": "Step4UsageDemo",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-007",
+          "description": "UpgradePrompt.tsx file exists",
+          "file_path": "apps/dashboard/src/components/billing/UpgradePrompt.tsx",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-008",
+          "description": "UpgradePrompt component exported",
+          "file_path": "apps/dashboard/src/components/billing/UpgradePrompt.tsx",
+          "grep_pattern": "export.*UpgradePrompt",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-009",
+          "description": "UpgradeBanner component defined",
+          "file_path": "apps/dashboard/src/components/billing/UpgradePrompt.tsx",
+          "grep_pattern": "UpgradeBanner",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-010",
+          "description": "UpgradeModal component defined",
+          "file_path": "apps/dashboard/src/components/billing/UpgradePrompt.tsx",
+          "grep_pattern": "UpgradeModal",
+          "status": "pending"
+        },
+        {
+          "id": "COMP-011",
+          "description": "TierCard component defined",
+          "file_path": "apps/dashboard/src/components/billing/UpgradePrompt.tsx",
+          "grep_pattern": "TierCard",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Environment Configuration",
+      "checks": [
+        {
+          "id": "ENV-001",
+          "description": ".env.sample file exists",
+          "file_path": ".env.sample",
+          "status": "pending"
+        },
+        {
+          "id": "ENV-002",
+          "description": "TRIAL_DURATION_DAYS documented in .env.sample",
+          "file_path": ".env.sample",
+          "grep_pattern": "TRIAL_DURATION_DAYS",
+          "status": "pending"
+        },
+        {
+          "id": "ENV-003",
+          "description": "TRIAL_GRACE_PERIOD_HOURS documented in .env.sample",
+          "file_path": ".env.sample",
+          "grep_pattern": "TRIAL_GRACE_PERIOD_HOURS",
+          "status": "pending"
+        },
+        {
+          "id": "ENV-004",
+          "description": "TRIAL_BUDGET_USD documented in .env.sample",
+          "file_path": ".env.sample",
+          "grep_pattern": "TRIAL_BUDGET_USD",
+          "status": "pending"
+        },
+        {
+          "id": "ENV-005",
+          "description": "ONBOARDING_EMAILS_ENABLED documented in .env.sample",
+          "file_path": ".env.sample",
+          "grep_pattern": "ONBOARDING_EMAILS_ENABLED",
+          "status": "pending"
+        },
+        {
+          "id": "ENV-006",
+          "description": "MAILGUN_DOMAIN documented in .env.sample",
+          "file_path": ".env.sample",
+          "grep_pattern": "MAILGUN_DOMAIN",
+          "status": "pending"
+        },
+        {
+          "id": "ENV-007",
+          "description": "ZAPIER_WEBHOOK_URL documented in .env.sample",
+          "file_path": ".env.sample",
+          "grep_pattern": "ZAPIER_WEBHOOK_URL",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Documentation",
+      "checks": [
+        {
+          "id": "DOC-001",
+          "description": "architecture.md file exists",
+          "file_path": "docs/architecture.md",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-002",
+          "description": "Phase 11 section exists in architecture.md",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Phase 11:.*Customer Lifecycle",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-003",
+          "description": "Self-Serve Signup Flow documented",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Self-Serve Signup Flow",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-004",
+          "description": "Onboarding Wizard documented",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Onboarding Wizard",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-005",
+          "description": "Trial Lifecycle Management documented",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Trial Lifecycle Management",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-006",
+          "description": "Budget Tracking & Warnings documented",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Budget Tracking.*Warnings",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-007",
+          "description": "Email Automation documented",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Email Automation",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-008",
+          "description": "Upgrade Prompts documented",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Upgrade Prompts",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-009",
+          "description": "Trial Conversion Flow diagram exists",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Trial Conversion Flow",
+          "status": "pending"
+        },
+        {
+          "id": "DOC-010",
+          "description": "Grace Period Lifecycle diagram exists",
+          "file_path": "docs/architecture.md",
+          "grep_pattern": "Grace Period Lifecycle",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "TypeScript Types",
+      "checks": [
+        {
+          "id": "TYPE-001",
+          "description": "OnboardingState interface defined",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "interface OnboardingState",
+          "status": "pending"
+        },
+        {
+          "id": "TYPE-002",
+          "description": "TrialStatus interface defined",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "interface TrialStatus",
+          "status": "pending"
+        },
+        {
+          "id": "TYPE-003",
+          "description": "SignupData interface defined",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "interface SignupData",
+          "status": "pending"
+        },
+        {
+          "id": "TYPE-004",
+          "description": "TrialExpiryCandidate interface defined",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "interface TrialExpiryCandidate",
+          "status": "pending"
+        },
+        {
+          "id": "TYPE-005",
+          "description": "GracePeriodOrganization interface defined",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "interface GracePeriodOrganization",
+          "status": "pending"
+        },
+        {
+          "id": "TYPE-006",
+          "description": "EmailTemplate interface defined",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "interface EmailTemplate",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "name": "Integration Points",
+      "checks": [
+        {
+          "id": "INTEG-001",
+          "description": "Stripe checkout integration in createUpgradeCheckoutLink",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "stripe\\.checkout\\.sessions\\.create",
+          "status": "pending"
+        },
+        {
+          "id": "INTEG-002",
+          "description": "Mailgun integration in sendTrialEmail",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "mg\\.messages\\.create",
+          "status": "pending"
+        },
+        {
+          "id": "INTEG-003",
+          "description": "Supabase Auth integration in provisionOrganization",
+          "file_path": "apps/api/src/services/onboarding.service.ts",
+          "grep_pattern": "supabase\\.auth\\.signUp",
+          "status": "pending"
+        },
+        {
+          "id": "INTEG-004",
+          "description": "React Query integration in hooks",
+          "file_path": "apps/dashboard/src/hooks/useOnboarding.ts",
+          "grep_pattern": "useQuery|useMutation",
+          "status": "pending"
+        },
+        {
+          "id": "INTEG-005",
+          "description": "Zapier webhook integration in sendMarketingWebhook",
+          "file_path": "apps/api/src/services/trial-lifecycle.service.ts",
+          "grep_pattern": "ZAPIER_WEBHOOK_URL",
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This verification report validates Sprint 73: User Onboarding + Trial-to-Paid Conversion Automation implementation.",
+    "All database schema changes should be applied via migration: 20251112000001_onboarding_state.sql",
+    "Trial lifecycle emails require ONBOARDING_EMAILS_ENABLED=true and valid Mailgun credentials.",
+    "Marketing webhooks are optional and silently skipped if ZAPIER_WEBHOOK_URL not configured.",
+    "Trial budget tracking requires integration with AI execution middleware.",
+    "Grace period provides 24-hour buffer before hard paywall activation.",
+    "Upgrade prompts use localStorage for 24-hour dismissal to avoid fatigue.",
+    "Stripe checkout sessions require valid STRIPE_PRICE_PRO and STRIPE_PRICE_ENTERPRISE price IDs."
+  ],
+  "manual_verification_steps": [
+    "Run migration: psql < apps/api/supabase/migrations/20251112000001_onboarding_state.sql",
+    "Start trial expiry cron: startTrialExpiryCron() in server startup",
+    "Test signup flow: POST /onboarding/signup with valid email/password/organizationName",
+    "Complete wizard steps: POST /onboarding/:orgId/step/1 through /step/4",
+    "Check trial status: GET /onboarding/:orgId/trial-status",
+    "Test upgrade prompt trigger: Modify budget to >80% or days to <2",
+    "Generate checkout link: POST /onboarding/:orgId/checkout-link with tier=pro",
+    "Verify email sending: Enable ONBOARDING_EMAILS_ENABLED and trigger lifecycle emails",
+    "Test grace period: Manually expire trial and verify 24-hour grace period",
+    "Validate invite codes: POST /onboarding/:orgId/invite-code then POST /onboarding/validate-invite"
+  ]
+}

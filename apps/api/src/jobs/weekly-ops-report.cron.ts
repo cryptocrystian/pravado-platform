@@ -6,6 +6,7 @@
 import { supabase } from '../config/supabase';
 import { logger } from '../lib/logger';
 import { captureException } from '../services/observability.service';
+import { sendWeeklyOpsReport, isMailgunConfigured } from '../services/mailgun.service';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -188,10 +189,31 @@ ${!slosMet.uptime ? '- 🚨 **Uptime below target** - Investigate service stabil
       total_cost: totalCost,
     });
 
-    // 5. (Optional) Send email via Mailgun
-    // Note: Mailgun integration would go here
-    // For now, just log that report is ready
-    logger.info('[Weekly Ops Report] Email sending skipped (Mailgun not configured)');
+    // 5. Send email via Mailgun (Sprint 85)
+    if (isMailgunConfigured()) {
+      try {
+        const recipients = process.env.REPORT_EMAIL_TO?.split(',') || ['ops@pravado.io'];
+
+        logger.info('[Weekly Ops Report] Sending email', { recipients });
+
+        await sendWeeklyOpsReport(report, recipients);
+
+        logger.info('[Weekly Ops Report] Email sent successfully', {
+          recipients,
+          subject: `Weekly Ops Report (${dateStr})`,
+        });
+      } catch (emailError) {
+        // Log error but don't fail the entire job
+        logger.error('[Weekly Ops Report] Failed to send email', { error: emailError });
+        captureException(emailError as Error, {
+          context: 'weekly-ops-report-email',
+          extra: { reportPath },
+        });
+      }
+    } else {
+      logger.warn('[Weekly Ops Report] Mailgun not configured - email sending skipped');
+      logger.info('[Weekly Ops Report] To enable emails, set MAILGUN_API_KEY, MAILGUN_DOMAIN, and REPORT_EMAIL_TO');
+    }
 
     logger.info('[Weekly Ops Report] Generation complete');
   } catch (error) {

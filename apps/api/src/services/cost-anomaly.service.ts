@@ -9,14 +9,15 @@ import { captureException } from './observability.service';
 
 /**
  * Cost anomaly detection thresholds
+ * Sprint 85: Adjusted from 20% to 25% based on production feedback
  */
 const ANOMALY_THRESHOLDS = {
   // Flag if daily cost increases by more than this percentage
-  DAILY_INCREASE_PERCENT: 20,
+  DAILY_INCREASE_PERCENT: 25,
   // Baseline calculation period in days
   BASELINE_DAYS: 7,
-  // Multiplier for baseline calculation (e.g., 1.2 = 20% above baseline)
-  BASELINE_MULTIPLIER: 1.2,
+  // Multiplier for baseline calculation (e.g., 1.25 = 25% above baseline)
+  BASELINE_MULTIPLIER: 1.25,
 };
 
 export interface CostAnomaly {
@@ -33,7 +34,7 @@ export interface CostAnomaly {
  * Detect cost anomalies for all organizations
  *
  * Compares today's cost against 7-day baseline average
- * Flags organizations exceeding 20% increase threshold
+ * Flags organizations exceeding 25% increase threshold (Sprint 85: adjusted from 20%)
  */
 export async function detectCostAnomalies(): Promise<CostAnomaly[]> {
   try {

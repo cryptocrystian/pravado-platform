@@ -3,7 +3,17 @@
 // Sprint 39 Phase 3.3.1: Role-Aware Defaults System
 // =====================================================
 
-import { NavigationItem, UserRole } from '@pravado/types';
+import { UserRole } from '@pravado/types';
+
+export interface NavigationItem {
+  id: string;
+  label: string;
+  icon: string;
+  href: string;
+  roles: UserRole[];
+  requiredPermission?: string;
+  children?: NavigationItem[];
+}
 
 /**
  * Complete navigation structure for Pravado platform
@@ -83,6 +93,38 @@ export const NAVIGATION_CONFIG: NavigationItem[] = [
         roles: [UserRole.ADMIN, UserRole.AGENT, UserRole.CAMPAIGN_MANAGER],
       },
     ],
+  },
+
+  // Media Opportunities (Sprint 85)
+  {
+    id: 'media-opportunities',
+    label: 'Media Opportunities',
+    icon: '📰',
+    href: '/media-opportunities',
+    roles: [
+      UserRole.ADMIN,
+      UserRole.AGENT,
+      UserRole.CAMPAIGN_MANAGER,
+      UserRole.STRATEGIST,
+      UserRole.ACCOUNT_MANAGER,
+    ],
+    requiredPermission: 'canManageCampaigns',
+  },
+
+  // Journalist Matching (Sprint 85)
+  {
+    id: 'journalist-matching',
+    label: 'Journalist Matching',
+    icon: '🎯',
+    href: '/journalist-matching',
+    roles: [
+      UserRole.ADMIN,
+      UserRole.AGENT,
+      UserRole.CAMPAIGN_MANAGER,
+      UserRole.STRATEGIST,
+      UserRole.ACCOUNT_MANAGER,
+    ],
+    requiredPermission: 'canManageContacts',
   },
 
   // Content
@@ -297,6 +339,20 @@ export const NAVIGATION_CONFIG: NavigationItem[] = [
         roles: [UserRole.ADMIN, UserRole.ACCOUNT_MANAGER],
         requiredPermission: 'canManageTeam',
       },
+      {
+        id: 'analytics-evi',
+        label: 'EVI (Exposure Visibility Index)',
+        icon: '📊',
+        href: '/analytics/evi',
+        roles: [
+          UserRole.ADMIN,
+          UserRole.CAMPAIGN_MANAGER,
+          UserRole.STRATEGIST,
+          UserRole.ANALYST,
+          UserRole.ACCOUNT_MANAGER,
+          UserRole.EXECUTIVE,
+        ],
+      },
     ],
   },
 
@@ -361,7 +417,7 @@ export function getNavigationForRole(role: UserRole): NavigationItem[] {
     if (item.children) {
       return {
         ...item,
-        children: item.children.filter((child) => child.roles.includes(role)),
+        children: item.children.filter((child: NavigationItem) => child.roles.includes(role)),
       };
     }
     return item;
@@ -378,7 +434,7 @@ export function getNavigationPathsForRole(role: UserRole): string[] {
   items.forEach((item) => {
     paths.push(item.href);
     if (item.children) {
-      item.children.forEach((child) => {
+      item.children.forEach((child: NavigationItem) => {
         paths.push(child.href);
       });
     }

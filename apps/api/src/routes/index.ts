@@ -46,6 +46,9 @@ import agentArbitrationRoutes from './agent-arbitration';
 import agentPlaybookSyncRoutes from './agent-playbook-sync';
 import externalAgentRoutes from './external-agent';
 import adminConsoleRoutes from './admin-console';
+import adminTestRoutes from './admin-test.routes';
+import adminOpsMetricsRoutes from './admin-ops-metrics.routes';
+import adminOpsHistoryRoutes from './admin-ops-history.routes';
 
 const router = Router();
 
@@ -96,5 +99,8 @@ router.use('/agent-arbitration', agentArbitrationRoutes);
 router.use('/agent-playbook-sync', agentPlaybookSyncRoutes);
 router.use('/external-agent', externalAgentRoutes);
 router.use('/admin-console', adminConsoleRoutes);
+router.use('/admin-test', adminTestRoutes);
+router.use('/admin/ops-metrics', adminOpsMetricsRoutes);
+router.use('/admin/ops-history', adminOpsHistoryRoutes);
 
 export default router;

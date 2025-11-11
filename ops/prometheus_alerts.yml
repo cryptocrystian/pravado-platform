@@ -403,3 +403,95 @@ groups:
           summary: "Disk space is critically low"
           description: "Only {{ $value | humanizePercentage }} disk space remaining on {{ $labels.instance }}. System may fail soon."
           runbook_url: "https://github.com/pravado/platform/ops/runbooks/incident_response.md#disk-space-low"
+
+  # ============================================================================
+  # SLO Compliance Alerts (Sprint 83)
+  # ============================================================================
+  - name: slo_compliance
+    interval: 1m
+    rules:
+      - alert: UptimeBelowSLO
+        expr: |
+          sum(rate(http_requests_total{job="pravado-api",status=~"2.."}[5m])) /
+          sum(rate(http_requests_total{job="pravado-api"}[5m])) < 0.999
+        for: 5m
+        labels:
+          severity: warning
+          component: slo
+          team: ops
+        annotations:
+          summary: "Uptime below 99.9% SLO threshold"
+          description: "Current uptime is {{ $value | humanizePercentage }} (target: ≥99.9%). Service reliability is degraded."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/slo_automation.md#uptime-below-slo"
+
+      - alert: LatencyAboveSLO
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="pravado-api"}[5m])) > 1.5
+        for: 5m
+        labels:
+          severity: warning
+          component: slo
+          team: ops
+        annotations:
+          summary: "Average latency above 1.5s SLO threshold"
+          description: "P95 latency is {{ $value | humanizeDuration }} (target: <1.5s). User experience may be impacted."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/slo_automation.md#latency-above-slo"
+
+      - alert: ErrorRateAboveSLO
+        expr: |
+          sum(rate(http_requests_total{job="pravado-api",status=~"5.."}[5m])) /
+          sum(rate(http_requests_total{job="pravado-api"}[5m])) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+          component: slo
+          team: ops
+          page: "true"
+        annotations:
+          summary: "Error rate above 1% SLO threshold"
+          description: "Error rate is {{ $value | humanizePercentage }} (target: <1%). Service quality is degraded."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/slo_automation.md#error-rate-above-slo"
+
+      - alert: LLMFailureRateAboveSLO
+        expr: |
+          sum(rate(llm_router_failures_total{job="pravado-api"}[5m])) /
+          sum(rate(llm_router_requests_total{job="pravado-api"}[5m])) > 0.10
+        for: 5m
+        labels:
+          severity: warning
+          component: slo
+          team: ops
+        annotations:
+          summary: "LLM failure rate above 10% SLO threshold"
+          description: "LLM failure rate is {{ $value | humanizePercentage }} (target: <10%). AI features may be degraded."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/slo_automation.md#llm-failure-rate-above-slo"
+
+  # ============================================================================
+  # Cost Anomaly Alerts (Sprint 83)
+  # ============================================================================
+  - name: cost_anomalies
+    interval: 5m
+    rules:
+      - alert: CostAnomalyDetected
+        expr: pravado_cost_anomaly_detected{job="pravado-api"} > 0
+        for: 1m
+        labels:
+          severity: warning
+          component: billing
+          team: ops
+        annotations:
+          summary: "Cost anomaly detected for organization"
+          description: "Organization {{ $labels.org_id }} has a {{ $labels.percent_increase }}% cost increase compared to baseline."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/slo_automation.md#cost-anomaly-detected"
+
+      - alert: CriticalCostAnomaly
+        expr: pravado_cost_anomaly_severity{job="pravado-api",severity="critical"} > 0
+        for: 1m
+        labels:
+          severity: critical
+          component: billing
+          team: ops
+          page: "true"
+        annotations:
+          summary: "CRITICAL cost anomaly detected"
+          description: "Organization {{ $labels.org_id }} has an extreme cost increase. Investigate potential runaway usage."
+          runbook_url: "https://github.com/pravado/platform/ops/runbooks/slo_automation.md#critical-cost-anomaly"
